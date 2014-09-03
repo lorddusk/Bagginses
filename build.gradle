@@ -22,7 +22,7 @@ group= "nl.lang2619.bagginses" // http://maven.apache.org/guides/mini/guide-nami
 archivesBaseName = "Bagginses"
 
 minecraft {
-    version = "1.7.10-10.13.0.1208"
+    version = "1.7.10-10.13.0.1199"
     runDir = "eclipse/assets"
 	
 	//replacing stuff in code.
