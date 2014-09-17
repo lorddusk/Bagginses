@@ -31,11 +31,17 @@ public class ModItems {
     private static Item orange, orangeT2;
     private static Item white, whiteT2;
     private static Item foid;
+    private static Item upgrade;
     public static Item[] tier1 = new Item[]{black, red, green, brown, blue, purple, cyan, silver, gray, pink, lime, yellow, lightBlue, magenta, orange, white};
     public static String[] BagColors = new String[]{"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
     public static Item[] tier2 = new Item[]{blackT2, redT2, greenT2, brownT2, blueT2, purpleT2, cyanT2, silverT2, grayT2, pinkT2, limeT2, yellowT2, lightBlueT2, magentaT2, orangeT2, whiteT2};
 
     public static void init() {
+
+        upgrade = new Upgrade();
+        GameRegistry.registerItem(upgrade, "upgrade");
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade),"SSS","III","WWW",'S', Items.string,'I',Items.iron_ingot,'W',Blocks.planks);
+
         for (int i = 0; i < tier1.length; i++) {
             tier1[i] = new BagTier1(BagColors[i]);
             GameRegistry.registerItem(tier1[i], BagColors[i]);
@@ -45,7 +51,7 @@ public class ModItems {
         for (int i = 0; i < tier2.length; i++) {
             tier2[i] = new BagTier2(BagColors[i] + "T2");
             GameRegistry.registerItem(tier2[i], BagColors[i] + "T2");
-            GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), new ItemStack(Items.iron_ingot)));
+            GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
 
         }
 

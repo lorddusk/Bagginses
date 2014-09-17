@@ -25,11 +25,11 @@ public class BagRecipe extends ShapelessOreRecipe {
         }
         if (bag != null) {
             if(bag.hasTagCompound()){
-                ItemStack output = getRecipeOutput();
+                ItemStack output = getRecipeOutput().copy();
                 output.setTagCompound((NBTTagCompound) bag.getTagCompound().copy());
                 return output;
             }
         }
-        return this.getRecipeOutput();
+        return this.getRecipeOutput().copy();
     }
 }

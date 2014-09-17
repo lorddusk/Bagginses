@@ -38,7 +38,6 @@ public class ContainerTier2 extends ContainerMain {
     }
 
     @Override
-
     public void onContainerClosed(EntityPlayer player) {
         bag.closeInventory();
         ((InventoryItemMain) bag).setNBT(player.getCurrentEquippedItem());
