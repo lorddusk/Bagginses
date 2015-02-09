@@ -33,7 +33,7 @@ public class ModItems {
     private static Item magenta, magentaT2;
     private static Item orange, orangeT2;
     private static Item white, whiteT2;
-    private static Item foid;
+    public static Item foid;
     private static Item upgrade;
     public static Item[] tier1 = new Item[16];
     public static String[] BagColors = new String[16];
@@ -41,24 +41,25 @@ public class ModItems {
     static int added = 0;
 
     public static void init() {
-
         fillTiers();
 
-        upgrade = new Upgrade();
-        GameRegistry.registerItem(upgrade, "upgrade");
-        GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
+        if(added > 0) {
+            upgrade = new Upgrade();
+            GameRegistry.registerItem(upgrade, "upgrade");
+            GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
 
-        for (int i = 0; i < added; i++) {
-            tier1[i] = new BagTier1(BagColors[i]);
-            GameRegistry.registerItem(tier1[i], BagColors[i]);
-            GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.string, 'w', new ItemStack(Blocks.wool, 1, added - i - 1), 'c', Blocks.chest);
-        }
 
-        for (int i = 0; i < added; i++) {
-            tier2[i] = new BagTier2(BagColors[i] + "T2");
-            GameRegistry.registerItem(tier2[i], BagColors[i] + "T2");
-            GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
+            for (int i = 0; i < added; i++) {
+                tier1[i] = new BagTier1(BagColors[i]);
+                GameRegistry.registerItem(tier1[i], BagColors[i]);
+                GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.string, 'w', new ItemStack(Blocks.wool, 1, added - i - 1), 'c', Blocks.chest);
+            }
 
+            for (int i = 0; i < added; i++) {
+                tier2[i] = new BagTier2(BagColors[i] + "T2");
+                GameRegistry.registerItem(tier2[i], BagColors[i] + "T2");
+                GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
+            }
         }
 
         foid = new BagVoid(ItemInfo.foid);

@@ -16,7 +16,7 @@ public class BagTab extends CreativeTabs{
 
     @Override
     public Item getTabIconItem() {
-        return ModItems.tier1[1];
+        return ModItems.foid;
     }
 
     public String getTranslatedTabLabel(){
