@@ -1,4 +1,4 @@
-package nl.lang2619.bagginses.items.bags.foid;
+package nl.lang2619.bagginses.items.bags;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

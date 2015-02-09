@@ -5,10 +5,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-import nl.lang2619.bagginses.items.bags.foid.BagVoid;
-import nl.lang2619.bagginses.items.bags.tier1.BagTier1;
-import nl.lang2619.bagginses.items.bags.tier2.BagTier2;
+import nl.lang2619.bagginses.items.bags.BagVoid;
+import nl.lang2619.bagginses.items.bags.BagTier1;
+import nl.lang2619.bagginses.items.bags.BagTier2;
 
 /**
  * Created by Tim on 8/24/2014.

@@ -10,9 +10,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import nl.lang2619.bagginses.config.ConfigHandler;
+import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.CommonProxy;
+import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.Defaults;
+import nl.lang2619.bagginses.references.Log;
 
 import java.io.File;
 
@@ -37,6 +40,7 @@ public class Bagginses {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+
         path = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Defaults.MODID.toLowerCase() + File.separator;
         ConfigHandler.init(path);
 
@@ -52,6 +56,6 @@ public class Bagginses {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-
+        BlockList.addFromString(ModConfig.whiteList);
     }
 }

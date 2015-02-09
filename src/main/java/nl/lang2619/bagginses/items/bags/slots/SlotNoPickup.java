@@ -1,4 +1,4 @@
-package nl.lang2619.bagginses.inventory;
+package nl.lang2619.bagginses.items.bags.slots;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
