@@ -17,14 +17,81 @@ import java.util.Set;
  */
 public class BlockList {
 
-    public static IdentityHashMap<Item, short[]> itemList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> blackList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> blueList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> brownList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> cyanList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> grayList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> greenList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> lightBlueList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> limeList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> magentaList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> orangeList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> purpleList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> pinkList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> redList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> silverList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> whiteList = new IdentityHashMap<Item, short[]>();
+    public static IdentityHashMap<Item, short[]> yellowList = new IdentityHashMap<Item, short[]>();
 
-    public static boolean contains(Item item, int damage) {
-        short[] listedDamages = itemList.get(item);
+    public static boolean contains(Item item, int damage, String color) {
+        short[] listedDamages = getList(color).get(item);
         return (listedDamages != null && listedDamages.length > 0 && (listedDamages[0] == -1 || ArrayUtils.contains(listedDamages, (short) damage)));
     }
 
-    public static void addFromString(String list) {
+    public static IdentityHashMap<Item, short[]> getList(String color) {
+        if (color.equals("black")) {
+            return blackList;
+        }
+        if (color.equals("blue")) {
+            return blueList;
+        }
+        if (color.equals("brown")) {
+            return brownList;
+        }
+        if (color.equals("cyan")) {
+            return cyanList;
+        }
+        if (color.equals("gray")) {
+            return grayList;
+        }
+        if (color.equals("green")) {
+            return greenList;
+        }
+        if (color.equals("lightBlue")) {
+            return lightBlueList;
+        }
+        if (color.equals("lime")) {
+            return limeList;
+        }
+        if (color.equals("magenta")) {
+            return magentaList;
+        }
+        if (color.equals("orange")) {
+            return orangeList;
+        }
+        if (color.equals("purple")) {
+            return purpleList;
+        }
+        if (color.equals("pink")) {
+            return pinkList;
+        }
+        if (color.equals("red")) {
+            return redList;
+        }
+        if (color.equals("silver")) {
+            return silverList;
+        }
+        if (color.equals("white")) {
+            return whiteList;
+        }
+        if (color.equals("yellow")) {
+            return yellowList;
+        }
+        return null;
+    }
+
+    public static void addFromString(String list, String color) {
         if (list.isEmpty()) return;
 
         int added = 0;
@@ -42,7 +109,7 @@ public class BlockList {
             if (entry.contains("/")) {
                 String[] sep = entry.split("/");
                 if (sep.length != 2) {
-                    Log.warn("Invalid entry in Decomposition Blacklist: $0", entry);
+                    Log.warn("Invalid entry in whitelist $1 : $0", entry, color);
                     continue;
                 }
 
@@ -54,7 +121,7 @@ public class BlockList {
                         for (int a = 0; a < dmgVals.length; a++) dmgs[a] = Short.parseShort(dmgVals[a]);
                     } else dmgs = new short[]{Short.parseShort(sep[1])};
                 } catch (NumberFormatException e) {
-                    Log.warn("Invalid entry in Decomposition Blacklist, wrong damage values: $0", entry);
+                    Log.warn("Invalid entry in whitelist $1, wrong damage values: $0", entry, color);
                     continue;
                 }
             }
@@ -63,7 +130,7 @@ public class BlockList {
 
             String[] itemId = itemName.split(":");
             if (itemId.length > 2) {
-                Log.warn("Invalid entry in Decomposition Blacklist, wrong item identifier: $0", entry);
+                Log.warn("Invalid entry in whitelist $1, wrong item identifier: $0", entry, color);
                 continue;
             } else if (itemId.length == 1) itemId = new String[]{"minecraft", itemId[0]};
 
@@ -78,11 +145,11 @@ public class BlockList {
 
                         if (block == null) {
                             if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
-                                Log.warn("Stumbled upon invalid entry in block registry while parsing Decomposition Blacklist, object not found: $0", key);
+                                Log.warn("Stumbled upon invalid entry in block registry while parsing whitelist $1, object not found: $0", key, color);
                             continue;
                         }
 
-                        itemList.put(Item.getItemFromBlock(block), dmgs);
+                        getList(color).put(Item.getItemFromBlock(block), dmgs);
                         ++added;
                     }
                 }
@@ -95,11 +162,11 @@ public class BlockList {
 
                         if (item == null) {
                             if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
-                                Log.warn("Stumbled upon invalid entry in item registry while parsing Decomposition Blacklist, object not found: $0", key);
+                                Log.warn("Stumbled upon invalid entry in item registry while parsing whitelist $1, object not found: $0", key, color);
                             continue;
                         }
 
-                        itemList.put(item, dmgs);
+                        getList(color).put(item, dmgs);
                         ++added;
                     }
                 }
@@ -111,16 +178,16 @@ public class BlockList {
 
                     if (block == null) {
                         if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
-                            Log.warn("Invalid entry in Decomposition Blacklist, item not found: $0", entry);
+                            Log.warn("Invalid entry in whitelist $1, item not found: $0", entry, color);
                         continue;
                     } else item = Item.getItemFromBlock(block);
                 }
 
-                itemList.put(item, dmgs);
+                getList(color).put(item, dmgs);
                 ++added;
             }
         }
 
-        if (added > 0) Log.info("Added $0 items into Decomposition blacklist", added);
+        if (added > 0) Log.info("Added $0 items into whitelist $1", added, color);
     }
 }

@@ -31,6 +31,10 @@ public class BagTier1 extends Item {
         this.itemIcon = register.registerIcon("bagginses:" + "backpack_" + color);
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public String getUnlocalizedName(ItemStack itemStack) {
         return "backpack_" + color;
     }

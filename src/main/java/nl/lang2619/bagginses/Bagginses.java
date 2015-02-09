@@ -56,6 +56,21 @@ public class Bagginses {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        BlockList.addFromString(ModConfig.whiteList);
+        BlockList.addFromString(ModConfig.black,"black");
+        BlockList.addFromString(ModConfig.red,"red");
+        BlockList.addFromString(ModConfig.brown,"brown");
+        BlockList.addFromString(ModConfig.blue,"blue");
+        BlockList.addFromString(ModConfig.cyan,"cyan");
+        BlockList.addFromString(ModConfig.gray,"gray");
+        BlockList.addFromString(ModConfig.green,"green");
+        BlockList.addFromString(ModConfig.lightBlue,"lightBlue");
+        BlockList.addFromString(ModConfig.lime,"lime");
+        BlockList.addFromString(ModConfig.magenta,"magenta");
+        BlockList.addFromString(ModConfig.orange,"orange");
+        BlockList.addFromString(ModConfig.pink,"pink");
+        BlockList.addFromString(ModConfig.purple,"purple");
+        BlockList.addFromString(ModConfig.silver,"silver");
+        BlockList.addFromString(ModConfig.white,"white");
+        BlockList.addFromString(ModConfig.yellow,"yellow");
     }
 }

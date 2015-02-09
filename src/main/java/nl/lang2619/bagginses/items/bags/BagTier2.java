@@ -25,6 +25,10 @@ public class BagTier2 extends Item {
         this.color = color;
     }
 
+    public String getColor() {
+        return color.replace("T2","");
+    }
+
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register) {
         this.itemIcon = register.registerIcon("bagginses:" + "backpack_" + color.replace("T2",""));

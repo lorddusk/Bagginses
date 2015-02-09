@@ -26,6 +26,7 @@ public class BagContainer extends Container {
     int startX = 0;
     int startY = 0;
     boolean foid = false;
+    String color;
 
     public BagContainer(InventoryPlayer playerInventory, ItemStack itemStack) {
         if (itemStack.getItem() instanceof BagTier1) {
@@ -33,12 +34,14 @@ public class BagContainer extends Container {
             columns = 5;
             startX = 44;
             startY = 19;
+            color = ((BagTier1) itemStack.getItem()).getColor();
             bag = new InventoryItemMain(itemStack, 15, 64);
         } else if (itemStack.getItem() instanceof BagTier2) {
             lines = 3;
             columns = 9;
             startX = 8;
             startY = 19;
+            color = ((BagTier2) itemStack.getItem()).getColor();
             bag = new InventoryItemMain(itemStack, 27, 64);
         } else if (itemStack.getItem() instanceof BagVoid) {
             lines = 1;
@@ -54,9 +57,9 @@ public class BagContainer extends Container {
             for (int column = 0; column < columns; ++column) {
                 int slotIndex = column + (row * columns);
                 int x = startX + (column * 18);
-                int y = startY + (row * 180);
+                int y = startY + (row * 18);
                 if (!foid) {
-                    addSlotToContainer(new SlotLocked(bag, slotIndex, x, y).blockShift());
+                    addSlotToContainer(new SlotLocked(bag, slotIndex, x, y,color).blockShift());
                 } else {
                     addSlotToContainer(new Slot(bag, slotIndex, x, y));
                 }

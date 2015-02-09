@@ -13,9 +13,11 @@ public class SlotLocked extends Slot {
     protected boolean isInfinite;
     protected boolean canAdjustPhantom = true;
     protected boolean canShift = false;
+    private String color;
 
-    public SlotLocked(IInventory inventory, int slotIndex, int x, int y) {
+    public SlotLocked(IInventory inventory, int slotIndex, int x, int y, String color) {
         super(inventory, slotIndex, x, y);
+        this.color = color;
         if (inventory == null)
             throw new IllegalArgumentException("Inventory must not be null");
     }
@@ -24,7 +26,7 @@ public class SlotLocked extends Slot {
     public boolean isItemValid(ItemStack itemStack) {
         itemStack = itemStack.copy();
         itemStack.stackSize = 1;
-        if (BlockList.contains(itemStack.getItem(),itemStack.getItemDamage())) {
+        if (BlockList.contains(itemStack.getItem(),itemStack.getItemDamage(),color)) {
             return true;
         }
         return false;
