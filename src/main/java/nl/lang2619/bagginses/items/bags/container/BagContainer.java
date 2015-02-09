@@ -54,7 +54,7 @@ public class BagContainer extends Container {
             for (int column = 0; column < columns; ++column) {
                 int slotIndex = column + (row * columns);
                 int x = startX + (column * 18);
-                int y = startY + (row * 180);
+                int y = startY + (row * 18);
                 if (!foid) {
                     addSlotToContainer(new SlotLocked(bag, slotIndex, x, y).blockShift());
                 } else {
