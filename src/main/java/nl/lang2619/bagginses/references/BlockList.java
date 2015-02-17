@@ -1,13 +1,18 @@
 package nl.lang2619.bagginses.references;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -105,14 +110,12 @@ public class BlockList {
             short[] dmgs = new short[]{-1};
 
             // PARSE DAMAGE VALUES
-
             if (entry.contains("/")) {
                 String[] sep = entry.split("/");
                 if (sep.length != 2) {
                     Log.warn("Invalid entry in whitelist $1 : $0", entry, color);
                     continue;
                 }
-
                 itemName = sep[0];
                 try {
                     if (sep[1].contains("+")) {
@@ -127,67 +130,140 @@ public class BlockList {
             }
 
             // PARSE ENTRY ID AND NAME
-
             String[] itemId = itemName.split(":");
             if (itemId.length > 2) {
                 Log.warn("Invalid entry in whitelist $1, wrong item identifier: $0", entry, color);
                 continue;
-            } else if (itemId.length == 1) itemId = new String[]{"minecraft", itemId[0]};
-
-            if (itemId[1].equals("*")) { // BLACKLIST ALL BLOCKS AND ITEMS FROM MOD
-                String identifier = itemId[0] + ":";
-
-                // SEARCH ALL BLOCKS WITH SPECIFIED ID
-
-                for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
-                    if (key.startsWith(identifier)) {
-                        Block block = GameData.getBlockRegistry().getRaw(key);
-
-                        if (block == null) {
-                            if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
-                                Log.warn("Stumbled upon invalid entry in block registry while parsing whitelist $1, object not found: $0", key, color);
-                            continue;
-                        }
-
+            } else if (itemId.length == 1) {
+                itemId = new String[]{"minecraft", itemId[0]};
+            }
+            if (itemId[0].equals("ore")) {
+                String identifier = itemId[1];
+                ArrayList<ItemStack> items = OreDictionary.getOres(identifier);
+                for (ItemStack is : items) {
+                    if (GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem())) instanceof Item) {
+                        Item item = GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem()));
+                        getList(color).put(item, dmgs);
+                        ++added;
+                    } else {
+                        Block block = GameData.getBlockRegistry().getRaw(Block.getIdFromBlock(Block.getBlockFromItem(is.getItem())));
                         getList(color).put(Item.getItemFromBlock(block), dmgs);
                         ++added;
                     }
                 }
-
+            }
+            if (itemId[1].equals("*")) { // BLACKLIST ALL BLOCKS AND ITEMS FROM MOD
+                String identifier = itemId[0] + ":";
+                // SEARCH ALL BLOCKS WITH SPECIFIED ID
+                added = SpecifiedBlock(color, added, dmgs, itemId, identifier);
                 // SEARCH ALL ITEMS WITH SPECIFIED ID
-
-                for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
-                    if (key.startsWith(identifier)) {
-                        Item item = GameData.getItemRegistry().getRaw(key);
-
-                        if (item == null) {
-                            if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
-                                Log.warn("Stumbled upon invalid entry in item registry while parsing whitelist $1, object not found: $0", key, color);
-                            continue;
-                        }
-
-                        getList(color).put(item, dmgs);
-                        ++added;
-                    }
-                }
+                added = SpecifiedItem(color, added, dmgs, itemId, identifier);
             } else { // BLACKLIST SPECIFIED ENTRY
-                Item item = GameRegistry.findItem(itemId[0], itemId[1]);
+                added = SpecifiedEntry(color, added, entry, dmgs, itemId);
+            }
+        }
+        //WHITELIST ALL MODS WITH THEIR BLOCKS/ITEMS
+        if (list.equals("*:*")) {
+            added = addAllMods(color, added);
+        }
 
+        if (added > 0) Log.info("Added $0 items into whitelist $1", added, color);
+    }
+
+    private static int SpecifiedEntry(String color, int added, String entry, short[] dmgs, String[] itemId) {
+        Item item = GameRegistry.findItem(itemId[0], itemId[1]);
+        if (item == null) {
+            Block block = GameRegistry.findBlock(itemId[0], itemId[1]);
+            if (block == null) {
+                if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
+                    Log.warn("Invalid entry in whitelist $1, item not found: $0", entry, color);
+                return added;
+            } else item = Item.getItemFromBlock(block);
+        }
+        getList(color).put(item, dmgs);
+        ++added;
+        return added;
+    }
+
+    private static int SpecifiedItem(String color, int added, short[] dmgs, String[] itemId, String identifier) {
+        for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
+            if (key.startsWith(identifier)) {
+                Item item = GameData.getItemRegistry().getRaw(key);
                 if (item == null) {
-                    Block block = GameRegistry.findBlock(itemId[0], itemId[1]);
-
-                    if (block == null) {
-                        if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
-                            Log.warn("Invalid entry in whitelist $1, item not found: $0", entry, color);
-                        continue;
-                    } else item = Item.getItemFromBlock(block);
+                    if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
+                        Log.warn("Stumbled upon invalid entry in item registry while parsing whitelist $1, object not found: $0", key, color);
+                    continue;
                 }
-
                 getList(color).put(item, dmgs);
                 ++added;
             }
         }
+        return added;
+    }
 
-        if (added > 0) Log.info("Added $0 items into whitelist $1", added, color);
+    private static int SpecifiedBlock(String color, int added, short[] dmgs, String[] itemId, String identifier) {
+        for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
+            if (key.startsWith(identifier)) {
+                Block block = GameData.getBlockRegistry().getRaw(key);
+                if (block == null) {
+                    if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
+                        Log.warn("Stumbled upon invalid entry in block registry while parsing whitelist $1, object not found: $0", key, color);
+                    continue;
+                }
+                getList(color).put(Item.getItemFromBlock(block), dmgs);
+                ++added;
+            }
+        }
+        return added;
+    }
+
+    private static int addAllMods(String color, int added) {
+        short[] dmgs = new short[]{-1};
+        Set<Map.Entry<String, ModContainer>> mapSet = Loader.instance().getIndexedModList().entrySet();
+        for (Map.Entry<String, ModContainer> mapEntry : mapSet) {
+            String keyValue = mapEntry.getKey();
+            String identifier = keyValue + ":";
+            for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
+                if (key.startsWith(identifier)) {
+                    Block block = GameData.getBlockRegistry().getRaw(key);
+                    if (block == null) {
+                        if (keyValue.equals("minecraft") || Loader.isModLoaded(keyValue))
+                            Log.warn("Stumbled upon invalid entry in block registry while parsing whitelist $1, object not found: $0", key, color);
+                        continue;
+                    }
+                    getList(color).put(Item.getItemFromBlock(block), dmgs);
+                    ++added;
+                }
+            }
+            for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
+                if (key.startsWith(identifier)) {
+                    Item item = GameData.getItemRegistry().getRaw(key);
+
+                    if (item == null) {
+                        if (keyValue.equals("minecraft") || Loader.isModLoaded(keyValue))
+                            Log.warn("Stumbled upon invalid entry in item registry while parsing whitelist $1, object not found: $0", key, color);
+                        continue;
+                    }
+                    getList(color).put(item, dmgs);
+                    ++added;
+                }
+            }
+        }
+        String identifier = "minecraft:";
+        for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
+            if (key.startsWith(identifier)) {
+                Block block = GameData.getBlockRegistry().getRaw(key);
+                getList(color).put(Item.getItemFromBlock(block), dmgs);
+                ++added;
+            }
+        }
+        for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
+            if (key.startsWith(identifier)) {
+                Item item = GameData.getItemRegistry().getRaw(key);
+                getList(color).put(item, dmgs);
+                ++added;
+            }
+        }
+        return added;
     }
 }
