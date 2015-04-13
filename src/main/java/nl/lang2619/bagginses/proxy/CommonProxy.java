@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.ChatComponentText;
+import net.minecraftforge.common.MinecraftForge;
+import nl.lang2619.bagginses.helpers.ItemEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +18,13 @@ import java.util.List;
  * Created by Tim on 8/24/2014.
  */
 public class CommonProxy {
+
+    public void registerEvents(){
+        ItemEvent itemEventHandler = new ItemEvent();
+        FMLCommonHandler.instance().bus().register(itemEventHandler);
+        MinecraftForge.EVENT_BUS.register(itemEventHandler);
+    }
+
     protected static final String prefix = "[Bagginses] ";
     protected List<String> notifications = Collections.synchronizedList(new ArrayList<String>());
 

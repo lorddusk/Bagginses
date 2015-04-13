@@ -1,0 +1,339 @@
+package nl.lang2619.bagginses.inventory;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import nl.lang2619.bagginses.helpers.INBTTaggable;
+import nl.lang2619.bagginses.helpers.NBTHelper;
+import nl.lang2619.bagginses.helpers.Names;
+import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.container.BagContainer;
+import nl.lang2619.bagginses.items.bags.container.ContainerBagginses;
+import nl.lang2619.bagginses.references.BagTypes;
+
+import java.util.UUID;
+
+/**
+ * Created by Tim on 4/12/2015.
+ */
+public class InventoryBag implements IInventory, INBTTaggable {
+    public ItemStack parentItemStack;
+    protected ItemStack[] inventory;
+    public ItemStack[] itemSlots = new ItemStack[64];
+    protected String customName;
+    public NBTTagCompound tag;
+    public static boolean instantAdd = false;
+    private boolean added = false;
+    public ItemStack item;
+    boolean foid = false;
+    public int stackSize;
+
+    public InventoryBag(ItemStack itemStack) {
+        Bags item = (Bags) itemStack.getItem();
+        int size;
+        if (item.getType() == BagTypes.TIER1) {
+            size = BagContainer.tier1Lines * BagContainer.tier1Columns;
+        } else if (item.getType() == BagTypes.TIER2) {
+            size = BagContainer.tier2Lines * BagContainer.tier2Columns;
+        } else {
+            size = BagContainer.voidLines * BagContainer.voidColumns;
+            foid = true;
+        }
+        inventory = new ItemStack[size];
+        parentItemStack = itemStack;
+        if (!foid) {
+            if (!itemStack.hasTagCompound()) {
+                itemStack.setTagCompound(new NBTTagCompound());
+            }
+            tag = itemStack.getTagCompound();
+            this.item = itemStack;
+            readFromNBT(itemStack.getTagCompound());
+        } else {
+            itemSlots = new ItemStack[size];
+            if (itemStack.hasTagCompound() == false) {
+                itemStack.setTagCompound(new NBTTagCompound());
+            }
+            tag = itemStack.getTagCompound();
+            this.item = itemStack;
+            stackSize = 64;
+        }
+    }
+
+    public void onGuiSaved(EntityPlayer entityPlayer) {
+        parentItemStack = findParentItemStack(entityPlayer);
+
+        if (parentItemStack != null) {
+            save();
+        }
+    }
+
+    public ItemStack findParentItemStack(EntityPlayer entityPlayer) {
+        if (NBTHelper.hasUUID(parentItemStack)) {
+            UUID parentItemStackUUID = new UUID(parentItemStack.getTagCompound().getLong(Names.NBT.UUID_MOST_SIG), parentItemStack.getTagCompound().getLong(Names.NBT.UUID_LEAST_SIG));
+            for (int i = 0; i < entityPlayer.inventory.getSizeInventory(); i++) {
+                ItemStack itemStack = entityPlayer.inventory.getStackInSlot(i);
+
+                if (NBTHelper.hasUUID(itemStack)) {
+                    if (itemStack.getTagCompound().getLong(Names.NBT.UUID_MOST_SIG) == parentItemStackUUID.getMostSignificantBits() && itemStack.getTagCompound().getLong(Names.NBT.UUID_LEAST_SIG) == parentItemStackUUID.getLeastSignificantBits()) {
+                        return itemStack;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean matchesUUID(UUID uuid) {
+        return NBTHelper.hasUUID(parentItemStack) && parentItemStack.getTagCompound().getLong(Names.NBT.UUID_LEAST_SIG) == uuid.getLeastSignificantBits() && parentItemStack.getTagCompound().getLong(Names.NBT.UUID_MOST_SIG) == uuid.getMostSignificantBits();
+    }
+
+    public void save() {
+        NBTTagCompound nbtTagCompound = parentItemStack.getTagCompound();
+
+        if (nbtTagCompound == null) {
+            nbtTagCompound = new NBTTagCompound();
+
+            UUID uuid = UUID.randomUUID();
+            nbtTagCompound.setLong(Names.NBT.UUID_MOST_SIG, uuid.getMostSignificantBits());
+            nbtTagCompound.setLong(Names.NBT.UUID_LEAST_SIG, uuid.getLeastSignificantBits());
+        }
+
+        writeToNBT(nbtTagCompound);
+        parentItemStack.setTagCompound(nbtTagCompound);
+    }
+
+    @Override
+    public int getSizeInventory() {
+        if (!foid) {
+            return inventory.length;
+        } else {
+            return 65;
+        }
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int slotIndex) {
+        if (!foid)
+            return inventory[slotIndex];
+        else
+            return slotIndex == 64 ? null : itemSlots[slotIndex];
+    }
+
+    @Override
+    public ItemStack decrStackSize(int slotIndex, int decrementAmount) {
+        if (!foid) {
+            ItemStack itemStack = getStackInSlot(slotIndex);
+            if (itemStack != null) {
+                if (itemStack.stackSize <= decrementAmount) {
+                    setInventorySlotContents(slotIndex, null);
+                } else {
+                    itemStack = itemStack.splitStack(decrementAmount);
+                    if (itemStack.stackSize == 0) {
+                        setInventorySlotContents(slotIndex, null);
+                    }
+                }
+            }
+
+            return itemStack;
+        } else {
+            if (slotIndex == 64) {
+                return null;
+            } else if (itemSlots[slotIndex] != null) {
+                ItemStack itemstack;
+                if (itemSlots[slotIndex].stackSize <= decrementAmount) {
+                    itemstack = itemSlots[slotIndex];
+                    itemSlots[slotIndex] = null;
+                    markDirty();
+                    return itemstack;
+                } else {
+                    itemstack = itemSlots[slotIndex].splitStack(decrementAmount);
+                    if (itemSlots[slotIndex].stackSize == 0) {
+                        itemSlots[slotIndex] = null;
+                    }
+                    markDirty();
+                    return itemstack;
+                }
+            } else return null;
+        }
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int slotIndex) {
+        if (!foid) {
+            if (inventory[slotIndex] != null) {
+                ItemStack itemStack = inventory[slotIndex];
+                inventory[slotIndex] = null;
+                return itemStack;
+            } else {
+                return null;
+            }
+        } else {
+            return getStackInSlot(slotIndex);
+        }
+    }
+
+    @Override
+    public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
+        if (!foid) {
+            inventory[slotIndex] = itemStack;
+            if ((itemStack != null) && (itemStack.stackSize > getInventoryStackLimit())) {
+                itemStack.stackSize = getInventoryStackLimit();
+            }
+            markDirty();
+        } else {
+            if (slotIndex != 64) {
+                itemSlots[slotIndex] = itemStack;
+                this.markDirty();
+                if (instantAdd) {
+                    this.processInv();
+                } else {
+                    added = true;
+                }
+            }
+        }
+    }
+
+    public void processInv() {
+        if (itemSlots[0] != null) {
+            itemSlots[0] = null;
+        }
+        /*for (int i = 1; i < 64; ++i) {
+            itemSlots[i] = null;
+        }*/
+    }
+
+    @Override
+    public String getInventoryName() {
+        if (this.hasCustomName()) {
+            return this.getCustomName();
+        } else {
+            return Names.Containers.BAGS;
+        }
+    }
+
+    @Override
+    public boolean hasCustomInventoryName() {
+        return false;
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        return 64;
+    }
+
+    @Override
+    public void markDirty() {
+        writeToNBT(tag);
+        setNBT(item);
+    }
+
+    public void setNBT(ItemStack item) {
+        item.setTagCompound(tag);
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+        return true;
+    }
+
+    @Override
+    public void openInventory() {
+        readFromNBT(tag);
+    }
+
+    @Override
+    public void closeInventory() {
+        writeToNBT(tag);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack) {
+        if (!foid)
+            return true;
+        else
+            return slotIndex <= 64;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
+        if(!foid) {
+            if (nbtTagCompound != null && nbtTagCompound.hasKey(Names.NBT.ITEMS)) {
+                // Read in the ItemStacks in the inventory from NBT
+                if (nbtTagCompound.hasKey(Names.NBT.ITEMS)) {
+                    NBTTagList tagList = nbtTagCompound.getTagList(Names.NBT.ITEMS, 10);
+                    inventory = new ItemStack[this.getSizeInventory()];
+                    for (int i = 0; i < tagList.tagCount(); ++i) {
+                        NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
+                        byte slotIndex = tagCompound.getByte("Slot");
+                        if (slotIndex >= 0 && slotIndex < inventory.length) {
+                            inventory[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                        }
+                    }
+                }
+
+                // Read in any custom name for the inventory
+                if (nbtTagCompound.hasKey("display") && nbtTagCompound.getTag("display").getClass().equals(NBTTagCompound.class)) {
+                    if (nbtTagCompound.getCompoundTag("display").hasKey("Name")) {
+                        customName = nbtTagCompound.getCompoundTag("display").getString("Name");
+                    }
+                }
+            }
+        }else{
+            itemSlots = new ItemStack[getSizeInventory()];
+            NBTTagList inventory = nbtTagCompound.getTagList("Items", 10);
+
+            for (int i = 0; i < inventory.tagCount(); ++i) {
+                NBTTagCompound Slots = inventory.getCompoundTagAt(i);
+                byte slot = Slots.getByte("Slot");
+                if ((slot >= 0) && (slot < itemSlots.length)) {
+                    itemSlots[slot] = ItemStack.loadItemStackFromNBT(Slots);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound nbtTagCompound) {
+        if (!foid) {
+            // Write the ItemStacks in the inventory to NBT
+            NBTTagList tagList = new NBTTagList();
+            for (int currentIndex = 0; currentIndex < inventory.length; ++currentIndex) {
+                if (inventory[currentIndex] != null) {
+                    NBTTagCompound tagCompound = new NBTTagCompound();
+                    tagCompound.setByte("Slot", (byte) currentIndex);
+                    inventory[currentIndex].writeToNBT(tagCompound);
+                    tagList.appendTag(tagCompound);
+                }
+            }
+            nbtTagCompound.setTag(Names.NBT.ITEMS, tagList);
+        }else{
+            NBTTagList inventory = new NBTTagList();
+            for (int slot = 0; slot < itemSlots.length; ++slot) {
+                if (itemSlots[slot] != null) {
+                    NBTTagCompound Slots = new NBTTagCompound();
+                    Slots.setByte("Slot", (byte) slot);
+                    itemSlots[slot].writeToNBT(Slots);
+                    inventory.appendTag(Slots);
+                }
+            }
+            nbtTagCompound.setTag("Items", inventory);
+            this.processInv();
+        }
+    }
+
+    @Override
+    public String getTagLabel() {
+        return "InventoryBag";
+    }
+
+    public boolean hasCustomName() {
+        return customName != null && customName.length() > 0;
+    }
+
+    public String getCustomName() {
+        return customName;
+    }
+}

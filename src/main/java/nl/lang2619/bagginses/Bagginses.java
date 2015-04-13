@@ -50,6 +50,7 @@ public class Bagginses {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         instance = this;
+        proxy.registerEvents();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
         MinecraftForge.EVENT_BUS.register(this);
     }

@@ -4,7 +4,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import nl.lang2619.bagginses.items.bags.BagTier1;
+import nl.lang2619.bagginses.items.bags.Bags;
 
 /**
  * Created by Tim on 8/24/2014.
@@ -18,7 +18,7 @@ public class BagRecipe extends ShapelessOreRecipe {
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
         ItemStack bag = null;
         for (int slot = 0; slot < inventoryCrafting.getSizeInventory(); slot++) {
-            if (inventoryCrafting.getStackInSlot(slot) != null && inventoryCrafting.getStackInSlot(slot).getItem() instanceof BagTier1) {
+            if (inventoryCrafting.getStackInSlot(slot) != null && inventoryCrafting.getStackInSlot(slot).getItem() instanceof Bags) {
                 bag = inventoryCrafting.getStackInSlot(slot);
             }
         }

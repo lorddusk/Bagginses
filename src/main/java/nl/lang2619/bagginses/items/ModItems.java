@@ -6,12 +6,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import nl.lang2619.bagginses.config.ModConfig;
-import nl.lang2619.bagginses.items.bags.BagVoid;
-import nl.lang2619.bagginses.items.bags.BagTier1;
-import nl.lang2619.bagginses.items.bags.BagTier2;
-
-import java.util.ArrayList;
-import java.util.List;
+import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.references.BagTypes;
 
 /**
  * Created by Tim on 8/24/2014.
@@ -43,29 +39,68 @@ public class ModItems {
     public static void init() {
         fillTiers();
 
-        if(added > 0) {
+        if (added > 0) {
             upgrade = new Upgrade();
             GameRegistry.registerItem(upgrade, "upgrade");
             GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
 
 
             for (int i = 0; i < added; i++) {
-                tier1[i] = new BagTier1(BagColors[i]);
+                tier1[i] = new Bags(BagColors[i], BagTypes.TIER1);
                 GameRegistry.registerItem(tier1[i], BagColors[i]);
-                GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.string, 'w', new ItemStack(Blocks.wool, 1, added - i - 1), 'c', Blocks.chest);
+                String color = BagColors[i];
+                GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.string, 'w', new ItemStack(Blocks.wool, 1, getWoolForColor(color)), 'c', Blocks.chest);
             }
 
             for (int i = 0; i < added; i++) {
-                tier2[i] = new BagTier2(BagColors[i] + "T2");
+                tier2[i] = new Bags(BagColors[i], BagTypes.TIER2);
                 GameRegistry.registerItem(tier2[i], BagColors[i] + "T2");
                 GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
             }
         }
 
-        foid = new BagVoid(ItemInfo.foid);
+        foid = new Bags(ItemInfo.foid, BagTypes.VOID);
         GameRegistry.registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.string, 'w', Blocks.wool, 'c', Items.ender_pearl);
 
+    }
+
+    private static int getWoolForColor(String color) {
+        int wool = 0;
+        if(color.equalsIgnoreCase("black")){
+            wool = 15;
+        }if(color.equalsIgnoreCase("red")){
+            wool = 14;
+        }if(color.equalsIgnoreCase("brown")){
+            wool = 12;
+        }if(color.equalsIgnoreCase("blue")){
+            wool = 11;
+        }if(color.equalsIgnoreCase("cyan")){
+            wool = 9;
+        }if(color.equalsIgnoreCase("gray")){
+            wool = 7;
+        }if(color.equalsIgnoreCase("green")){
+            wool = 13;
+        }if(color.equalsIgnoreCase("lightBlue")){
+            wool = 3;
+        }if(color.equalsIgnoreCase("lime")){
+            wool = 5;
+        }if(color.equalsIgnoreCase("magenta")){
+            wool = 2;
+        }if(color.equalsIgnoreCase("orange")){
+            wool = 1;
+        }if(color.equalsIgnoreCase("pink")){
+            wool = 6;
+        }if(color.equalsIgnoreCase("purple")){
+            wool = 10;
+        }if(color.equalsIgnoreCase("silver")){
+            wool = 8;
+        }if(color.equalsIgnoreCase("white")){
+            wool = 0;
+        }if(color.equalsIgnoreCase("yellow")){
+            wool = 4;
+        }
+        return wool;
     }
 
     static void fillTiers() {
