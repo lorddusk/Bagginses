@@ -68,11 +68,15 @@ public class ModItems {
     }
 
     public static void registerModels() {
+        ModelLoader.registerItemVariants(foid);
         ModelLoader.setCustomModelResourceLocation(foid, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.foid, "inventory"));
         if (added > 0) {
+            ModelLoader.registerItemVariants(upgrade);
             ModelLoader.setCustomModelResourceLocation(upgrade, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.upgrade, "inventory"));
             for (int i = 0; i < added; i++) {
+                ModelLoader.registerItemVariants(tier1[i]);
                 ModelLoader.setCustomModelResourceLocation(tier1[i], 0, new ModelResourceLocation(Defaults.MODID + ":" + BagColors[i], "inventory"));
+                ModelLoader.registerItemVariants(tier2[i]);
                 ModelLoader.setCustomModelResourceLocation(tier2[i], 0, new ModelResourceLocation(Defaults.MODID + ":" + BagColors[i], "inventory"));
             }
         }
