@@ -49,6 +49,10 @@ public class Bagginses {
         ConfigHandler.init(path);
 
         ModItems.init();
+
+        if(event.getSide() == Side.CLIENT){
+            ModItems.registerModels();
+        }
     }
 
     @Mod.EventHandler
@@ -59,11 +63,6 @@ public class Bagginses {
         MinecraftForge.EVENT_BUS.register(this);
 
         FMLCommonHandler.instance().bus().register(new PickUpEventHandler());
-
-        if(event.getSide() == Side.CLIENT){
-            ModItems.registerModels();
-        }
-
     }
 
     @Mod.EventHandler
