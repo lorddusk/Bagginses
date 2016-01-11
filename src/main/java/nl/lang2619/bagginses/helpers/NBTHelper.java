@@ -19,12 +19,12 @@ public class NBTHelper {
     }
 
     public static boolean hasTag(ItemStack itemStack, String keyName) {
-        return itemStack != null && itemStack.stackTagCompound != null && itemStack.stackTagCompound.hasKey(keyName);
+        return itemStack != null && itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(keyName);
     }
 
     public static void removeTag(ItemStack itemStack, String keyName) {
-        if (itemStack.stackTagCompound != null) {
-            itemStack.stackTagCompound.removeTag(keyName);
+        if (itemStack.getTagCompound() != null) {
+            itemStack.getTagCompound().removeTag(keyName);
         }
     }
 
@@ -50,12 +50,12 @@ public class NBTHelper {
     {
         initNBTTagCompound(itemStack);
 
-        itemStack.stackTagCompound.setLong(keyName, keyValue);
+        itemStack.getTagCompound().setLong(keyName, keyValue);
     }
 
     private static void initNBTTagCompound(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
@@ -65,13 +65,13 @@ public class NBTHelper {
     {
         initNBTTagCompound(itemStack);
 
-        itemStack.stackTagCompound.setBoolean(keyName, keyValue);
+        itemStack.getTagCompound().setBoolean(keyName, keyValue);
     }
 
     public static void setString(ItemStack itemStack, String keyName, String keyValue)
     {
         initNBTTagCompound(itemStack);
 
-        itemStack.stackTagCompound.setString(keyName, keyValue);
+        itemStack.getTagCompound().setString(keyName, keyValue);
     }
 }

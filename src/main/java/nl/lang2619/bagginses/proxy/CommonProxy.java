@@ -1,8 +1,9 @@
 package nl.lang2619.bagginses.proxy;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
@@ -58,10 +59,10 @@ public class CommonProxy {
     protected void tryDeliverNotifications(){
         boolean delivered = false;
         ServerConfigurationManager manager = MinecraftServer.getServer().getConfigurationManager();
-        List<EntityPlayer> players = manager.playerEntityList;
+        List<EntityPlayerMP> players = manager.playerEntityList;
 
         for(EntityPlayer player:players){
-            if (manager.func_152596_g(player.getGameProfile())){
+            if (manager.canSendCommands(player.getGameProfile())){
                 deliverNotificationsToPlayer(player);
                 delivered = true;
             }
@@ -71,7 +72,7 @@ public class CommonProxy {
     }
 
     protected void onPlayerLogin(EntityPlayer player){
-        if (MinecraftServer.getServer().getConfigurationManager().func_152596_g(player.getGameProfile())){
+        if (MinecraftServer.getServer().getConfigurationManager().canSendCommands(player.getGameProfile())){
             deliverNotificationsToPlayer(player);
             clearNotifications();
         }

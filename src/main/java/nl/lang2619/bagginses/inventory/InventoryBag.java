@@ -1,10 +1,12 @@
 package nl.lang2619.bagginses.inventory;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IChatComponent;
 import nl.lang2619.bagginses.helpers.INBTTaggable;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
@@ -161,19 +163,34 @@ public class InventoryBag implements IInventory, INBTTaggable {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slotIndex) {
+    public ItemStack removeStackFromSlot(int index) {
         if (!foid) {
-            if (inventory[slotIndex] != null) {
-                ItemStack itemStack = inventory[slotIndex];
-                inventory[slotIndex] = null;
+            if (inventory[index] != null) {
+                ItemStack itemStack = inventory[index];
+                inventory[index] = null;
                 return itemStack;
             } else {
                 return null;
             }
         } else {
-            return getStackInSlot(slotIndex);
+            return getStackInSlot(index);
         }
     }
+
+//    @Override
+//    public ItemStack getStackInSlotOnClosing(int slotIndex) {
+//        if (!foid) {
+//            if (inventory[slotIndex] != null) {
+//                ItemStack itemStack = inventory[slotIndex];
+//                inventory[slotIndex] = null;
+//                return itemStack;
+//            } else {
+//                return null;
+//            }
+//        } else {
+//            return getStackInSlot(slotIndex);
+//        }
+//    }
 
     @Override
     public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
@@ -206,20 +223,6 @@ public class InventoryBag implements IInventory, INBTTaggable {
     }
 
     @Override
-    public String getInventoryName() {
-        if (this.hasCustomName()) {
-            return this.getCustomName();
-        } else {
-            return Names.Containers.BAGS;
-        }
-    }
-
-    @Override
-    public boolean hasCustomInventoryName() {
-        return false;
-    }
-
-    @Override
     public int getInventoryStackLimit() {
         return 64;
     }
@@ -240,12 +243,12 @@ public class InventoryBag implements IInventory, INBTTaggable {
     }
 
     @Override
-    public void openInventory() {
+    public void openInventory(EntityPlayer entityPlayer) {
         readFromNBT(tag);
     }
 
     @Override
-    public void closeInventory() {
+    public void closeInventory(EntityPlayer entityPlayer) {
         writeToNBT(tag);
     }
 
@@ -255,6 +258,26 @@ public class InventoryBag implements IInventory, INBTTaggable {
             return true;
         else
             return slotIndex <= 64;
+    }
+
+    @Override
+    public int getField(int id) {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value) {
+
+    }
+
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     @Override
@@ -329,8 +352,22 @@ public class InventoryBag implements IInventory, INBTTaggable {
         return "InventoryBag";
     }
 
+    @Override
+    public String getName() {
+        if (this.hasCustomName()) {
+            return this.getCustomName();
+        } else {
+            return Names.Containers.BAGS;
+        }
+    }
+
     public boolean hasCustomName() {
         return customName != null && customName.length() > 0;
+    }
+
+    @Override
+    public IChatComponent getDisplayName() {
+        return null;
     }
 
     public String getCustomName() {

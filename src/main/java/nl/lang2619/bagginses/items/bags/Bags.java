@@ -1,8 +1,5 @@
 package nl.lang2619.bagginses.items.bags;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,11 +26,6 @@ public class Bags extends Item {
         setCreativeTab(Bagginses.BagTab);
         this.color = color;
         this.type = type;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister register) {
-        this.itemIcon = register.registerIcon("bagginses:" + "backpack_" + color);
     }
 
     public String getColor() {

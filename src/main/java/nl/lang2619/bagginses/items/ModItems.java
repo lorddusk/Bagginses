@@ -1,6 +1,8 @@
 package nl.lang2619.bagginses.items;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -8,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.items.bags.Bags;
 import nl.lang2619.bagginses.references.BagTypes;
+import nl.lang2619.bagginses.references.Defaults;
 
 /**
  * Created by Tim on 8/24/2014.
@@ -41,7 +44,7 @@ public class ModItems {
 
         if (added > 0) {
             upgrade = new Upgrade();
-            GameRegistry.registerItem(upgrade, "upgrade");
+            GameRegistry.registerItem(upgrade, ItemInfo.upgrade);
             GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
 
 
@@ -62,42 +65,67 @@ public class ModItems {
         foid = new Bags(ItemInfo.foid, BagTypes.VOID);
         GameRegistry.registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.string, 'w', Blocks.wool, 'c', Items.ender_pearl);
+    }
 
+    public static void registerModels() {
+        ModelLoader.setCustomModelResourceLocation(foid, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.foid, "inventory"));
+        if (added > 0) {
+            ModelLoader.setCustomModelResourceLocation(upgrade, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.upgrade, "inventory"));
+            for (int i = 0; i < added; i++) {
+                ModelLoader.setCustomModelResourceLocation(tier1[i], 0, new ModelResourceLocation(Defaults.MODID + ":" + BagColors[i], "inventory"));
+                ModelLoader.setCustomModelResourceLocation(tier2[i], 0, new ModelResourceLocation(Defaults.MODID + ":" + BagColors[i], "inventory"));
+            }
+        }
     }
 
     private static int getWoolForColor(String color) {
         int wool = 0;
-        if(color.equalsIgnoreCase("black")){
+        if (color.equalsIgnoreCase("black")) {
             wool = 15;
-        }if(color.equalsIgnoreCase("red")){
+        }
+        if (color.equalsIgnoreCase("red")) {
             wool = 14;
-        }if(color.equalsIgnoreCase("brown")){
+        }
+        if (color.equalsIgnoreCase("brown")) {
             wool = 12;
-        }if(color.equalsIgnoreCase("blue")){
+        }
+        if (color.equalsIgnoreCase("blue")) {
             wool = 11;
-        }if(color.equalsIgnoreCase("cyan")){
+        }
+        if (color.equalsIgnoreCase("cyan")) {
             wool = 9;
-        }if(color.equalsIgnoreCase("gray")){
+        }
+        if (color.equalsIgnoreCase("gray")) {
             wool = 7;
-        }if(color.equalsIgnoreCase("green")){
+        }
+        if (color.equalsIgnoreCase("green")) {
             wool = 13;
-        }if(color.equalsIgnoreCase("lightBlue")){
+        }
+        if (color.equalsIgnoreCase("lightBlue")) {
             wool = 3;
-        }if(color.equalsIgnoreCase("lime")){
+        }
+        if (color.equalsIgnoreCase("lime")) {
             wool = 5;
-        }if(color.equalsIgnoreCase("magenta")){
+        }
+        if (color.equalsIgnoreCase("magenta")) {
             wool = 2;
-        }if(color.equalsIgnoreCase("orange")){
+        }
+        if (color.equalsIgnoreCase("orange")) {
             wool = 1;
-        }if(color.equalsIgnoreCase("pink")){
+        }
+        if (color.equalsIgnoreCase("pink")) {
             wool = 6;
-        }if(color.equalsIgnoreCase("purple")){
+        }
+        if (color.equalsIgnoreCase("purple")) {
             wool = 10;
-        }if(color.equalsIgnoreCase("silver")){
+        }
+        if (color.equalsIgnoreCase("silver")) {
             wool = 8;
-        }if(color.equalsIgnoreCase("white")){
+        }
+        if (color.equalsIgnoreCase("white")) {
             wool = 0;
-        }if(color.equalsIgnoreCase("yellow")){
+        }
+        if (color.equalsIgnoreCase("yellow")) {
             wool = 4;
         }
         return wool;

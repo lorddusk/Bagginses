@@ -24,4 +24,5 @@ public class ItemInfo {
     public static String orange = "orange";
     public static String white = "white";
     public static String foid = "void";
+    public static String upgrade = "upgrade";
 }

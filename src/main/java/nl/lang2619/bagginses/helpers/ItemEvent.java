@@ -1,6 +1,6 @@
 package nl.lang2619.bagginses.helpers;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import nl.lang2619.bagginses.items.bags.container.BagContainer;
 

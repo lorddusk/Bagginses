@@ -1,9 +1,11 @@
 package nl.lang2619.bagginses.references;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry;
+import com.sun.org.apache.regexp.internal.RE;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -139,7 +141,7 @@ public class BlockList {
             }
             if (itemId[0].equals("ore")) {
                 String identifier = itemId[1];
-                ArrayList<ItemStack> items = OreDictionary.getOres(identifier);
+                ArrayList<ItemStack> items = (ArrayList<ItemStack>) OreDictionary.getOres(identifier);
                 for (ItemStack is : items) {
                     if (GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem())) instanceof Item) {
                         Item item = GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem()));
@@ -186,9 +188,10 @@ public class BlockList {
     }
 
     private static int SpecifiedItem(String color, int added, short[] dmgs, String[] itemId, String identifier) {
-        for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
-            if (key.startsWith(identifier)) {
-                Item item = GameData.getItemRegistry().getRaw(key);
+        for (ResourceLocation key : GameData.getItemRegistry().getKeys()) {
+            if (key.toString().startsWith(identifier)) {
+                int id = GameData.getItemRegistry().getId(key);
+                Item item = Item.getItemById(id);
                 if (item == null) {
                     if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
                         Log.warn("Stumbled upon invalid entry in item registry while parsing whitelist $1, object not found: $0", key, color);
@@ -202,9 +205,10 @@ public class BlockList {
     }
 
     private static int SpecifiedBlock(String color, int added, short[] dmgs, String[] itemId, String identifier) {
-        for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
-            if (key.startsWith(identifier)) {
-                Block block = GameData.getBlockRegistry().getRaw(key);
+        for (ResourceLocation key : GameData.getBlockRegistry().getKeys()) {
+            if (key.toString().startsWith(identifier)) {
+                int id = GameData.getBlockRegistry().getId(key);
+                Block block = Block.getBlockById(id);
                 if (block == null) {
                     if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
                         Log.warn("Stumbled upon invalid entry in block registry while parsing whitelist $1, object not found: $0", key, color);
@@ -223,9 +227,10 @@ public class BlockList {
         for (Map.Entry<String, ModContainer> mapEntry : mapSet) {
             String keyValue = mapEntry.getKey();
             String identifier = keyValue + ":";
-            for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
-                if (key.startsWith(identifier)) {
-                    Block block = GameData.getBlockRegistry().getRaw(key);
+            for (ResourceLocation key : GameData.getBlockRegistry().getKeys()) {
+                if (key.toString().startsWith(identifier)) {
+                    int id = GameData.getBlockRegistry().getId(key);
+                    Block block = Block.getBlockById(id);
                     if (block == null) {
                         if (keyValue.equals("minecraft") || Loader.isModLoaded(keyValue))
                             Log.warn("Stumbled upon invalid entry in block registry while parsing whitelist $1, object not found: $0", key, color);
@@ -235,9 +240,10 @@ public class BlockList {
                     ++added;
                 }
             }
-            for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
-                if (key.startsWith(identifier)) {
-                    Item item = GameData.getItemRegistry().getRaw(key);
+            for (ResourceLocation key : GameData.getItemRegistry().getKeys()) {
+                if (key.toString().startsWith(identifier)) {
+                    int id = GameData.getItemRegistry().getId(key);
+                    Item item = Item.getItemById(id);
 
                     if (item == null) {
                         if (keyValue.equals("minecraft") || Loader.isModLoaded(keyValue))
@@ -250,16 +256,18 @@ public class BlockList {
             }
         }
         String identifier = "minecraft:";
-        for (String key : (Set<String>) GameData.getBlockRegistry().getKeys()) {
-            if (key.startsWith(identifier)) {
-                Block block = GameData.getBlockRegistry().getRaw(key);
+        for (ResourceLocation key : GameData.getBlockRegistry().getKeys()) {
+            if (key.toString().startsWith(identifier)) {
+                int id = GameData.getBlockRegistry().getId(key);
+                Block block = Block.getBlockById(id);
                 getList(color).put(Item.getItemFromBlock(block), dmgs);
                 ++added;
             }
         }
-        for (String key : (Set<String>) GameData.getItemRegistry().getKeys()) {
-            if (key.startsWith(identifier)) {
-                Item item = GameData.getItemRegistry().getRaw(key);
+        for (ResourceLocation key : GameData.getItemRegistry().getKeys()) {
+            if (key.toString().startsWith(identifier)) {
+                int id = GameData.getItemRegistry().getId(key);
+                Item item = Item.getItemById(id);
                 getList(color).put(item, dmgs);
                 ++added;
             }
