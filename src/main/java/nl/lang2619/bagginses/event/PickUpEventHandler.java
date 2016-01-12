@@ -13,6 +13,6 @@ public class PickUpEventHandler {
 
     @SubscribeEvent
     public void pickUp(PlayerEvent.ItemPickupEvent event) {
-        System.out.println(event.pickedUp.getEntityItem().getDisplayName());
+        //System.out.println(event.pickedUp.getEntityItem().getDisplayName());
     }
 }

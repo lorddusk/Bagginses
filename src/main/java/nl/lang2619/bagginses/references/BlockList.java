@@ -226,7 +226,7 @@ public class BlockList {
         Set<Map.Entry<String, ModContainer>> mapSet = Loader.instance().getIndexedModList().entrySet();
         for (Map.Entry<String, ModContainer> mapEntry : mapSet) {
             String keyValue = mapEntry.getKey();
-            String identifier = keyValue + ":";
+            String identifier = (keyValue + ":").toLowerCase();
             for (ResourceLocation key : GameData.getBlockRegistry().getKeys()) {
                 if (key.toString().startsWith(identifier)) {
                     int id = GameData.getBlockRegistry().getId(key);
