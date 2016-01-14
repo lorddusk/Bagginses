@@ -1,7 +1,6 @@
 package nl.lang2619.bagginses.items.bags.container;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -20,7 +19,6 @@ import java.util.UUID;
 /**
  * Created by Tim on 8-2-2015.
  */
-@ChestContainer(isLargeChest = false)
 public class BagContainer extends ContainerBagginses {
     public static int tier1Lines = 3;
     public static int tier1Columns = 5;
@@ -33,6 +31,7 @@ public class BagContainer extends ContainerBagginses {
 
     private final EntityPlayer entityPlayer;
     public final InventoryBag inventoryBag;
+    private int blockedSlot;
 
     private int bagInventoryRows;
     private int bagInventoryColumns;
@@ -67,15 +66,20 @@ public class BagContainer extends ContainerBagginses {
             color = "foid";
         }
 
+        int i = 0;
+
         //Inventory
         for (int bagRowIndex = 0; bagRowIndex < bagInventoryRows; ++bagRowIndex) {
             for (int bagColumnIndex = 0; bagColumnIndex < bagInventoryColumns; ++bagColumnIndex) {
                 if (item.getType() == BagTypes.TIER1) {
                     this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
+                    i++;
                 } else if (item.getType() == BagTypes.TIER2) {
                     this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
+                    i++;
                 } else if (item.getType() == BagTypes.VOID) {
                     this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
+                    i++;
                 }
             }
         }
@@ -103,6 +107,7 @@ public class BagContainer extends ContainerBagginses {
                 this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 142));
             }
         }
+        blockedSlot = entityPlayer.inventory.currentItem + 27 + i;
     }
 
     @Override
@@ -132,7 +137,7 @@ public class BagContainer extends ContainerBagginses {
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p, int slotIndex) {
-        if(!foid) {
+        if (!foid) {
             ItemStack newItemStack = null;
             Slot slot = (Slot) inventorySlots.get(slotIndex);
 
@@ -162,7 +167,7 @@ public class BagContainer extends ContainerBagginses {
                 }
             }
             return newItemStack;
-        }else{
+        } else {
             return transferVoid(p, slotIndex);
         }
     }
@@ -250,9 +255,15 @@ public class BagContainer extends ContainerBagginses {
         inventoryBag.onGuiSaved(player);
     }
 
-    @ChestContainer.RowSizeCallback
     public int getNumColumns() {
         return bagInventoryRows;
+    }
+
+    @Override
+    public ItemStack slotClick(int slotID, int clickedButton, int mode, EntityPlayer player) {
+        if (slotID == this.blockedSlot)
+            return null;
+        return super.slotClick(slotID, clickedButton, mode, player);
     }
 
     private class SlotBag extends Slot {
@@ -281,12 +292,13 @@ public class BagContainer extends ContainerBagginses {
          */
         @Override
         public boolean isItemValid(ItemStack itemStack) {
-            itemStack = itemStack.copy();
-            itemStack.stackSize = 1;
-            if (!(itemStack.getItem() instanceof Bags)) {
-                if (color.equals("foid")) {
-                    return true;
-                } else return BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color);
+            if (itemStack != null) {
+                itemStack = itemStack.copy();
+                itemStack.stackSize = 1;
+                if (!(itemStack.getItem() instanceof Bags))
+                    if (color.equals("foid") || BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color))
+                        return true;
+                return false;
             } else {
                 return false;
             }

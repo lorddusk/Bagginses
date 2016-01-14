@@ -177,21 +177,6 @@ public class InventoryBag implements IInventory, INBTTaggable {
         }
     }
 
-//    @Override
-//    public ItemStack getStackInSlotOnClosing(int slotIndex) {
-//        if (!foid) {
-//            if (inventory[slotIndex] != null) {
-//                ItemStack itemStack = inventory[slotIndex];
-//                inventory[slotIndex] = null;
-//                return itemStack;
-//            } else {
-//                return null;
-//            }
-//        } else {
-//            return getStackInSlot(slotIndex);
-//        }
-//    }
-
     @Override
     public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
         if (!foid) {

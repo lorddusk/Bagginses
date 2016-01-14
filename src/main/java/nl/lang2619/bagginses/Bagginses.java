@@ -61,8 +61,7 @@ public class Bagginses {
         proxy.registerEvents();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
         MinecraftForge.EVENT_BUS.register(this);
-
-        FMLCommonHandler.instance().bus().register(new PickUpEventHandler());
+        MinecraftForge.EVENT_BUS.register(new PickUpEventHandler());
     }
 
     @Mod.EventHandler

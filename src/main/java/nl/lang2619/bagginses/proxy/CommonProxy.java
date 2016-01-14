@@ -22,7 +22,6 @@ public class CommonProxy {
 
     public void registerEvents(){
         ItemEvent itemEventHandler = new ItemEvent();
-        FMLCommonHandler.instance().bus().register(itemEventHandler);
         MinecraftForge.EVENT_BUS.register(itemEventHandler);
     }
 
