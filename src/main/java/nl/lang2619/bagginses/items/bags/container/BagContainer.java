@@ -292,17 +292,18 @@ public class BagContainer extends ContainerBagginses {
          */
         @Override
         public boolean isItemValid(ItemStack itemStack) {
-            if (itemStack != null) {
+            if (itemStack == null) {
+                return true;
+            } else {
                 itemStack = itemStack.copy();
                 itemStack.stackSize = 1;
-                if (!(itemStack.getItem() instanceof Bags))
-                    if (color.equals("foid") || BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color))
+                if (!(itemStack.getItem() instanceof Bags)) {
+                    if (color.equals("foid") || BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color)) {
                         return true;
-                return false;
-            } else {
+                    }
+                }
                 return false;
             }
         }
     }
-
 }
