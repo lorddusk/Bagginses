@@ -1,6 +1,7 @@
 package nl.lang2619.bagginses.items.bags;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -26,6 +27,7 @@ public class Bags extends Item {
         setCreativeTab(Bagginses.BagTab);
         this.color = color;
         this.type = type;
+
     }
 
     public String getColor() {
@@ -60,6 +62,10 @@ public class Bags extends Item {
                 player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T2, world, 0, 0, 0);
             if (type == BagTypes.VOID)
                 player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_VOID, world, 0, 0, 0);
+            if(type == BagTypes.ENDER) {
+                InventoryEnderChest inventoryEnderChest = player.getInventoryEnderChest();
+                player.displayGUIChest(inventoryEnderChest);
+            }
         }
         return itemStack;
     }
@@ -73,5 +79,7 @@ public class Bags extends Item {
             list.add("Tier 2");
         if (type == BagTypes.VOID)
             list.add("Void Bag");
+        if (type == BagTypes.ENDER)
+            list.add("Ender Chest Bag");
     }
 }

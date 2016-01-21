@@ -33,6 +33,7 @@ public class ModItems {
     private static Item orange, orangeT2;
     private static Item white, whiteT2;
     public static Item foid;
+    public static Item ender;
     private static Item upgrade;
     public static Item[] tier1 = new Item[16];
     public static String[] BagColors = new String[16];
@@ -65,14 +66,20 @@ public class ModItems {
         foid = new Bags(ItemInfo.foid, BagTypes.VOID);
         GameRegistry.registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.string, 'w', Blocks.wool, 'c', Items.ender_pearl);
+
+        ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
+        GameRegistry.registerItem(ender, ItemInfo.ender);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ender_chest);
     }
 
     public static void registerModels() {
         ModelLoader.registerItemVariants(foid);
         ModelLoader.setCustomModelResourceLocation(foid, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.foid, "inventory"));
+        ModelLoader.registerItemVariants(upgrade);
+        ModelLoader.setCustomModelResourceLocation(upgrade, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.upgrade, "inventory"));
+        ModelLoader.registerItemVariants(ender);
+        ModelLoader.setCustomModelResourceLocation(ender, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.ender, "inventory"));
         if (added > 0) {
-            ModelLoader.registerItemVariants(upgrade);
-            ModelLoader.setCustomModelResourceLocation(upgrade, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.upgrade, "inventory"));
             for (int i = 0; i < added; i++) {
                 ModelLoader.registerItemVariants(tier1[i]);
                 ModelLoader.setCustomModelResourceLocation(tier1[i], 0, new ModelResourceLocation(Defaults.MODID + ":" + BagColors[i], "inventory"));
