@@ -1,4 +1,4 @@
-backpack_black.name=黑色背包
+﻿backpack_black.name=黑色背包
 backpack_blackT2.name=二级黑色背包
 backpack_red.name=红色背包
 backpack_redT2.name=二级红色背包
@@ -31,3 +31,5 @@ backpack_orangeT2.name=二级橙色背包
 backpack_white.name=白色背包
 backpack_whiteT2.name=二级白色背包
 backpack_void.name=虚空背包
+upgrade.name=升级
+backpack_ender.name=末影背包
