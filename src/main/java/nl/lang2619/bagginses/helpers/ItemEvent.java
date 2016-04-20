@@ -11,16 +11,16 @@ public class ItemEvent {
     @SubscribeEvent
     public void onItemTossEvent(ItemTossEvent itemTossEvent)
     {
-        NBTHelper.clearStatefulNBTTags(itemTossEvent.entityItem.getEntityItem());
+        NBTHelper.clearStatefulNBTTags(itemTossEvent.getEntityItem().getEntityItem());
 
         //Close the Alchemical Bag GUI when the Alchemical bag is tossed
-        if (itemTossEvent.player.openContainer instanceof BagContainer)
+        if (itemTossEvent.getPlayer().openContainer instanceof BagContainer)
         {
-            if (((BagContainer) itemTossEvent.player.openContainer).isItemStackParent(itemTossEvent.entityItem.getEntityItem()))
+            if (((BagContainer) itemTossEvent.getPlayer().openContainer).isItemStackParent(itemTossEvent.getEntityItem().getEntityItem()))
             {
                 //We have to remove the itemstack we are throwing from the inventory now to prevent a loop (will also happen after this event has been fired)
-                itemTossEvent.player.inventory.setItemStack(null);
-                itemTossEvent.player.closeScreen();
+                itemTossEvent.getPlayer().inventory.setItemStack(null);
+                itemTossEvent.getPlayer().closeScreen();
             }
         }
     }

@@ -1,12 +1,13 @@
 package nl.lang2619.bagginses.items;
 
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.items.bags.Bags;
 import nl.lang2619.bagginses.references.BagTypes;
@@ -45,31 +46,35 @@ public class ModItems {
 
         if (added > 0) {
             upgrade = new Upgrade();
-            GameRegistry.registerItem(upgrade, ItemInfo.upgrade);
+            registerItem(upgrade, ItemInfo.upgrade);
             GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
 
 
             for (int i = 0; i < added; i++) {
                 tier1[i] = new Bags(BagColors[i], BagTypes.TIER1);
-                GameRegistry.registerItem(tier1[i], BagColors[i]);
+                registerItem(tier1[i], BagColors[i]);
                 String color = BagColors[i];
                 GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.string, 'w', new ItemStack(Blocks.wool, 1, getWoolForColor(color)), 'c', Blocks.chest);
             }
 
             for (int i = 0; i < added; i++) {
                 tier2[i] = new Bags(BagColors[i], BagTypes.TIER2);
-                GameRegistry.registerItem(tier2[i], BagColors[i] + "T2");
+                registerItem(tier2[i], BagColors[i] + "T2");
                 GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
             }
         }
 
         foid = new Bags(ItemInfo.foid, BagTypes.VOID);
-        GameRegistry.registerItem(foid, ItemInfo.foid);
+        registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.string, 'w', Blocks.wool, 'c', Items.ender_pearl);
 
         ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
-        GameRegistry.registerItem(ender, ItemInfo.ender);
+        registerItem(ender, ItemInfo.ender);
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ender_chest);
+    }
+
+    static void registerItem(Item item, String name) {
+        GameRegistry.register(item, new ResourceLocation(Defaults.MODID + ":" + name));
     }
 
     public static void registerModels() {

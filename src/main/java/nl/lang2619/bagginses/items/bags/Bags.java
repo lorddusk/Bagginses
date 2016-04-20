@@ -4,6 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.helpers.ItemHelper;
@@ -48,7 +51,7 @@ public class Bags extends Item {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
             if (!ItemHelper.hasOwnerUUID(itemStack)) {
                 ItemHelper.setOwner(itemStack, player);
@@ -67,7 +70,7 @@ public class Bags extends Item {
                 player.displayGUIChest(inventoryEnderChest);
             }
         }
-        return itemStack;
+        return new ActionResult(EnumActionResult.SUCCESS, itemStack);
     }
 
     @Override
