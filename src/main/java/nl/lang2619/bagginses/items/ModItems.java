@@ -68,9 +68,12 @@ public class ModItems {
         registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.string, 'w', Blocks.wool, 'c', Items.ender_pearl);
 
-        ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
-        registerItem(ender, ItemInfo.ender);
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ender_chest);
+        if (added > 0) {
+            ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
+            registerItem(ender, ItemInfo.ender);
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ender_chest);
+        }
+
     }
 
     static void registerItem(Item item, String name) {
