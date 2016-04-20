@@ -44,12 +44,12 @@ public class ModItems {
     public static void init() {
         fillTiers();
 
-        if (added > 0) {
-            upgrade = new Upgrade();
+        upgrade = new Upgrade();
             registerItem(upgrade, ItemInfo.upgrade);
             GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
 
 
+        if (added > 0) {
             for (int i = 0; i < added; i++) {
                 tier1[i] = new Bags(BagColors[i], BagTypes.TIER1);
                 registerItem(tier1[i], BagColors[i]);
@@ -147,102 +147,80 @@ public class ModItems {
         return wool;
     }
 
+    private static void newBag(Item t1, Item t2, String color) {
+        tier1[added] = t1;
+        tier2[added] = t2;
+        BagColors[added] = color;
+        added++;
+    }
+
     static void fillTiers() {
-        if (!ModConfig.black.isEmpty()) {
-            tier1[added] = black;
-            tier2[added] = blackT2;
-            BagColors[added] = "black";
-            added++;
-        }
-        if (!ModConfig.red.isEmpty()) {
-            tier1[added] = red;
-            tier2[added] = redT2;
-            BagColors[added] = "red";
-            added++;
-        }
-        if (!ModConfig.brown.isEmpty()) {
-            tier1[added] = brown;
-            tier2[added] = brownT2;
-            BagColors[added] = "brown";
-            added++;
-        }
-        if (!ModConfig.blue.isEmpty()) {
-            tier1[added] = blue;
-            tier2[added] = blueT2;
-            BagColors[added] = "blue";
-            added++;
-        }
-        if (!ModConfig.cyan.isEmpty()) {
-            tier1[added] = cyan;
-            tier2[added] = cyanT2;
-            BagColors[added] = "cyan";
-            added++;
-        }
-        if (!ModConfig.gray.isEmpty()) {
-            tier1[added] = gray;
-            tier2[added] = grayT2;
-            BagColors[added] = "gray";
-            added++;
-        }
-        if (!ModConfig.green.isEmpty()) {
-            tier1[added] = green;
-            tier2[added] = greenT2;
-            BagColors[added] = "green";
-            added++;
-        }
-        if (!ModConfig.lightBlue.isEmpty()) {
-            tier1[added] = lightBlue;
-            tier2[added] = lightBlueT2;
-            BagColors[added] = "lightBlue";
-            added++;
-        }
-        if (!ModConfig.lime.isEmpty()) {
-            tier1[added] = lime;
-            tier2[added] = limeT2;
-            BagColors[added] = "lime";
-            added++;
-        }
-        if (!ModConfig.magenta.isEmpty()) {
-            tier1[added] = magenta;
-            tier2[added] = magentaT2;
-            BagColors[added] = "magenta";
-            added++;
-        }
-        if (!ModConfig.orange.isEmpty()) {
-            tier1[added] = orange;
-            tier2[added] = orangeT2;
-            BagColors[added] = "orange";
-            added++;
-        }
-        if (!ModConfig.pink.isEmpty()) {
-            tier1[added] = pink;
-            tier2[added] = pinkT2;
-            BagColors[added] = "pink";
-            added++;
-        }
-        if (!ModConfig.purple.isEmpty()) {
-            tier1[added] = purple;
-            tier2[added] = purpleT2;
-            BagColors[added] = "purple";
-            added++;
-        }
-        if (!ModConfig.silver.isEmpty()) {
-            tier1[added] = silver;
-            tier2[added] = silverT2;
-            BagColors[added] = "silver";
-            added++;
-        }
-        if (!ModConfig.white.isEmpty()) {
-            tier1[added] = white;
-            tier2[added] = whiteT2;
-            BagColors[added] = "white";
-            added++;
-        }
-        if (!ModConfig.yellow.isEmpty()) {
-            tier1[added] = yellow;
-            tier2[added] = yellowT2;
-            BagColors[added] = "yellow";
-            added++;
+        if (ModConfig.whitelist) {
+            if (!ModConfig.black.isEmpty()) {
+                newBag(black, blackT2, "black");
+            }
+            if (!ModConfig.red.isEmpty()) {
+                newBag(red, redT2, "red");
+            }
+            if (!ModConfig.brown.isEmpty()) {
+                newBag(brown, brownT2, "brown");
+            }
+            if (!ModConfig.blue.isEmpty()) {
+                newBag(blue, blueT2, "blue");
+            }
+            if (!ModConfig.cyan.isEmpty()) {
+                newBag(cyan, cyanT2, "cyan");
+            }
+            if (!ModConfig.gray.isEmpty()) {
+                newBag(gray, grayT2, "gray");
+            }
+            if (!ModConfig.green.isEmpty()) {
+                newBag(green, greenT2, "green");
+            }
+            if (!ModConfig.lightBlue.isEmpty()) {
+                newBag(lightBlue, lightBlueT2, "lightBlue");
+            }
+            if (!ModConfig.lime.isEmpty()) {
+                newBag(lime, limeT2, "lime");
+            }
+            if (!ModConfig.magenta.isEmpty()) {
+                newBag(magenta, magentaT2, "magenta");
+            }
+            if (!ModConfig.orange.isEmpty()) {
+                newBag(orange, orangeT2, "orange");
+            }
+            if (!ModConfig.pink.isEmpty()) {
+                newBag(pink, pinkT2, "pink");
+            }
+            if (!ModConfig.purple.isEmpty()) {
+                newBag(purple, purpleT2, "purple");
+            }
+            if (!ModConfig.silver.isEmpty()) {
+                newBag(silver, silverT2, "silver");
+            }
+            if (!ModConfig.white.isEmpty()) {
+                newBag(white, whiteT2, "white");
+            }
+            if (!ModConfig.yellow.isEmpty()) {
+                newBag(yellow, yellowT2, "yellow");
+            }
+        } else {
+            newBag(black, blackT2, "black");
+            newBag(red, redT2, "red");
+            newBag(brown, brownT2, "brown");
+            newBag(blue, blueT2, "blue");
+            newBag(cyan, cyanT2, "cyan");
+            newBag(gray, grayT2, "gray");
+            newBag(green, greenT2, "green");
+            newBag(lightBlue, lightBlueT2, "lightBlue");
+            newBag(lime, limeT2, "lime");
+            newBag(magenta, magentaT2, "magenta");
+            newBag(orange, orangeT2, "orange");
+            newBag(pink, pinkT2, "pink");
+            newBag(purple, purpleT2, "purple");
+            newBag(silver, silverT2, "silver");
+            newBag(white, whiteT2, "white");
+            newBag(yellow, yellowT2, "yellow");
         }
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import nl.lang2619.bagginses.config.ModConfig;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -169,7 +170,13 @@ public class BlockList {
             added = addAllMods(color, added);
         }
 
-        if (added > 0) Log.info("Added $0 items into whitelist $1", added, color);
+        if (added > 0) {
+            if (ModConfig.whitelist) {
+                Log.info("Added $0 items into whitelist $1", added, color);
+            } else {
+                Log.info("Added $0 items into blacklist $1", added, color);
+            }
+        }
     }
 
     private static int SpecifiedEntry(String color, int added, String entry, short[] dmgs, String[] itemId) {

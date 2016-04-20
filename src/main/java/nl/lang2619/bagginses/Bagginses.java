@@ -1,14 +1,16 @@
 package nl.lang2619.bagginses;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
@@ -17,6 +19,7 @@ import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.CommonProxy;
 import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.Defaults;
+import nl.lang2619.bagginses.references.Log;
 
 import java.io.File;
 

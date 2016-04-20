@@ -10,14 +10,14 @@ import java.io.File;
 public class ModConfig {
 
     public static String black, red, green, brown, blue, purple, cyan, silver, gray, pink, lime, yellow, lightBlue, magenta, orange, white;
-    //public static boolean whitelist;
-    //public static final String CATEGORY_WHITELIST = "Whitelist instead of blacklist.";
+    public static boolean whitelist;
+    public static final String CATEGORY_WHITELIST = "whitelist";
 
     public static void init(File file) {
         Configuration config = new Configuration(file);
         config.load();
-        //config.setCategoryComment(CATEGORY_WHITELIST, "");
-        //whitelist = config.get("whitelist", CATEGORY_WHITELIST, true, "If you want to blacklist items instead of whitelist, change this config to false").getBoolean();
+        config.setCategoryComment(CATEGORY_WHITELIST, "");
+        whitelist = config.get("whitelist", CATEGORY_WHITELIST, true, "If you want to blacklist items instead of whitelist, change this config to false").getBoolean();
         config.setCategoryComment(Configuration.CATEGORY_GENERAL, "Input here all your whitelists per bag. \nIf empty, bag won't be added to the world.\nUse modid:* to whitelist the whole mod.\nFor example:\nminecraft:wool/2 will add Magenta wool to the whitelist. \nminecraft:wool will add every wool type. \nminecraft:wool/0+1+2 will add damage value 0,1 and 2.\nAdd multiple items by using a comma between items.");
         black = config.get(Configuration.CATEGORY_GENERAL, "Whitelist Items/Blocks for black bag", "").getString();
         red = config.get(Configuration.CATEGORY_GENERAL, "Whitelist Items/Blocks for red bag", "").getString();

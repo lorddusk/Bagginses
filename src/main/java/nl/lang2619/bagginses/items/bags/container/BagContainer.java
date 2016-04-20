@@ -7,6 +7,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
 import nl.lang2619.bagginses.inventory.InventoryBag;
@@ -299,8 +300,23 @@ public class BagContainer extends ContainerBagginses {
                 itemStack = itemStack.copy();
                 itemStack.stackSize = 1;
                 if (!(itemStack.getItem() instanceof Bags)) {
-                    if (color.equals("foid") || BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color)) {
+                    if (color.equals("foid")) {
                         return true;
+                    }
+                    if (ModConfig.whitelist) {
+                        //Whitelist
+                        if (BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color)) {
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }else{
+                        //Blacklist
+                        if (BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color)) {
+                            return false;
+                        }else{
+                            return true;
+                        }
                     }
                 }
                 return false;
