@@ -1,18 +1,16 @@
 package nl.lang2619.bagginses.inventory;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import nl.lang2619.bagginses.helpers.INBTTaggable;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
 import nl.lang2619.bagginses.items.bags.Bags;
 import nl.lang2619.bagginses.items.bags.container.BagContainer;
-import nl.lang2619.bagginses.items.bags.container.ContainerBagginses;
 import nl.lang2619.bagginses.references.BagTypes;
 
 import java.util.UUID;
@@ -351,7 +349,7 @@ public class InventoryBag implements IInventory, INBTTaggable {
     }
 
     @Override
-    public IChatComponent getDisplayName() {
+    public ITextComponent getDisplayName() {
         return null;
     }
 

@@ -1,5 +1,6 @@
 package nl.lang2619.bagginses.items.bags.container;
 
+import net.minecraft.inventory.ClickType;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -260,10 +261,10 @@ public class BagContainer extends ContainerBagginses {
     }
 
     @Override
-    public ItemStack slotClick(int slotID, int clickedButton, int mode, EntityPlayer player) {
+    public ItemStack func_184996_a(int slotID, int clickedButton, ClickType clickType, EntityPlayer player) {
         if (slotID == this.blockedSlot)
             return null;
-        return super.slotClick(slotID, clickedButton, mode, player);
+        return super.func_184996_a(slotID, clickedButton, clickType, player);
     }
 
     private class SlotBag extends Slot {

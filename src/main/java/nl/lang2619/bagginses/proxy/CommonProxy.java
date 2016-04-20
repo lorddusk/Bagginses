@@ -1,14 +1,12 @@
 package nl.lang2619.bagginses.proxy;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
-import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.common.MinecraftForge;
 import nl.lang2619.bagginses.helpers.ItemEvent;
 
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class CommonProxy {
     protected List<String> notifications = Collections.synchronizedList(new ArrayList<String>());
 
     public final void register(){
-        FMLCommonHandler.instance().bus().register(this);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
@@ -48,7 +46,7 @@ public class CommonProxy {
     }
 
     protected final void deliverNotificationsToPlayer(EntityPlayer player){
-        for(String notification:notifications)player.addChatMessage(new ChatComponentText(notification));
+        for(String notification:notifications)player.addChatMessage(new TextComponentString(notification));
     }
 
     protected final void clearNotifications(){
@@ -57,23 +55,29 @@ public class CommonProxy {
 
     protected void tryDeliverNotifications(){
         boolean delivered = false;
-        ServerConfigurationManager manager = MinecraftServer.getServer().getConfigurationManager();
-        List<EntityPlayerMP> players = manager.playerEntityList;
+        List<EntityPlayerMP> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerList();
 
         for(EntityPlayer player:players){
-            if (manager.canSendCommands(player.getGameProfile())){
+            deliverNotificationsToPlayer(player);
+            delivered = true;
+            /*
+            if (FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager().can.canSendCommands(player.getGameProfile())){
                 deliverNotificationsToPlayer(player);
                 delivered = true;
             }
+            */
         }
 
         if (delivered)clearNotifications();
     }
 
     protected void onPlayerLogin(EntityPlayer player){
+        deliverNotificationsToPlayer(player);
+        clearNotifications();
+        /*
         if (MinecraftServer.getServer().getConfigurationManager().canSendCommands(player.getGameProfile())){
             deliverNotificationsToPlayer(player);
             clearNotifications();
-        }
+        } */
     }
 }
