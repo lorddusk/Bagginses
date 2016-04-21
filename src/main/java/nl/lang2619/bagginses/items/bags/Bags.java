@@ -1,5 +1,6 @@
 package nl.lang2619.bagginses.items.bags;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
@@ -9,11 +10,14 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import nl.lang2619.bagginses.Bagginses;
+import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.helpers.ItemHelper;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
+import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.GuiInfo;
 import nl.lang2619.bagginses.references.BagTypes;
+import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -74,8 +78,8 @@ public class Bags extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List list, boolean p_77624_4_) {
-        super.addInformation(p_77624_1_, p_77624_2_, list, p_77624_4_);
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
+        super.addInformation(stack, player, list, advanced);
         if (type == BagTypes.TIER1)
             list.add("Tier 1");
         if (type == BagTypes.TIER2)
@@ -84,5 +88,13 @@ public class Bags extends Item {
             list.add("Void Bag");
         if (type == BagTypes.ENDER)
             list.add("Ender Chest Bag");
+        if (!ModItems.bagInfo[ModItems.getWoolForColor(color)].isEmpty()) {
+            if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+                list.add(ChatFormatting.AQUA + ModItems.bagInfo[ModItems.getWoolForColor(color)]);
+            }
+            else {
+                list.add(ChatFormatting.GRAY + "Hold shift to see custom name");
+            }
+        }
     }
 }

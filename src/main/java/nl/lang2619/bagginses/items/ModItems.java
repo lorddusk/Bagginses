@@ -41,6 +41,8 @@ public class ModItems {
     public static Item[] tier2 = new Item[16];
     static int added = 0;
 
+    public static String[] bagInfo = new String[16];
+
     public static void init() {
         fillTiers();
 
@@ -71,6 +73,8 @@ public class ModItems {
         ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
         registerItem(ender, ItemInfo.ender);
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ender_chest);
+
+        getDescriptions();
     }
 
     static void registerItem(Item item, String name) {
@@ -94,7 +98,7 @@ public class ModItems {
         }
     }
 
-    private static int getWoolForColor(String color) {
+    public static int getWoolForColor(String color) {
         int wool = 0;
         if (color.equalsIgnoreCase("black")) {
             wool = 15;
@@ -152,6 +156,58 @@ public class ModItems {
         tier2[added] = t2;
         BagColors[added] = color;
         added++;
+    }
+
+    static void getDescriptions() {
+        if (!ModConfig.blackInfo.isEmpty()) {
+            bagInfo[15] = ModConfig.blackInfo;
+        }
+        if (!ModConfig.redInfo.isEmpty()) {
+            bagInfo[14] = ModConfig.redInfo;
+        }
+        if (!ModConfig.brownInfo.isEmpty()) {
+            bagInfo[12] = ModConfig.brownInfo;
+        }
+        if (!ModConfig.blueInfo.isEmpty()) {
+            bagInfo[11] = ModConfig.blueInfo;
+        }
+        if (!ModConfig.cyanInfo.isEmpty()) {
+            bagInfo[9] = ModConfig.cyanInfo;
+        }
+        if (!ModConfig.grayInfo.isEmpty()) {
+            bagInfo[7] = ModConfig.grayInfo;
+        }
+        if (!ModConfig.greenInfo.isEmpty()) {
+            bagInfo[13] = ModConfig.greenInfo;
+        }
+        if (!ModConfig.lightBlueInfo.isEmpty()) {
+            bagInfo[3] = ModConfig.lightBlueInfo;
+        }
+        if (!ModConfig.limeInfo.isEmpty()) {
+            bagInfo[5] = ModConfig.limeInfo;
+        }
+        if (!ModConfig.magentaInfo.isEmpty()) {
+            bagInfo[2] = ModConfig.magentaInfo;
+        }
+        if (!ModConfig.orangeInfo.isEmpty()) {
+            bagInfo[1] = ModConfig.orangeInfo;
+        }
+        if (!ModConfig.pinkInfo.isEmpty()) {
+            bagInfo[6] = ModConfig.pinkInfo;
+        }
+        if (!ModConfig.purpleInfo.isEmpty()) {
+            bagInfo[10] = ModConfig.purpleInfo;
+        }
+        if (!ModConfig.silverInfo.isEmpty()) {
+            bagInfo[8] = ModConfig.silverInfo;
+        }
+        if (!ModConfig.whiteInfo.isEmpty()) {
+            bagInfo[0] = ModConfig.whiteInfo;
+        }
+        if (!ModConfig.yellowInfo.isEmpty()) {
+            bagInfo[4] = ModConfig.yellowInfo;
+        }
+
     }
 
     static void fillTiers() {
