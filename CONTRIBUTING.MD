@@ -5,7 +5,7 @@ First of all, thanks for contributing! :sparkles: :+1:
 Don't file these issues, because they are NOT issues.
 
 ### Creating an Issue
-HQM crashes every time :bomb:?  Have a suggestion?  Found a :bug:?  Create an issue now!
+Bagginses crashes every time :bomb:?  Have a suggestion?  Found a :bug:?  Create an issue now!
 
 1. Make sure your issue hasn't already been answered or fixed by [searching for it](https://github.com/lorddusk/Bagginses/search?q=&type=Issues).  Also think about whether your issue is a valid one before submitting it.
 2. Go to [the issues page](https://github.com/lorddusk/Bagginses/issues).
