@@ -35,13 +35,13 @@ public class ModItems {
     private static Item white, whiteT2;
     public static Item foid;
     public static Item ender;
-    private static Item upgrade;
+    public static Item upgrade;
     public static Item[] tier1 = new Item[16];
     public static String[] BagColors = new String[16];
     public static Item[] tier2 = new Item[16];
     static int added = 0;
 
-    public static String[] bagInfo = new String[16];
+    public static String[] bagInfo = new String[18];
 
     public static void init() {
         fillTiers();
@@ -148,6 +148,14 @@ public class ModItems {
         if (color.equalsIgnoreCase("yellow")) {
             wool = 4;
         }
+
+
+        if (color.equalsIgnoreCase("ender")) {
+            wool = 16;
+        }
+        if (color.equalsIgnoreCase("void")) {
+            wool = 17;
+        }
         return wool;
     }
 
@@ -206,6 +214,12 @@ public class ModItems {
         }
         if (!ModConfig.yellowInfo.isEmpty()) {
             bagInfo[4] = ModConfig.yellowInfo;
+        }
+        if(!ModConfig.enderInfo.isEmpty()) {
+            bagInfo[16] = ModConfig.enderInfo;
+        }
+        if(!ModConfig.voidInfo.isEmpty()) {
+            bagInfo[17] = ModConfig.voidInfo;
         }
 
     }

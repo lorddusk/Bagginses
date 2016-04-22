@@ -88,12 +88,34 @@ public class Bags extends Item {
             list.add("Void Bag");
         if (type == BagTypes.ENDER)
             list.add("Ender Chest Bag");
-        if (!ModItems.bagInfo[ModItems.getWoolForColor(color)].isEmpty()) {
-            if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-                list.add(ChatFormatting.AQUA + ModItems.bagInfo[ModItems.getWoolForColor(color)]);
+        try {
+            if (ModItems.bagInfo[ModItems.getWoolForColor(color)] != null
+                    && !ModItems.bagInfo[ModItems.getWoolForColor(color)].isEmpty()) {
+                if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+                    list.add(ChatFormatting.AQUA + ModItems.bagInfo[ModItems.getWoolForColor(color)]);
+                }
+                else {
+                    list.add(ChatFormatting.GRAY + "Hold shift to see custom name");
+                }
             }
-            else {
-                list.add(ChatFormatting.GRAY + "Hold shift to see custom name");
+        }
+        catch (NullPointerException e) {
+            //Ignore
+        }
+    }
+
+    @Override
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer player) {
+        if (stack.getItem() instanceof Bags) {
+            Bags bag = (Bags) stack.getItem();
+            if (bag.getType() == BagTypes.TIER1) {
+                player.addStat(Bagginses.achievementFirstBag, 1);
+            }
+            if (bag.getType() == BagTypes.ENDER) {
+                player.addStat(Bagginses.achievementEnderBag, 1);
+            }
+            if (bag.getType() == BagTypes.VOID) {
+                player.addStat(Bagginses.achievementVoidBag, 1);
             }
         }
     }

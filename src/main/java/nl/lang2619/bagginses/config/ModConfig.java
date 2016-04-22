@@ -25,7 +25,9 @@ public class ModConfig {
             lightBlueInfo,
             magentaInfo,
             orangeInfo,
-            whiteInfo;
+            whiteInfo,
+            enderInfo,
+            voidInfo;
     public static boolean whitelist;
     public static final String CATEGORY_WHITELIST = "whitelist";
     public static final String CATEGORY_DESC = "descriptions";
@@ -70,6 +72,8 @@ public class ModConfig {
         magentaInfo = config.get(CATEGORY_DESC, "Custom description for magenta bag", "").getString();
         orangeInfo = config.get(CATEGORY_DESC, "Custom description for orange bag", "").getString();
         whiteInfo = config.get(CATEGORY_DESC, "Custom description for white bag", "").getString();
+        enderInfo = config.get(CATEGORY_DESC, "Custom description for ender bag", "").getString();
+        voidInfo = config.get(CATEGORY_DESC, "Custom description for void bag", "").getString();
 
         config.save();
     }
