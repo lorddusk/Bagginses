@@ -15,6 +15,7 @@ Bagginses crashes every time :bomb:?  Have a suggestion?  Found a :bug:?  Create
 		* Bagginses Version
 		* Forge Version
 		* ForgeModLoader log
+		* Your config if you have changed it
 		* Crash log if applicable
 		* Server log if applicable
 		* Detailed description of the bug and pictures if applicable
