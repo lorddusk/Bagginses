@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.items.bags.Bags;
 import nl.lang2619.bagginses.items.bags.gui.BagGui;
+import nl.lang2619.bagginses.references.BagTypes;
 import nl.lang2619.bagginses.references.BlockList;
 
 /**
@@ -23,8 +24,11 @@ public class TooltipEvent {
             Bags bag = (Bags) getStack(e.getEntityPlayer()).getItem();
             String color = bag.getColor();
 
-            if (!isItemAllowed(e.getItemStack(), color)) {
-                e.getToolTip().add(ChatFormatting.RED + "This item is not allowed in this bag");
+            if (bag.getType() == BagTypes.TIER1
+                    || bag.getType() == BagTypes.TIER2) {
+                if (!isItemAllowed(e.getItemStack(), color)) {
+                    e.getToolTip().add(ChatFormatting.RED + "This item is not allowed in this bag");
+                }
             }
         }
     }

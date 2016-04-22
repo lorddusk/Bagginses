@@ -1,6 +1,7 @@
 package nl.lang2619.bagginses;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
