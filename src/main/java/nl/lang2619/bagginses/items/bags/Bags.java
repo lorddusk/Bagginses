@@ -103,20 +103,4 @@ public class Bags extends Item {
             //Ignore
         }
     }
-
-    @Override
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer player) {
-        if (stack.getItem() instanceof Bags) {
-            Bags bag = (Bags) stack.getItem();
-            if (bag.getType() == BagTypes.TIER1) {
-                player.addStat(Bagginses.achievementFirstBag, 1);
-            }
-            if (bag.getType() == BagTypes.ENDER) {
-                player.addStat(Bagginses.achievementEnderBag, 1);
-            }
-            if (bag.getType() == BagTypes.VOID) {
-                player.addStat(Bagginses.achievementVoidBag, 1);
-            }
-        }
-    }
 }

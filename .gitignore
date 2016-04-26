@@ -12,3 +12,4 @@ libs
 *.iws
 /bin/
 /.idea/
+/classes/
