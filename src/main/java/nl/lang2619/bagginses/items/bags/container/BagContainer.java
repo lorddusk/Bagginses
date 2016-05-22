@@ -262,10 +262,10 @@ public class BagContainer extends ContainerBagginses {
     }
 
     @Override
-    public ItemStack func_184996_a(int slotID, int clickedButton, ClickType clickType, EntityPlayer player) {
+    public ItemStack slotClick(int slotID, int clickedButton, ClickType clickType, EntityPlayer player) {
         if (slotID == this.blockedSlot)
             return null;
-        return super.func_184996_a(slotID, clickedButton, clickType, player);
+        return super.slotClick(slotID, clickedButton, clickType, player);
     }
 
     private class SlotBag extends Slot {

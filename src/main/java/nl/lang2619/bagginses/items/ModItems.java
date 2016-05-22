@@ -48,7 +48,7 @@ public class ModItems {
 
         upgrade = new Upgrade();
             registerItem(upgrade, ItemInfo.upgrade);
-            GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.string, 'I', Items.iron_ingot, 'W', Blocks.planks);
+            GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.STRING, 'I', Items.IRON_INGOT, 'W', Blocks.PLANKS);
 
 
         if (added > 0) {
@@ -56,7 +56,7 @@ public class ModItems {
                 tier1[i] = new Bags(BagColors[i], BagTypes.TIER1);
                 registerItem(tier1[i], BagColors[i]);
                 String color = BagColors[i];
-                GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.string, 'w', new ItemStack(Blocks.wool, 1, getWoolForColor(color)), 'c', Blocks.chest);
+                GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.STRING, 'w', new ItemStack(Blocks.WOOL, 1, getWoolForColor(color)), 'c', Blocks.CHEST);
             }
 
             for (int i = 0; i < added; i++) {
@@ -68,11 +68,11 @@ public class ModItems {
 
         foid = new Bags(ItemInfo.foid, BagTypes.VOID);
         registerItem(foid, ItemInfo.foid);
-        GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.string, 'w', Blocks.wool, 'c', Items.ender_pearl);
+        GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.STRING, 'w', Blocks.WOOL, 'c', Items.ENDER_PEARL);
 
         ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
         registerItem(ender, ItemInfo.ender);
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ender_chest);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ENDER_CHEST);
 
         getDescriptions();
     }
