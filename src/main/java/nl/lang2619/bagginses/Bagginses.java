@@ -1,7 +1,6 @@
 package nl.lang2619.bagginses;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -13,10 +12,12 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
+import nl.lang2619.bagginses.event.AchievementEvents;
 import nl.lang2619.bagginses.event.PickUpEventHandler;
 import nl.lang2619.bagginses.event.TooltipEvent;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.CommonProxy;
+import nl.lang2619.bagginses.references.Achievements;
 import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.Defaults;
 
@@ -64,6 +65,9 @@ public class Bagginses {
 
         MinecraftForge.EVENT_BUS.register(new TooltipEvent());
 
+        MinecraftForge.EVENT_BUS.register(new AchievementEvents());
+
+        Achievements.init();
     }
 
     @Mod.EventHandler
