@@ -33,3 +33,12 @@ backpack_whiteT2.name=White Bag
 backpack_void.name=Void Bag
 upgrade.name=Upgrade
 backpack_ender.name=Ender Bag
+
+achievement.firstbag=Learning to carry
+achievement.firstbag.desc=Make a Bagginses bag
+achievement.voidbag=It's time to let go
+achievement.voidbag.desc=Make a void bag
+achievement.enderbag=Don't lose it
+achievement.enderbag.desc=Make an ender bag
+achievement.tier2bag=Lets carry even more
+achievement.tier2bag.desc=Make a tier2 Bagginses bag
