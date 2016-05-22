@@ -2,6 +2,7 @@ package nl.lang2619.bagginses;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.stats.Achievement;
+import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
+import nl.lang2619.bagginses.event.BagCraft;
 import nl.lang2619.bagginses.event.PickUpEventHandler;
 import nl.lang2619.bagginses.event.TooltipEvent;
 import nl.lang2619.bagginses.items.ModItems;
@@ -41,6 +43,8 @@ public class Bagginses {
 
     public static Configuration configuration;
 
+    public static Achievement achievementFirstBag = new Achievement("achievement.firstbag", "firstbag", 4, 4, ModItems.foid, null);
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
@@ -64,6 +68,13 @@ public class Bagginses {
 
         MinecraftForge.EVENT_BUS.register(new TooltipEvent());
 
+        achievementFirstBag.registerStat();
+
+        AchievementPage.registerAchievementPage(
+                new AchievementPage("Bagginses",
+                        new Achievement[] {achievementFirstBag}));
+
+        MinecraftForge.EVENT_BUS.register(new BagCraft());
     }
 
     @Mod.EventHandler
