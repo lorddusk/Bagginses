@@ -22,12 +22,6 @@ import java.util.UUID;
  * Created by Tim on 8-2-2015.
  */
 public class BagContainer extends ContainerBagginses {
-    public static int tier1Lines = 3;
-    public static int tier1Columns = 5;
-    public static int tier2Lines = 3;
-    public static int tier2Columns = 9;
-    public static int voidLines = 1;
-    public static int voidColumns = 1;
     int startX = 0;
     int startY = 0;
 
@@ -47,67 +41,36 @@ public class BagContainer extends ContainerBagginses {
         this.inventoryBag = inventoryBag;
 
         Bags item = (Bags) inventoryBag.parentItemStack.getItem();
-        if (item.getType() == BagTypes.TIER1) {
-            bagInventoryRows = tier1Lines;
-            bagInventoryColumns = tier1Columns;
-            startX = 44;
-            startY = 19;
-            color = item.getColor();
-        } else if (item.getType() == BagTypes.TIER2) {
-            bagInventoryRows = tier2Lines;
-            bagInventoryColumns = tier2Columns;
-            startX = 8;
-            startY = 19;
-            color = item.getColor();
-        } else if (item.getType() == BagTypes.VOID) {
-            bagInventoryRows = voidLines;
-            bagInventoryColumns = voidColumns;
-            startX = 80;
-            startY = 37;
-            foid = true;
-            color = "foid";
-        }
+
+        BagTypes type = item.getType();
+        color = item.getColor();
+        foid = type == BagTypes.VOID;
+
+        bagInventoryRows = type.getRows();
+        bagInventoryColumns = type.getColumns();
+        startX = type.getStartX();
+        startY = type.getStartY();
 
         int i = 0;
 
         //Inventory
         for (int bagRowIndex = 0; bagRowIndex < bagInventoryRows; ++bagRowIndex) {
             for (int bagColumnIndex = 0; bagColumnIndex < bagInventoryColumns; ++bagColumnIndex) {
-                if (item.getType() == BagTypes.TIER1) {
-                    this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
-                    i++;
-                } else if (item.getType() == BagTypes.TIER2) {
-                    this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
-                    i++;
-                } else if (item.getType() == BagTypes.VOID) {
-                    this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
-                    i++;
-                }
+                this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
+                i++;
             }
         }
 
         //PlayerInventory
         for (int inventoryRowIndex = 0; inventoryRowIndex < PLAYER_INVENTORY_ROWS; ++inventoryRowIndex) {
             for (int inventoryColumnIndex = 0; inventoryColumnIndex < PLAYER_INVENTORY_COLUMNS; ++inventoryColumnIndex) {
-                if (item.getType() == BagTypes.TIER1) {
-                    this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 84 + inventoryRowIndex * 18));
-                } else if (item.getType() == BagTypes.TIER2) {
-                    this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 84 + inventoryRowIndex * 18));
-                } else if (item.getType() == BagTypes.VOID) {
-                    this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 84 + inventoryRowIndex * 18));
-                }
+                this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 84 + inventoryRowIndex * 18));
             }
         }
 
         //Hotbar
         for (int actionBarSlotIndex = 0; actionBarSlotIndex < PLAYER_INVENTORY_COLUMNS; ++actionBarSlotIndex) {
-            if (item.getType() == BagTypes.TIER1) {
-                this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 142));
-            } else if (item.getType() == BagTypes.TIER2) {
-                this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 142));
-            } else if (item.getType() == BagTypes.VOID) {
-                this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 142));
-            }
+            this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 142));
         }
         blockedSlot = entityPlayer.inventory.currentItem + 27 + i;
     }
