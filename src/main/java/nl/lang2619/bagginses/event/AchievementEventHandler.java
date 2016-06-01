@@ -9,7 +9,7 @@ import nl.lang2619.bagginses.references.BagTypes;
 /**
  * Created by alex on 22/05/16.
  */
-public class AchievementEvents {
+public class AchievementEventHandler {
 
     @SubscribeEvent
     public void event(PlayerEvent.ItemCraftedEvent e) {

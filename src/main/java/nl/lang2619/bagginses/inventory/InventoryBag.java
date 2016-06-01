@@ -32,15 +32,8 @@ public class InventoryBag implements IInventory, INBTTaggable {
 
     public InventoryBag(ItemStack itemStack) {
         Bags item = (Bags) itemStack.getItem();
-        int size;
-        if (item.getType() == BagTypes.TIER1) {
-            size = BagContainer.tier1Lines * BagContainer.tier1Columns;
-        } else if (item.getType() == BagTypes.TIER2) {
-            size = BagContainer.tier2Lines * BagContainer.tier2Columns;
-        } else {
-            size = BagContainer.voidLines * BagContainer.voidColumns;
-            foid = true;
-        }
+        int size = item.getType().getSize();
+        foid = item.getType() == BagTypes.VOID;
         inventory = new ItemStack[size];
         parentItemStack = itemStack;
         if (!foid) {

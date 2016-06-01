@@ -55,6 +55,16 @@ public class Bags extends Item {
     }
 
     @Override
+    public boolean hasEffect(ItemStack stack) {
+        if (stack.getTagCompound() != null
+                && stack.getTagCompound().hasKey("soulbound")
+                && stack.getTagCompound().getBoolean("soulbound")) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
             if (!ItemHelper.hasOwnerUUID(itemStack)) {
@@ -88,6 +98,9 @@ public class Bags extends Item {
             list.add("Void Bag");
         if (type == BagTypes.ENDER)
             list.add("Ender Chest Bag");
+        if (isSoulBound(stack)) {
+            list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");
+        }
         try {
             if (ModItems.bagInfo[ModItems.getWoolForColor(color)] != null
                     && !ModItems.bagInfo[ModItems.getWoolForColor(color)].isEmpty()) {
@@ -102,5 +115,19 @@ public class Bags extends Item {
         catch (NullPointerException e) {
             //Ignore
         }
+    }
+
+    private boolean isSoulBound(ItemStack stack) {
+        try {
+            if (stack != null
+                    && stack.getTagCompound() != null
+                    && stack.getTagCompound().hasKey("soulbound")
+                    && stack.getTagCompound().getBoolean("soulbound")) {
+                return true;
+            }
+        } catch (Exception e){
+
+        }
+        return false;
     }
 }

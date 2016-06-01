@@ -1,14 +1,13 @@
 package nl.lang2619.bagginses.references;
 
-import com.sun.org.apache.regexp.internal.RE;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import nl.lang2619.bagginses.config.ModConfig;
 import org.apache.commons.lang3.ArrayUtils;

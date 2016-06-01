@@ -16,7 +16,7 @@ import nl.lang2619.bagginses.references.BlockList;
 /**
  * Created by alex_ on 21/04/2016.
  */
-public class TooltipEvent {
+public class TooltipEventHandler {
 
     @SubscribeEvent
     public void tooltip(ItemTooltipEvent e) {
