@@ -65,7 +65,7 @@ public class Bagginses {
         MinecraftForge.EVENT_BUS.register(new PickUpEventHandler());
 
         MinecraftForge.EVENT_BUS.register(new TooltipEventHandler());
-
+        
         MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
 
         MinecraftForge.EVENT_BUS.register(new SoulBoundEventHandler());
