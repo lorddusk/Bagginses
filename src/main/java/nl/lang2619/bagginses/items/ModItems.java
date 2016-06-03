@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.RecipeSorter;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.items.bags.Bags;
 import nl.lang2619.bagginses.references.BagTypes;
@@ -62,9 +63,11 @@ public class ModItems {
             for (int i = 0; i < added; i++) {
                 tier2[i] = new Bags(BagColors[i], BagTypes.TIER2);
                 registerItem(tier2[i], BagColors[i] + "T2");
-                GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
                 GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(tier1[i])));
+                RecipeSorter.register(Defaults.MODID + ":soulbound" + BagColors[i] + "tier1bag", SoulBoundBagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
                 GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(tier2[i])));
+                RecipeSorter.register(Defaults.MODID + ":soulbound" + BagColors[i] + "tier2bag", SoulBoundBagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+
             }
         }
 
@@ -72,11 +75,13 @@ public class ModItems {
         registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.STRING, 'w', Blocks.WOOL, 'c', Items.ENDER_PEARL);
         GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(foid)));
+        RecipeSorter.register(Defaults.MODID + ":soulboundvoidbag", SoulBoundBagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
         ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
         registerItem(ender, ItemInfo.ender);
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ENDER_CHEST);
         GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(ender)));
+        RecipeSorter.register(Defaults.MODID + ":soulboundenderbag", SoulBoundBagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
         getDescriptions();
     }
