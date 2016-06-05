@@ -5,7 +5,7 @@ package nl.lang2619.bagginses.references;
  */
 public enum BagTypes {
     TIER1(3, 5, 44, 19),
-    TIER2(3, 5, 8, 19),
+    TIER2(3, 9, 8, 19),
     VOID(1, 1, 80, 37),
     ENDER(0, 0, 0, 0);
 
