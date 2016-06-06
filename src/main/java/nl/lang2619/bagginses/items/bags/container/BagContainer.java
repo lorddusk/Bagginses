@@ -263,7 +263,7 @@ public class BagContainer extends ContainerBagginses {
                 itemStack = itemStack.copy();
                 itemStack.stackSize = 1;
                 if (!(itemStack.getItem() instanceof Bags)) {
-                    if (color.equals("foid")) {
+                    if (foid) {
                         return true;
                     }
                     if (ModConfig.whitelist) {
