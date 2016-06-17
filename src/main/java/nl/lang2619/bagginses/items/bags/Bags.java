@@ -61,7 +61,7 @@ public class Bags extends Item {
                 && stack.getTagCompound().getBoolean("soulbound")) {
             return true;
         }
-        return false;
+        return stack.isItemEnchanted();
     }
 
     @Override

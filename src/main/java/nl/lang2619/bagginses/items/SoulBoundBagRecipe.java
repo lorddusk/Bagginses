@@ -42,14 +42,31 @@ public class SoulBoundBagRecipe extends ShapedRecipes {
             }
         }
         if (bag != null) {
-            if(bag.hasTagCompound()){
+            if(bag.hasTagCompound()
+                    && bag.getTagCompound() != null) {
+                if (!bag.getTagCompound().hasKey("soulbound")) {
+                    ItemStack output = getRecipeOutput().copy();
+                    NBTBase tag = bag.getTagCompound().copy();
+                    output.setTagCompound((NBTTagCompound) tag);
+                    output.getTagCompound().setBoolean("soulbound", true);
+                    return output;
+                } else {
+                    return null;
+                }
+            } else {
                 ItemStack output = getRecipeOutput().copy();
-                NBTBase tag = bag.getTagCompound().copy();
-                output.setTagCompound((NBTTagCompound) tag);
+                output.setTagCompound(new NBTTagCompound());
                 output.getTagCompound().setBoolean("soulbound", true);
                 return output;
             }
         }
         return this.getRecipeOutput().copy();
+    }
+
+    public ItemStack getRecipeOutput() {
+        ItemStack stack = super.getRecipeOutput().copy();
+        stack.setTagCompound(new NBTTagCompound());
+        stack.getTagCompound().setBoolean("soulbound", true);
+        return stack;
     }
 }
