@@ -12,10 +12,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
-import nl.lang2619.bagginses.event.AchievementEventHandler;
-import nl.lang2619.bagginses.event.PickUpEventHandler;
-import nl.lang2619.bagginses.event.SoulBoundEventHandler;
-import nl.lang2619.bagginses.event.TooltipEventHandler;
+import nl.lang2619.bagginses.event.*;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.CommonProxy;
 import nl.lang2619.bagginses.references.Achievements;
@@ -62,13 +59,14 @@ public class Bagginses {
         proxy.registerEvents();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new PickUpEventHandler());
 
         MinecraftForge.EVENT_BUS.register(new TooltipEventHandler());
         
         MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
 
         MinecraftForge.EVENT_BUS.register(new SoulBoundEventHandler());
+
+        MinecraftForge.EVENT_BUS.register(new ItemDropEvent());
 
         Achievements.init();
     }

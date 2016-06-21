@@ -8,14 +8,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.config.ModConfig;
+import nl.lang2619.bagginses.helpers.ChatUtils;
 import nl.lang2619.bagginses.helpers.ItemHelper;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.GuiInfo;
+import nl.lang2619.bagginses.references.BagMode;
 import nl.lang2619.bagginses.references.BagTypes;
 import org.lwjgl.input.Keyboard;
 
@@ -27,6 +31,8 @@ import java.util.List;
 public class Bags extends Item {
     String color;
     BagTypes type;
+    BagMode mode;
+
 
     public Bags(String color, BagTypes type) {
         super();
@@ -34,7 +40,7 @@ public class Bags extends Item {
         setCreativeTab(Bagginses.BagTab);
         this.color = color;
         this.type = type;
-
+        this.mode = BagMode.DEFAULT;
     }
 
     public String getColor() {
@@ -67,6 +73,10 @@ public class Bags extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
+            if (player.isSneaking()) {
+                changeMode(itemStack, world, player, hand);
+                return new ActionResult(EnumActionResult.SUCCESS, itemStack);
+            }
             if (!ItemHelper.hasOwnerUUID(itemStack)) {
                 ItemHelper.setOwner(itemStack, player);
             }
@@ -85,6 +95,17 @@ public class Bags extends Item {
             }
         }
         return new ActionResult(EnumActionResult.SUCCESS, itemStack);
+    }
+
+    private void changeMode(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
+        if (type == BagTypes.VOID) {
+            return;
+        }
+        if (!ModConfig.bagPickUp) {
+            return;
+        }
+        mode = mode.next();
+        ChatUtils.sendNoSpamMessages(14, new TextComponentString(ChatFormatting.AQUA + "Mode: " + mode.getName()));
     }
 
     @Override
