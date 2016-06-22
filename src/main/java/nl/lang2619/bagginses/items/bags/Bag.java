@@ -34,10 +34,11 @@ public class Bag extends Item {
     BagMode mode;
 
 
-    public Bag(String color, BagTypes type) {
+    public Bag(String color, BagTypes type, boolean registered) {
         super();
         maxStackSize = 1;
-        setCreativeTab(Bagginses.BagTab);
+        if (registered)
+            setCreativeTab(Bagginses.BagTab);
         this.color = color;
         this.type = type;
         this.mode = BagMode.DEFAULT;
