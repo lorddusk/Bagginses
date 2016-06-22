@@ -44,7 +44,7 @@ public class ModConfig {
             enderInfo,
             voidInfo;
     public static boolean whitelist;
-    public static boolean bagPickUp;
+    public static boolean soulbound, bagPickUp;
     public static final String CATEGORY_WHITELIST = "whitelist";
     public static final String CATEGORY_DESC = "descriptions";
     public static final String CATEGORY_MISC = "miscellaneous config options";
@@ -95,6 +95,7 @@ public class ModConfig {
 
         config.setCategoryComment(CATEGORY_MISC, "Miscellaneous config options related to the mod");
         bagPickUp = config.get(CATEGORY_MISC, "Should bags be able to pick up items when dropped", true).getBoolean();
+        soulbound = config.get(CATEGORY_MISC, "Should soulbound bags be enabled?", true).getBoolean();
 
         if (config.hasChanged())
             config.save();
