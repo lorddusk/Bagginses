@@ -8,6 +8,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.references.BagMode;
 
 /**
  * Stolen with love from Modular Utilities
@@ -21,16 +22,19 @@ public class ItemDropEvent {
             EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
 
             if(player.inventory.offHandInventory[0].getItem() instanceof Bags) {
-                if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
-                    for(int i = 0; i < event.getDrops().size(); i++) {
-                        if(player.getInventoryEnderChest().addItem(event.getDrops().get(i).getEntityItem()) == null)
-                            event.getDrops().remove(0);
-                    }
-                } else {
-                    //TODO
+                Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
+                if (bag.getMode() == BagMode.PICKUP) {
+                    if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
+                        for(int i = 0; i < event.getDrops().size(); i++) {
+                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i).getEntityItem()) == null)
+                                event.getDrops().remove(0);
+                        }
+                    } else {
+                        //TODO
                     /*for(int i = 0; i < event.getDrops().size(); i++) {
                         Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
                     }*/
+                    }
                 }
             }
         }
@@ -41,17 +45,20 @@ public class ItemDropEvent {
         if(event.getHarvester() != null) {
             EntityPlayer player = event.getHarvester();
             if(player.inventory.offHandInventory[0].getItem() instanceof Bags) {
-                if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
-                    for(int i = 0; i < event.getDrops().size(); i++) {
-                        if(player.getInventoryEnderChest().addItem(event.getDrops().get(i)) == null)
-                            event.getDrops().remove(0);
-                    }
-                } else {
-                    //TODO
+                Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
+                if (bag.getMode() == BagMode.PICKUP) {
+                    if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
+                        for(int i = 0; i < event.getDrops().size(); i++) {
+                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i)) == null)
+                                event.getDrops().remove(0);
+                        }
+                    } else {
+                        //TODO
                     /*for(int i = 0; i < event.getDrops().size(); i++) {
                         Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
 
                     }*/
+                    }
                 }
             }
         }

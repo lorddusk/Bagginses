@@ -51,6 +51,10 @@ public class Bags extends Item {
         return type;
     }
 
+    public BagMode getMode() {
+        return mode;
+    }
+
     public String getUnlocalizedName(ItemStack itemStack) {
         return "backpack_" + color;
     }
