@@ -17,6 +17,6 @@ public class Names {
     }
 
     public static final class Containers{
-        public static final String BAGS = "container.bagginses:Bags";
+        public static final String BAGS = "container.bagginses:Bag";
     }
 }

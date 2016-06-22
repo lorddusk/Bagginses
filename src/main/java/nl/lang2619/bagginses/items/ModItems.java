@@ -7,11 +7,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import nl.lang2619.bagginses.config.ModConfig;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagTypes;
 import nl.lang2619.bagginses.references.Defaults;
 
@@ -56,14 +55,14 @@ public class ModItems {
 
         if (added > 0) {
             for (int i = 0; i < added; i++) {
-                tier1[i] = new Bags(BagColors[i], BagTypes.TIER1);
+                tier1[i] = new Bag(BagColors[i], BagTypes.TIER1);
                 registerItem(tier1[i], BagColors[i]);
                 String color = BagColors[i];
                 GameRegistry.addShapedRecipe(new ItemStack(ModItems.tier1[i]), "sws", "wcw", "sws", 's', Items.STRING, 'w', new ItemStack(Blocks.WOOL, 1, getWoolForColor(color)), 'c', Blocks.CHEST);
             }
 
             for (int i = 0; i < added; i++) {
-                tier2[i] = new Bags(BagColors[i], BagTypes.TIER2);
+                tier2[i] = new Bag(BagColors[i], BagTypes.TIER2);
                 registerItem(tier2[i], BagColors[i] + "T2");
                 GameRegistry.addRecipe(new BagRecipe(new ItemStack(tier2[i]), new ItemStack(ModItems.tier1[i]), ModItems.upgrade));
                 if (ModConfig.soulbound) {
@@ -73,13 +72,13 @@ public class ModItems {
             }
         }
 
-        foid = new Bags(ItemInfo.foid, BagTypes.VOID);
+        foid = new Bag(ItemInfo.foid, BagTypes.VOID);
         registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.STRING, 'w', Blocks.WOOL, 'c', Items.ENDER_PEARL);
         if(ModConfig.soulbound)
             GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(foid)));
 
-        ender = new Bags(ItemInfo.ender, BagTypes.ENDER);
+        ender = new Bag(ItemInfo.ender, BagTypes.ENDER);
         registerItem(ender, ItemInfo.ender);
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ENDER_CHEST);
         if(ModConfig.soulbound)

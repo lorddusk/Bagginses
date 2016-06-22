@@ -7,7 +7,7 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 
 /**
  * Created by alex on 23/05/16.
@@ -37,7 +37,7 @@ public class SoulBoundBagRecipe extends ShapedRecipes {
     public ItemStack getCraftingResult(InventoryCrafting inv) {
         ItemStack bag = null;
         for (int slot = 0; slot < inv.getSizeInventory(); slot++) {
-            if (inv.getStackInSlot(slot) != null && inv.getStackInSlot(slot).getItem() instanceof Bags) {
+            if (inv.getStackInSlot(slot) != null && inv.getStackInSlot(slot).getItem() instanceof Bag) {
                 bag = inv.getStackInSlot(slot);
             }
         }

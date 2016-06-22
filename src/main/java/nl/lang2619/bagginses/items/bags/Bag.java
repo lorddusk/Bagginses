@@ -28,13 +28,13 @@ import java.util.List;
 /**
  * Created by Tim on 4/12/2015.
  */
-public class Bags extends Item {
+public class Bag extends Item {
     String color;
     BagTypes type;
     BagMode mode;
 
 
-    public Bags(String color, BagTypes type) {
+    public Bag(String color, BagTypes type) {
         super();
         maxStackSize = 1;
         setCreativeTab(Bagginses.BagTab);

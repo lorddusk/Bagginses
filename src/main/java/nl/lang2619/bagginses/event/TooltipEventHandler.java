@@ -6,9 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import nl.lang2619.bagginses.config.ModConfig;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.items.bags.gui.BagGui;
 import nl.lang2619.bagginses.references.BagTypes;
 import nl.lang2619.bagginses.references.BlockList;
@@ -21,7 +20,7 @@ public class TooltipEventHandler {
     @SubscribeEvent
     public void tooltip(ItemTooltipEvent e) {
         if (Minecraft.getMinecraft().currentScreen instanceof BagGui) {
-            Bags bag = (Bags) getStack(e.getEntityPlayer()).getItem();
+            Bag bag = (Bag) getStack(e.getEntityPlayer()).getItem();
             String color = bag.getColor();
 
             if (bag.getType() == BagTypes.TIER1
@@ -53,7 +52,7 @@ public class TooltipEventHandler {
 
     static ItemStack getStack(EntityPlayer p) {
         if (p.getHeldItemMainhand() != null
-                && p.getHeldItemMainhand().getItem() instanceof Bags) {
+                && p.getHeldItemMainhand().getItem() instanceof Bag) {
             return p.getHeldItemMainhand();
         } else {
             return p.getHeldItemOffhand();

@@ -7,7 +7,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nl.lang2619.bagginses.items.ModItems;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagMode;
 
 /**
@@ -21,8 +21,8 @@ public class ItemDropEvent {
         if(event.getSource().getDamageType() == "player") {
             EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
 
-            if(player.inventory.offHandInventory[0].getItem() instanceof Bags) {
-                Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
+            if(player.inventory.offHandInventory[0].getItem() instanceof Bag) {
+                Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
                 if (bag.getMode() == BagMode.PICKUP) {
                     if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
                         for(int i = 0; i < event.getDrops().size(); i++) {
@@ -32,7 +32,7 @@ public class ItemDropEvent {
                     } else {
                         //TODO
                     /*for(int i = 0; i < event.getDrops().size(); i++) {
-                        Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
+                        Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
                     }*/
                     }
                 }
@@ -44,8 +44,8 @@ public class ItemDropEvent {
     public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
         if(event.getHarvester() != null) {
             EntityPlayer player = event.getHarvester();
-            if(player.inventory.offHandInventory[0].getItem() instanceof Bags) {
-                Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
+            if(player.inventory.offHandInventory[0].getItem() instanceof Bag) {
+                Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
                 if (bag.getMode() == BagMode.PICKUP) {
                     if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
                         for(int i = 0; i < event.getDrops().size(); i++) {
@@ -55,7 +55,7 @@ public class ItemDropEvent {
                     } else {
                         //TODO
                     /*for(int i = 0; i < event.getDrops().size(); i++) {
-                        Bags bag = (Bags) player.inventory.offHandInventory[0].getItem();
+                        Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
 
                     }*/
                     }

@@ -2,13 +2,12 @@ package nl.lang2619.bagginses.items.bags.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
 import nl.lang2619.bagginses.inventory.InventoryBag;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.items.bags.container.BagContainer;
 import nl.lang2619.bagginses.references.BagTypes;
 import nl.lang2619.bagginses.references.TextureInfo;
@@ -31,7 +30,7 @@ public class BagGui extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 
-        Bags item = (Bags) this.parentItemStack.getItem();
+        Bag item = (Bag) this.parentItemStack.getItem();
         if (item.getType() == BagTypes.TIER2) {
             mc.renderEngine.bindTexture(new ResourceLocation(TextureInfo.GUI_BACKPACK_T2));
         } else if (item.getType() == BagTypes.TIER1) {
@@ -48,7 +47,7 @@ public class BagGui extends GuiContainer {
     @Override
     public void drawGuiContainerForegroundLayer(int i, int j) {
         String s = "";
-        Bags item = (Bags) this.parentItemStack.getItem();
+        Bag item = (Bag) this.parentItemStack.getItem();
         if (item.getType() == BagTypes.TIER2) {
             s = "Tier 2 Bag";
 

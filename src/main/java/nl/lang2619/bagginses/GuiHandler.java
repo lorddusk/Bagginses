@@ -1,13 +1,11 @@
 package nl.lang2619.bagginses;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import nl.lang2619.bagginses.inventory.InventoryBag;
-import nl.lang2619.bagginses.items.ModItems;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.items.bags.container.BagContainer;
 import nl.lang2619.bagginses.items.bags.gui.BagGui;
 import nl.lang2619.bagginses.proxy.GuiInfo;
@@ -48,7 +46,7 @@ public class GuiHandler implements IGuiHandler {
 
     static ItemStack getStack(EntityPlayer p) {
         if (p.getHeldItemMainhand() != null
-                && p.getHeldItemMainhand().getItem() instanceof Bags) {
+                && p.getHeldItemMainhand().getItem() instanceof Bag) {
             return p.getHeldItemMainhand();
         } else {
             return p.getHeldItemOffhand();

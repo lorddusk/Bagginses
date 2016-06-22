@@ -11,7 +11,7 @@ import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
 import nl.lang2619.bagginses.inventory.InventoryBag;
-import nl.lang2619.bagginses.items.bags.Bags;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagTypes;
 import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.StackUtils;
@@ -40,7 +40,7 @@ public class BagContainer extends ContainerBagginses {
         this.entityPlayer = entityPlayer;
         this.inventoryBag = inventoryBag;
 
-        Bags item = (Bags) inventoryBag.parentItemStack.getItem();
+        Bag item = (Bag) inventoryBag.parentItemStack.getItem();
 
         BagTypes type = item.getType();
         color = item.getColor();
@@ -114,7 +114,7 @@ public class BagContainer extends ContainerBagginses {
                     if (!this.mergeItemStack(itemStack, bagInventoryRows * bagInventoryColumns, inventorySlots.size(), false)) {
                         return null;
                     }
-                } else if (itemStack.getItem() instanceof Bags) {
+                } else if (itemStack.getItem() instanceof Bag) {
                     if (slotIndex < (bagInventoryRows * bagInventoryColumns) + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS)) {
                         if (!this.mergeItemStack(itemStack, (bagInventoryRows * bagInventoryColumns) + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), inventorySlots.size(), false)) {
                             return null;
@@ -262,7 +262,7 @@ public class BagContainer extends ContainerBagginses {
             } else {
                 itemStack = itemStack.copy();
                 itemStack.stackSize = 1;
-                if (!(itemStack.getItem() instanceof Bags)) {
+                if (!(itemStack.getItem() instanceof Bag)) {
                     if (foid) {
                         return true;
                     }

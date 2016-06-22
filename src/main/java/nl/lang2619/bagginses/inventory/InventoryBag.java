@@ -9,8 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 import nl.lang2619.bagginses.helpers.INBTTaggable;
 import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.helpers.Names;
-import nl.lang2619.bagginses.items.bags.Bags;
-import nl.lang2619.bagginses.items.bags.container.BagContainer;
+import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagTypes;
 
 import java.util.UUID;
@@ -31,7 +30,7 @@ public class InventoryBag implements IInventory, INBTTaggable {
     public int stackSize;
 
     public InventoryBag(ItemStack itemStack) {
-        Bags item = (Bags) itemStack.getItem();
+        Bag item = (Bag) itemStack.getItem();
         int size = item.getType().getSize();
         foid = item.getType() == BagTypes.VOID;
         inventory = new ItemStack[size];
