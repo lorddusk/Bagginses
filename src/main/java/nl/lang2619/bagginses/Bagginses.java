@@ -30,7 +30,7 @@ import java.io.File;
 /**
  * Created by Tim on 7/29/2014.
  */
-@Mod(modid = Defaults.MODID, version = Defaults.VERSION, name = Defaults.NAME)
+@Mod(modid = Defaults.MODID, version = "2.4.2d", name = Defaults.NAME)
 public class Bagginses {
     @Mod.Instance(Defaults.MODID)
     public static Bagginses instance;

@@ -46,7 +46,6 @@ public class BagDescriptions {
 
 
         for (BagInfo desc : descriptions) {
-            System.out.println(desc.getColor());
             ModItems.bags.get(desc.getColor()).setDesc(desc.getDescription());
         }
     }

@@ -14,7 +14,6 @@ public class AchievementEventHandler {
     @SubscribeEvent
     public void event(PlayerEvent.ItemCraftedEvent e) {
         if (e.crafting.getItem() instanceof Bag) {
-            System.out.println("MADE A BAG");
             e.player.addStat(Achievements.firstBag);
             if (((Bag) e.crafting.getItem()).getType() == BagTypes.VOID) {
                 e.player.addStat(Achievements.voidBag);

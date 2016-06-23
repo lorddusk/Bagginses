@@ -36,8 +36,6 @@ public class BagDescMessage implements IMessage {
 
         @Override
         public IMessage onMessage(BagDescMessage message, MessageContext ctx) {
-            System.out.println("processing recieved message");
-            //ModItems.serverBagInfo = message.bagInfo;
             return null;
         }
     }
