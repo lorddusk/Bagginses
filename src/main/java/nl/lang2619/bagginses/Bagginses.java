@@ -23,6 +23,7 @@ import nl.lang2619.bagginses.proxy.CommonProxy;
 import nl.lang2619.bagginses.references.Achievements;
 import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.Defaults;
+import scala.tools.nsc.doc.model.Def;
 
 import java.io.File;
 
@@ -39,11 +40,11 @@ public class Bagginses {
 
     public static GuiHandler guiHandler = new GuiHandler();
 
-    public static CreativeTabs BagTab = new BagTab(CreativeTabs.getNextID(), "Bagginses");
+    public static CreativeTabs BagTab = new BagTab(CreativeTabs.getNextID(), Defaults.NAME);
 
     public static String path;
 
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("mymodid");
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Defaults.MODID);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
