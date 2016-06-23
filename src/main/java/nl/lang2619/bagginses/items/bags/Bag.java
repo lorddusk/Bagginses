@@ -13,10 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.config.ModConfig;
-import nl.lang2619.bagginses.helpers.ChatUtils;
-import nl.lang2619.bagginses.helpers.ItemHelper;
-import nl.lang2619.bagginses.helpers.NBTHelper;
-import nl.lang2619.bagginses.helpers.Names;
+import nl.lang2619.bagginses.helpers.*;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.GuiInfo;
 import nl.lang2619.bagginses.references.BagMode;
@@ -34,11 +31,10 @@ public class Bag extends Item {
     BagMode mode;
 
 
-    public Bag(String color, BagTypes type, boolean registered) {
+    public Bag(String color, BagTypes type) {
         super();
         maxStackSize = 1;
-        if (registered)
-            setCreativeTab(Bagginses.BagTab);
+        setCreativeTab(Bagginses.BagTab);
         this.color = color;
         this.type = type;
         this.mode = BagMode.DEFAULT;
@@ -116,6 +112,20 @@ public class Bag extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         super.addInformation(stack, player, list, advanced);
+        //TODO
+        try {
+            if (ModItems.bags.get(color).getServerDesc() != null
+                    && !ModItems.bags.get(color).getServerDesc().equals("")) {
+                list.add(ChatFormatting.AQUA + ModItems.bags.get(color).getServerDesc());
+            } else if (ModItems.bags.get(color).getDesc() != null
+                    && !ModItems.bags.get(color).getDesc().equals("")) {
+                list.add(ChatFormatting.AQUA + ModItems.bags.get(color).getDesc());
+            }
+        }
+        catch (NullPointerException e) {
+            //Ignore
+        }
+
         if (type == BagTypes.TIER1)
             list.add("Tier 1");
         if (type == BagTypes.TIER2)
@@ -126,20 +136,6 @@ public class Bag extends Item {
             list.add("Ender Chest Bag");
         if (isSoulBound(stack)) {
             list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");
-        }
-        try {
-            if (ModItems.bagInfo[ModItems.getWoolForColor(color)] != null
-                    && !ModItems.bagInfo[ModItems.getWoolForColor(color)].isEmpty()) {
-                if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-                    list.add(ChatFormatting.AQUA + ModItems.bagInfo[ModItems.getWoolForColor(color)]);
-                }
-                else {
-                    list.add(ChatFormatting.GRAY + "Hold shift to see custom name");
-                }
-            }
-        }
-        catch (NullPointerException e) {
-            //Ignore
         }
     }
 

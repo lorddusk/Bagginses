@@ -10,12 +10,15 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import nl.lang2619.bagginses.config.ModConfig;
+import nl.lang2619.bagginses.helpers.BagDescriptions;
 import nl.lang2619.bagginses.helpers.Bags;
 import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagTypes;
 import nl.lang2619.bagginses.references.Defaults;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Tim on 8/24/2014.
@@ -40,9 +43,50 @@ public class ModItems {
     public static Item foid;
     public static Item ender;
     public static Item upgrade;
-    public static ArrayList<Bags> bags = new ArrayList<Bags>();
+    //public static ArrayList<Bags> bags = new ArrayList<Bags>();
+    public static Map<String, Bags> bags = new HashMap<String, Bags>();
 
-    public static String[] bagInfo = new String[18];
+    public static ArrayList<String> bagColors = new ArrayList<String>() {{
+        add("black");
+        add("red");
+        add("brown");
+        add("blue");
+        add("cyan");
+        add("gray");
+        add("green");
+        add("lightBlue");
+        add("lime");
+        add("magenta");
+        add("orange");
+        add("pink");
+        add("purple");
+        add("silver");
+        add("white");
+        add("yellow");
+        add("ender");
+        add("void");
+    }};
+
+    public static Map<String, Integer> colorNumbers = new HashMap<String, Integer>() {{
+        put("black", 15);
+        put("red", 14);
+        put("brown", 12);
+        put("blue", 11);
+        put("cyan", 9);
+        put("gray", 7);
+        put("green", 13);
+        put("lightBlue", 3);
+        put("lime", 5);
+        put("magenta", 2);
+        put("orange", 1);
+        put("pink", 6);
+        put("purple", 10);
+        put("silver", 8);
+        put("white", 0);
+        put("yellow", 4);
+        put("ender", 16);
+        put("void", 17);
+    }};
 
     public static void init() {
         fillTiers();
@@ -53,16 +97,21 @@ public class ModItems {
 
         RecipeSorter.register(Defaults.MODID + ":soulboundbag", SoulBoundBagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
-        for (Bags bag : bags) {
-            bag.setTier1(new Bag(bag.getColor(), BagTypes.TIER1, bag.isRegistered()));
+        for (Bags bag : bags.values()) {
+            if (!bag.isRegistered())
+                continue;
+            bag.setTier1(new Bag(bag.getColor(), BagTypes.TIER1));
             registerItem(bag.getTier1(), bag.getColor());
             String color = bag.getColor();
             if (bag.isRegistered())
-                GameRegistry.addShapedRecipe(new ItemStack(bag.getTier1()), "sws", "wcw", "sws", 's', Items.STRING, 'w', new ItemStack(Blocks.WOOL, 1, getWoolForColor(color)), 'c', Blocks.CHEST);
+                GameRegistry.addShapedRecipe(new ItemStack(bag.getTier1()), "sws", "wcw", "sws", 's', Items.STRING, 'w', new ItemStack(Blocks.WOOL, 1, colorNumbers.get(color)), 'c', Blocks.CHEST);
+
         }
 
-        for (Bags bag: bags) {
-            bag.setTier2(new Bag(bag.getColor(), BagTypes.TIER2, bag.isRegistered()));
+        for (Bags bag: bags.values()) {
+            if (!bag.isRegistered())
+                continue;
+            bag.setTier2(new Bag(bag.getColor(), BagTypes.TIER2));
             registerItem(bag.getTier2(), bag.getColor() + "T2");
             GameRegistry.addRecipe(new BagRecipe(new ItemStack(bag.getTier2()), new ItemStack(bag.getTier1()), ModItems.upgrade));
             if (ModConfig.soulbound) {
@@ -71,19 +120,21 @@ public class ModItems {
             }
         }
 
-        foid = new Bag(ItemInfo.foid, BagTypes.VOID, true);
+        foid = new Bag(ItemInfo.foid, BagTypes.VOID);
         registerItem(foid, ItemInfo.foid);
         GameRegistry.addRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', Items.STRING, 'w', Blocks.WOOL, 'c', Items.ENDER_PEARL);
         if(ModConfig.soulbound)
             GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(foid)));
+        bags.put("void", new Bags(foid, null, "void", true));
 
-        ender = new Bag(ItemInfo.ender, BagTypes.ENDER, true);
+        ender = new Bag(ItemInfo.ender, BagTypes.ENDER);
         registerItem(ender, ItemInfo.ender);
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, Blocks.ENDER_CHEST);
         if(ModConfig.soulbound)
             GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(ender)));
+        bags.put("ender", new Bags(ender, null, "ender", true));
 
-        getDescriptions();
+        BagDescriptions.init();
     }
 
     static void registerItem(Item item, String name) {
@@ -97,7 +148,11 @@ public class ModItems {
         ModelLoader.setCustomModelResourceLocation(upgrade, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.upgrade, "inventory"));
         ModelLoader.registerItemVariants(ender);
         ModelLoader.setCustomModelResourceLocation(ender, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.ender, "inventory"));
-        for (Bags bag : bags) {
+        for (Bags bag : bags.values()) {
+            if (bag.getColor().equals("ender")
+                    || bag.getColor().equals("void")
+                    || !bag.isRegistered())
+                continue;
             ModelLoader.registerItemVariants(bag.getTier1());
             ModelLoader.setCustomModelResourceLocation(bag.getTier1(), 0, new ModelResourceLocation(Defaults.MODID + ":" + bag.getColor(), "inventory"));
             ModelLoader.registerItemVariants(bag.getTier2());
@@ -110,7 +165,8 @@ public class ModItems {
     }
 
     private static void newBag(Item t1, Item t2, String color, boolean register) {
-        bags.add(new Bags(t1, t2, color, register));
+        bags.put(color, new Bags(t1, t2, color, register));
+        //bags.add(new Bags(t1, t2, color, register));
     }
 
     static void fillTiers() {
@@ -229,125 +285,6 @@ public class ModItems {
             newBag(white, whiteT2, "white");
             newBag(yellow, yellowT2, "yellow");
         }
-    }
-
-    public static int getWoolForColor(String color) {
-        int wool = 0;
-        if (color.equalsIgnoreCase("black")) {
-            wool = 15;
-        }
-        if (color.equalsIgnoreCase("red")) {
-            wool = 14;
-        }
-        if (color.equalsIgnoreCase("brown")) {
-            wool = 12;
-        }
-        if (color.equalsIgnoreCase("blue")) {
-            wool = 11;
-        }
-        if (color.equalsIgnoreCase("cyan")) {
-            wool = 9;
-        }
-        if (color.equalsIgnoreCase("gray")) {
-            wool = 7;
-        }
-        if (color.equalsIgnoreCase("green")) {
-            wool = 13;
-        }
-        if (color.equalsIgnoreCase("lightBlue")) {
-            wool = 3;
-        }
-        if (color.equalsIgnoreCase("lime")) {
-            wool = 5;
-        }
-        if (color.equalsIgnoreCase("magenta")) {
-            wool = 2;
-        }
-        if (color.equalsIgnoreCase("orange")) {
-            wool = 1;
-        }
-        if (color.equalsIgnoreCase("pink")) {
-            wool = 6;
-        }
-        if (color.equalsIgnoreCase("purple")) {
-            wool = 10;
-        }
-        if (color.equalsIgnoreCase("silver")) {
-            wool = 8;
-        }
-        if (color.equalsIgnoreCase("white")) {
-            wool = 0;
-        }
-        if (color.equalsIgnoreCase("yellow")) {
-            wool = 4;
-        }
-
-
-        if (color.equalsIgnoreCase("ender")) {
-            wool = 16;
-        }
-        if (color.equalsIgnoreCase("void")) {
-            wool = 17;
-        }
-        return wool;
-    }
-
-    static void getDescriptions() {
-        if (!ModConfig.blackInfo.isEmpty()) {
-            bagInfo[15] = ModConfig.blackInfo;
-        }
-        if (!ModConfig.redInfo.isEmpty()) {
-            bagInfo[14] = ModConfig.redInfo;
-        }
-        if (!ModConfig.brownInfo.isEmpty()) {
-            bagInfo[12] = ModConfig.brownInfo;
-        }
-        if (!ModConfig.blueInfo.isEmpty()) {
-            bagInfo[11] = ModConfig.blueInfo;
-        }
-        if (!ModConfig.cyanInfo.isEmpty()) {
-            bagInfo[9] = ModConfig.cyanInfo;
-        }
-        if (!ModConfig.grayInfo.isEmpty()) {
-            bagInfo[7] = ModConfig.grayInfo;
-        }
-        if (!ModConfig.greenInfo.isEmpty()) {
-            bagInfo[13] = ModConfig.greenInfo;
-        }
-        if (!ModConfig.lightBlueInfo.isEmpty()) {
-            bagInfo[3] = ModConfig.lightBlueInfo;
-        }
-        if (!ModConfig.limeInfo.isEmpty()) {
-            bagInfo[5] = ModConfig.limeInfo;
-        }
-        if (!ModConfig.magentaInfo.isEmpty()) {
-            bagInfo[2] = ModConfig.magentaInfo;
-        }
-        if (!ModConfig.orangeInfo.isEmpty()) {
-            bagInfo[1] = ModConfig.orangeInfo;
-        }
-        if (!ModConfig.pinkInfo.isEmpty()) {
-            bagInfo[6] = ModConfig.pinkInfo;
-        }
-        if (!ModConfig.purpleInfo.isEmpty()) {
-            bagInfo[10] = ModConfig.purpleInfo;
-        }
-        if (!ModConfig.silverInfo.isEmpty()) {
-            bagInfo[8] = ModConfig.silverInfo;
-        }
-        if (!ModConfig.whiteInfo.isEmpty()) {
-            bagInfo[0] = ModConfig.whiteInfo;
-        }
-        if (!ModConfig.yellowInfo.isEmpty()) {
-            bagInfo[4] = ModConfig.yellowInfo;
-        }
-        if(!ModConfig.enderInfo.isEmpty()) {
-            bagInfo[16] = ModConfig.enderInfo;
-        }
-        if(!ModConfig.voidInfo.isEmpty()) {
-            bagInfo[17] = ModConfig.voidInfo;
-        }
-
     }
 
 }
