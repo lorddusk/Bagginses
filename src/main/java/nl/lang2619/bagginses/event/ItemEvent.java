@@ -1,16 +1,17 @@
-package nl.lang2619.bagginses.helpers;
+package nl.lang2619.bagginses.event;
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import nl.lang2619.bagginses.helpers.NBTHelper;
 import nl.lang2619.bagginses.items.bags.container.BagContainer;
 
 /**
  * Created by Tim on 4/13/2015.
  */
 public class ItemEvent {
+
     @SubscribeEvent
-    public void onItemTossEvent(ItemTossEvent itemTossEvent)
-    {
+    public void onItemTossEvent(ItemTossEvent itemTossEvent) {
         NBTHelper.clearStatefulNBTTags(itemTossEvent.getEntityItem().getEntityItem());
 
         //Close the Alchemical Bag GUI when the Alchemical bag is tossed

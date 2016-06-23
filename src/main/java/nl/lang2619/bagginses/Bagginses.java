@@ -48,56 +48,17 @@ public class Bagginses {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
-        path = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Defaults.MODID.toLowerCase() + File.separator;
-        ConfigHandler.init(path);
-
-        ModItems.init();
-
-        if(event.getSide() == Side.CLIENT){
-            ModItems.registerModels();
-        }
+        proxy.preInit(event);
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        proxy.registerEvents();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
-        MinecraftForge.EVENT_BUS.register(this);
-
-        MinecraftForge.EVENT_BUS.register(new TooltipEventHandler());
-        
-        MinecraftForge.EVENT_BUS.register(new AchievementEventHandler());
-
-        MinecraftForge.EVENT_BUS.register(new SoulBoundEventHandler());
-
-        MinecraftForge.EVENT_BUS.register(new ItemDropEvent());
-
-        MinecraftForge.EVENT_BUS.register(new PlayerServerEventHandler());
-
-        INSTANCE.registerMessage(BagDescMessage.MyMessageHandler.class, BagDescMessage.class, 0, Side.CLIENT);
-
-        Achievements.init();
+        proxy.init(event);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        BlockList.addFromString(ModConfig.black, "black");
-        BlockList.addFromString(ModConfig.red, "red");
-        BlockList.addFromString(ModConfig.brown, "brown");
-        BlockList.addFromString(ModConfig.blue, "blue");
-        BlockList.addFromString(ModConfig.cyan, "cyan");
-        BlockList.addFromString(ModConfig.gray, "gray");
-        BlockList.addFromString(ModConfig.green, "green");
-        BlockList.addFromString(ModConfig.lightBlue, "lightBlue");
-        BlockList.addFromString(ModConfig.lime, "lime");
-        BlockList.addFromString(ModConfig.magenta, "magenta");
-        BlockList.addFromString(ModConfig.orange, "orange");
-        BlockList.addFromString(ModConfig.pink, "pink");
-        BlockList.addFromString(ModConfig.purple, "purple");
-        BlockList.addFromString(ModConfig.silver, "silver");
-        BlockList.addFromString(ModConfig.white, "white");
-        BlockList.addFromString(ModConfig.yellow, "yellow");
+        proxy.postInit(event);
     }
 
 }

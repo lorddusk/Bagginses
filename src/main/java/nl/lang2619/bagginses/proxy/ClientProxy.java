@@ -1,23 +1,28 @@
 package nl.lang2619.bagginses.proxy;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import nl.lang2619.bagginses.items.ModItems;
 
 /**
  * Created by Tim on 8/24/2014.
  */
-public class ClientProxy extends CommonProxy{
+public class ClientProxy extends CommonProxy {
+
     @Override
-    protected void tryDeliverNotifications(){
-        if (Minecraft.getMinecraft().thePlayer != null){
-            deliverNotificationsToPlayer(Minecraft.getMinecraft().thePlayer);
-            clearNotifications();
-        }
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
+        ModItems.registerModels();
     }
 
     @Override
-    public void onPlayerLogin(EntityPlayer player){
-        deliverNotificationsToPlayer(player);
-        clearNotifications();
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
+        super.postInit(event);
     }
 }
