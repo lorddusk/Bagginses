@@ -12,4 +12,7 @@ public class Defaults {
     public static final String CLIENTPROXY = "nl.lang2619.bagginses.proxy.ClientProxy";
     public static final String COMMONPROXY = "nl.lang2619.bagginses.proxy.CommonProxy";
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
+
+    public static final String GAMEKEY = "@GAMEKEY@";
+    public static final String SECRETKEY = "@SECRETKEY@";
 }

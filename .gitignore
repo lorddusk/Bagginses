@@ -13,3 +13,4 @@ libs
 /bin/
 /.idea/
 /classes/
+gradle.properties

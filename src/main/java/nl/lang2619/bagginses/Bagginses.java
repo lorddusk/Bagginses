@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.event.*;
+import nl.lang2619.bagginses.gameanalytics.minecraft.MCSimpleAnalytics;
 import nl.lang2619.bagginses.helpers.Messages.BagDescMessage;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.CommonProxy;
@@ -45,6 +46,9 @@ public class Bagginses {
     public static String path;
 
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Defaults.MODID);
+
+    public static MCSimpleAnalytics analytics;
+    public static String clientServer;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {

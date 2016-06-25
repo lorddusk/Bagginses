@@ -11,6 +11,7 @@ import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import nl.lang2619.bagginses.Bagginses;
 
 import java.util.ListIterator;
 
@@ -61,6 +62,7 @@ public class SoulBoundEventHandler {
             ItemStack item = ei.getEntityItem();
             if(isSoulBound(item)) {
                 if (addToPlayerInventory(evt.getEntityPlayer(), item)) {
+                    Bagginses.analytics.eventDesign("playerDied:Soulbound");
                     iter.remove();
                 }
             }

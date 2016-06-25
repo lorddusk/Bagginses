@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagMode;
@@ -26,8 +27,10 @@ public class ItemDropEvent {
                 if (bag.getMode() == BagMode.PICKUP) {
                     if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
                         for(int i = 0; i < event.getDrops().size(); i++) {
-                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i).getEntityItem()) == null)
+                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i).getEntityItem()) == null) {
                                 event.getDrops().remove(0);
+                                Bagginses.analytics.eventDesign("ItemPickup:ENDER");
+                            }
                         }
                     } else {
                         //TODO
@@ -49,8 +52,10 @@ public class ItemDropEvent {
                 if (bag.getMode() == BagMode.PICKUP) {
                     if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
                         for(int i = 0; i < event.getDrops().size(); i++) {
-                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i)) == null)
+                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i)) == null) {
                                 event.getDrops().remove(0);
+                                Bagginses.analytics.eventDesign("ItemPickup:ENDER");
+                            }
                         }
                     } else {
                         //TODO

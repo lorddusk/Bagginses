@@ -10,7 +10,7 @@ import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.event.*;
-import nl.lang2619.bagginses.event.ItemEvent;
+import nl.lang2619.bagginses.gameanalytics.minecraft.MCSimpleAnalytics;
 import nl.lang2619.bagginses.helpers.Messages.BagDescMessage;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.references.Achievements;
@@ -28,6 +28,9 @@ public class CommonProxy {
         Bagginses.path = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Defaults.MODID.toLowerCase() + File.separator;
         ConfigHandler.init(Bagginses.path);
 
+        Bagginses.analytics = new MCSimpleAnalytics(Defaults.VERSION, Defaults.GAMEKEY, Defaults.SECRETKEY);
+        Bagginses.analytics.eventDesign(Defaults.VERSION + ":ModStarted:" + Bagginses.analytics.userPrefix(), Bagginses.analytics.userPrefix());
+
         ModItems.init();
 
         if(event.getSide() == Side.CLIENT){
@@ -37,7 +40,7 @@ public class CommonProxy {
 
     public void init(FMLInitializationEvent event) {
         registerEvents();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, Bagginses.guiHandler);
+        NetworkRegistry.INSTANCE.registerGuiHandler(Bagginses.instance, Bagginses.guiHandler);
 
         Bagginses.INSTANCE.registerMessage(BagDescMessage.MyMessageHandler.class, BagDescMessage.class, 0, Side.CLIENT);
 
