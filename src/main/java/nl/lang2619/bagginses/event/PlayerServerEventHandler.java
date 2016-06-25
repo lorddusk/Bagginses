@@ -28,7 +28,7 @@ public class PlayerServerEventHandler {
 
     @SubscribeEvent
     public void playerJoin(PlayerEvent.PlayerLoggedInEvent e) {
-        Bagginses.analytics.eventDesign("playerJoin:server");
+        Bagginses.analytics.eventDesign("playerJoin:server", Bagginses.analytics.userPrefix());
         Bagginses.INSTANCE.sendTo(new BagDescMessage(), (EntityPlayerMP) e.player);
     }
 }

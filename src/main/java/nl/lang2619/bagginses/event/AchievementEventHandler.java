@@ -1,5 +1,6 @@
 package nl.lang2619.bagginses.event;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import nl.lang2619.bagginses.Bagginses;
@@ -17,7 +18,7 @@ public class AchievementEventHandler {
         if (e.crafting.getItem() instanceof Bag) {
             e.player.addStat(Achievements.firstBag);
             Bag bag = (Bag) e.crafting.getItem();
-            Bagginses.analytics.eventDesign("BagCrafted:" + bag.getType().name().toLowerCase() + ":" + bag.getColor());
+            Bagginses.analytics.eventDesign("BagCrafted:" + bag.getType().name().toLowerCase() + bag.getColor() + ":" + (isSoulBound(e.crafting) ? "soulbound" : "notSoulbound"), Bagginses.analytics.userPrefix());
             if (((Bag) e.crafting.getItem()).getType() == BagTypes.VOID) {
                 e.player.addStat(Achievements.voidBag);
             }
@@ -28,5 +29,19 @@ public class AchievementEventHandler {
                 e.player.addStat(Achievements.tier2Bag);
             }
         }
+    }
+
+    private boolean isSoulBound(ItemStack stack) {
+        try {
+            if (stack != null
+                    && stack.getTagCompound() != null
+                    && stack.getTagCompound().hasKey("soulbound")
+                    && stack.getTagCompound().getBoolean("soulbound")) {
+                return true;
+            }
+        } catch (Exception e){
+
+        }
+        return false;
     }
 }

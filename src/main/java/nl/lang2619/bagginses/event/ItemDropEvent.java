@@ -29,7 +29,7 @@ public class ItemDropEvent {
                         for(int i = 0; i < event.getDrops().size(); i++) {
                             if(player.getInventoryEnderChest().addItem(event.getDrops().get(i).getEntityItem()) == null) {
                                 event.getDrops().remove(0);
-                                Bagginses.analytics.eventDesign("ItemPickup:ENDER");
+                                Bagginses.analytics.eventDesign("ItemPickup:ENDER", Bagginses.analytics.userPrefix());
                             }
                         }
                     } else {
@@ -54,7 +54,7 @@ public class ItemDropEvent {
                         for(int i = 0; i < event.getDrops().size(); i++) {
                             if(player.getInventoryEnderChest().addItem(event.getDrops().get(i)) == null) {
                                 event.getDrops().remove(0);
-                                Bagginses.analytics.eventDesign("ItemPickup:ENDER");
+                                Bagginses.analytics.eventDesign("ItemPickup:ENDER", Bagginses.analytics.userPrefix());
                             }
                         }
                     } else {

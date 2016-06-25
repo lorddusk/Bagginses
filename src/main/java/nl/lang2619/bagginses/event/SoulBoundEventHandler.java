@@ -1,6 +1,5 @@
 package nl.lang2619.bagginses.event;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -62,7 +61,7 @@ public class SoulBoundEventHandler {
             ItemStack item = ei.getEntityItem();
             if(isSoulBound(item)) {
                 if (addToPlayerInventory(evt.getEntityPlayer(), item)) {
-                    Bagginses.analytics.eventDesign("playerDied:Soulbound");
+                    Bagginses.analytics.eventDesign("playerDied:Soulbound", Bagginses.analytics.userPrefix());
                     iter.remove();
                 }
             }
