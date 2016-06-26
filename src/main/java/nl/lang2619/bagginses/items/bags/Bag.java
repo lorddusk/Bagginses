@@ -10,15 +10,16 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.config.ModConfig;
-import nl.lang2619.bagginses.helpers.*;
+import nl.lang2619.bagginses.helpers.ChatUtils;
+import nl.lang2619.bagginses.helpers.ItemHelper;
+import nl.lang2619.bagginses.helpers.NBTHelper;
+import nl.lang2619.bagginses.helpers.Names;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.GuiInfo;
 import nl.lang2619.bagginses.references.BagMode;
 import nl.lang2619.bagginses.references.BagTypes;
-import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -114,12 +115,23 @@ public class Bag extends Item {
         super.addInformation(stack, player, list, advanced);
         //TODO
         try {
+            String msg = "";
             if (ModItems.bags.get(color).getServerDesc() != null
                     && !ModItems.bags.get(color).getServerDesc().equals("")) {
-                list.add(ChatFormatting.AQUA + ModItems.bags.get(color).getServerDesc());
+                msg = ModItems.bags.get(color).getServerDesc();
             } else if (ModItems.bags.get(color).getDesc() != null
                     && !ModItems.bags.get(color).getDesc().equals("")) {
-                list.add(ChatFormatting.AQUA + ModItems.bags.get(color).getDesc());
+                msg = ModItems.bags.get(color).getDesc();
+            }
+
+            if (!("").equals(msg)) {
+                String[] parts = msg.split("\n");
+                for (int i = 0; i < Math.max(3, parts.length); i++) {
+                    if (parts[i] != null
+                            && !("").equals(parts[i])) {
+                        list.add(parts[i]);
+                    }
+                }
             }
         }
         catch (NullPointerException e) {
