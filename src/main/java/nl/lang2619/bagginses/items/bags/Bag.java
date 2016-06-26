@@ -126,7 +126,7 @@ public class Bag extends Item {
 
             if (!("").equals(msg)) {
                 String[] parts = msg.split("\n");
-                for (int i = 0; i < Math.max(3, parts.length); i++) {
+                for (int i = 0; i < Math.min(3, parts.length); i++) {
                     if (parts[i] != null
                             && !("").equals(parts[i])) {
                         list.add(parts[i]);
