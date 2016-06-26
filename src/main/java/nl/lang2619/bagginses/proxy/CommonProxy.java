@@ -18,6 +18,8 @@ import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.Defaults;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * Created by Tim on 8/24/2014.
@@ -25,6 +27,12 @@ import java.io.File;
 public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
+        //Stops "Failed to send analytics event data"
+        System.setErr(new PrintStream(new OutputStream() {
+            public void write(int b) {
+            }
+        }));
+        
         Bagginses.path = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Defaults.MODID.toLowerCase() + File.separator;
         ConfigHandler.init(Bagginses.path);
 

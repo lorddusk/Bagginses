@@ -1,15 +1,18 @@
 package nl.lang2619.bagginses.event;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.references.BagMode;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Stolen with love from Modular Utilities
@@ -21,24 +24,18 @@ public class ItemDropEvent {
     public void onLivingDrops(LivingDropsEvent event) {
         if(event.getSource().getDamageType() == "player") {
             EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
-
-            if(player.inventory.offHandInventory[0].getItem() instanceof Bag) {
-                Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
-                if (bag.getMode() == BagMode.PICKUP) {
-                    if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
-                        for(int i = 0; i < event.getDrops().size(); i++) {
-                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i).getEntityItem()) == null) {
-                                event.getDrops().remove(0);
-                                Bagginses.analytics.eventDesign("ItemPickup:ENDER", Bagginses.analytics.userPrefix());
-                            }
-                        }
-                    } else {
-                        //TODO
-                    /*for(int i = 0; i < event.getDrops().size(); i++) {
-                        Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
-                    }*/
-                    }
+            if(doItemsMatch(player.getHeldItemOffhand(), ModItems.ender)) {
+                Bag bag = (Bag) player.getHeldItemOffhand().getItem();
+                if (bag.getMode() != BagMode.PICKUP)
+                    return;
+                Iterator<EntityItem> drops = event.getDrops().iterator();
+                ArrayList<EntityItem> toRemove = new ArrayList<EntityItem>();
+                while(drops.hasNext()) {
+                    EntityItem current = drops.next();
+                    if(player.getInventoryEnderChest().addItem(current.getEntityItem()) == null)
+                        toRemove.add(current);
                 }
+                event.getDrops().removeAll(toRemove);
             }
         }
     }
@@ -47,24 +44,19 @@ public class ItemDropEvent {
     public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
         if(event.getHarvester() != null) {
             EntityPlayer player = event.getHarvester();
-            if(player.inventory.offHandInventory[0].getItem() instanceof Bag) {
-                Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
-                if (bag.getMode() == BagMode.PICKUP) {
-                    if (doItemsMatch(player.inventory.offHandInventory[0], ModItems.ender)) {
-                        for(int i = 0; i < event.getDrops().size(); i++) {
-                            if(player.getInventoryEnderChest().addItem(event.getDrops().get(i)) == null) {
-                                event.getDrops().remove(0);
-                                Bagginses.analytics.eventDesign("ItemPickup:ENDER", Bagginses.analytics.userPrefix());
-                            }
-                        }
-                    } else {
-                        //TODO
-                    /*for(int i = 0; i < event.getDrops().size(); i++) {
-                        Bag bag = (Bag) player.inventory.offHandInventory[0].getItem();
-
-                    }*/
+            if(doItemsMatch(player.getHeldItemOffhand(), ModItems.ender)) {
+                Bag bag = (Bag) player.getHeldItemOffhand().getItem();
+                if (bag.getMode() != BagMode.PICKUP)
+                    return;
+                Iterator<ItemStack> drops = event.getDrops().iterator();
+                ArrayList<ItemStack> toRemove = new ArrayList<ItemStack>();
+                while(drops.hasNext()) {
+                    ItemStack current = drops.next();
+                    if(player.getInventoryEnderChest().addItem(current) == null) {
+                        toRemove.add(current);
                     }
                 }
+                event.getDrops().removeAll(toRemove);
             }
         }
     }
