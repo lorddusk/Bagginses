@@ -113,7 +113,9 @@ public class Bag extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         super.addInformation(stack, player, list, advanced);
-        //TODO
+        if (isSoulBound(stack)) {
+            list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");
+        }
         try {
             String msg = "";
             if (ModItems.bags.get(color).getServerDesc() != null
@@ -128,7 +130,7 @@ public class Bag extends Item {
                 String[] parts = msg.split("\n");
                 for (int i = 0; i < Math.min(3, parts.length); i++) {
                     if (parts[i] != null
-                            && !("").equals(parts[i])) {
+                    && !("").equals(parts[i])) {
                         list.add(parts[i]);
                     }
                 }
@@ -138,17 +140,14 @@ public class Bag extends Item {
             //Ignore
         }
 
-        if (type == BagTypes.TIER1)
+        /*if (type == BagTypes.TIER1)
             list.add("Tier 1");
         if (type == BagTypes.TIER2)
             list.add("Tier 2");
         if (type == BagTypes.VOID)
             list.add("Void Bag");
         if (type == BagTypes.ENDER)
-            list.add("Ender Chest Bag");
-        if (isSoulBound(stack)) {
-            list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");
-        }
+            list.add("Ender Chest Bag");*/
     }
 
     private boolean isSoulBound(ItemStack stack) {

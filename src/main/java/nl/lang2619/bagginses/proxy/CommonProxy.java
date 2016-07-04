@@ -32,7 +32,7 @@ public class CommonProxy {
             public void write(int b) {
             }
         }));
-        
+
         Bagginses.path = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Defaults.MODID.toLowerCase() + File.separator;
         ConfigHandler.init(Bagginses.path);
 
