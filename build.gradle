@@ -21,7 +21,7 @@ plugins {
 }
 */
 
-version = "3.0.1"
+version = "3.0.1a"
 group= "nl.lang2619.bagginses" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Bagginses"
 

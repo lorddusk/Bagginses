@@ -54,6 +54,9 @@ public class Bag extends Item {
     }
 
     public String getUnlocalizedName(ItemStack itemStack) {
+        if (type == BagTypes.TIER2) {
+            return "backpack_" + color + "T2";
+        }
         return "backpack_" + color;
     }
 
