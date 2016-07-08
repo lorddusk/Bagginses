@@ -28,6 +28,9 @@ public class AchievementEventHandler {
             else if (((Bag) e.crafting.getItem()).getType() == BagTypes.TIER2) {
                 e.player.addStat(Achievements.tier2Bag);
             }
+            else if (((Bag) e.crafting.getItem()).getType() == BagTypes.TIER3) {
+                e.player.addStat(Achievements.tier3Bag);
+            }
         }
     }
 

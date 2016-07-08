@@ -56,6 +56,8 @@ public class Bag extends Item {
     public String getUnlocalizedName(ItemStack itemStack) {
         if (type == BagTypes.TIER2) {
             return "backpack_" + color + "T2";
+        } else if (type == BagTypes.TIER3) {
+            return "backpack_" + color + "T3";
         }
         return "backpack_" + color;
     }
@@ -92,6 +94,8 @@ public class Bag extends Item {
                 player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK, world, 0, 0, 0);
             if (type == BagTypes.TIER2)
                 player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T2, world, 0, 0, 0);
+            if (type == BagTypes.TIER3)
+                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T3, world, 0, 0, 0);
             if (type == BagTypes.VOID)
                 player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_VOID, world, 0, 0, 0);
             if(type == BagTypes.ENDER) {
@@ -133,7 +137,7 @@ public class Bag extends Item {
                 String[] parts = msg.split("\n");
                 for (int i = 0; i < Math.min(3, parts.length); i++) {
                     if (parts[i] != null
-                    && !("").equals(parts[i])) {
+                            && !("").equals(parts[i])) {
                         list.add(parts[i]);
                     }
                 }
@@ -147,6 +151,8 @@ public class Bag extends Item {
             list.add("Tier 1");
         if (type == BagTypes.TIER2)
             list.add("Tier 2");
+        if (type == BagTypes.TIER3)
+            list.add("Tier 3");
         if (type == BagTypes.VOID)
             list.add("Void Bag");
         if (type == BagTypes.ENDER)

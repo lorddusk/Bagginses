@@ -13,6 +13,7 @@ public class Achievements {
     public static Achievement voidBag;
     public static Achievement enderBag;
     public static Achievement tier2Bag;
+    public static Achievement tier3Bag;
 
     public static void init() {
         firstBag = new Achievement("achievement.firstbag", "firstbag", 0, 0, ModItems.foid, null);
@@ -27,12 +28,15 @@ public class Achievements {
         tier2Bag = new Achievement("achievement.tier2bag", "tier2bag", 0, -2, ModItems.foid, firstBag);
         tier2Bag.registerStat();
 
+        tier3Bag = new Achievement("achievement.tier3bag", "tier3bag", 2, -4, ModItems.foid, tier2Bag);
+
         AchievementPage.registerAchievementPage(
                 new AchievementPage("Bagginses",
                         new Achievement[] {
                                 firstBag,
                         voidBag,
                         enderBag,
-                        tier2Bag}));
+                        tier2Bag,
+                        tier3Bag}));
     }
 }

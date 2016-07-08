@@ -9,14 +9,16 @@ public class Bags {
 
     private Item tier1;
     private Item tier2;
+    private Item tier3;
     private String color;
     private boolean registered;
     private String desc;
     private String serverDesc;
 
-    public Bags(Item tier1, Item tier2, String color, boolean registered) {
+    public Bags(Item tier1, Item tier2, Item tier3, String color, boolean registered) {
         this.tier1 = tier1;
         this.tier2 = tier2;
+        this.tier3 = tier3;
         this.color = color;
         this.registered = registered;
     }
@@ -35,6 +37,14 @@ public class Bags {
 
     public void setTier2(Item tier2) {
         this.tier2 = tier2;
+    }
+
+    public Item getTier3() {
+        return tier3;
+    }
+
+    public void setTier3(Item tier3) {
+        this.tier3 = tier3;
     }
 
     public String getColor() {

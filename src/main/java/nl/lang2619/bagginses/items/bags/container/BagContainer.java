@@ -22,8 +22,8 @@ import java.util.UUID;
  * Created by Tim on 8-2-2015.
  */
 public class BagContainer extends ContainerBagginses {
-    int startX = 0;
-    int startY = 0;
+    int bagStartX = 0;
+    int bagStartY = 0;
 
     private final EntityPlayer entityPlayer;
     public final InventoryBag inventoryBag;
@@ -48,15 +48,15 @@ public class BagContainer extends ContainerBagginses {
 
         bagInventoryRows = type.getRows();
         bagInventoryColumns = type.getColumns();
-        startX = type.getStartX();
-        startY = type.getStartY();
+        bagStartX = type.getBagStartX();
+        bagStartY = type.getBagStartY();
 
         int i = 0;
 
         //Inventory
         for (int bagRowIndex = 0; bagRowIndex < bagInventoryRows; ++bagRowIndex) {
             for (int bagColumnIndex = 0; bagColumnIndex < bagInventoryColumns; ++bagColumnIndex) {
-                this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, startX + bagColumnIndex * 18, startY + bagRowIndex * 18));
+                this.addSlotToContainer(new SlotBag(this, inventoryBag, entityPlayer, bagColumnIndex + bagRowIndex * bagInventoryColumns, bagStartX + bagColumnIndex * 18, bagStartY + bagRowIndex * 18));
                 i++;
             }
         }
@@ -64,13 +64,13 @@ public class BagContainer extends ContainerBagginses {
         //PlayerInventory
         for (int inventoryRowIndex = 0; inventoryRowIndex < PLAYER_INVENTORY_ROWS; ++inventoryRowIndex) {
             for (int inventoryColumnIndex = 0; inventoryColumnIndex < PLAYER_INVENTORY_COLUMNS; ++inventoryColumnIndex) {
-                this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 84 + inventoryRowIndex * 18));
+                this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 30 + (18* bagInventoryRows) + inventoryRowIndex * 18));
             }
         }
 
         //Hotbar
         for (int actionBarSlotIndex = 0; actionBarSlotIndex < PLAYER_INVENTORY_COLUMNS; ++actionBarSlotIndex) {
-            this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 142));
+            this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 30 + (18* bagInventoryRows) + 58));
         }
         blockedSlot = entityPlayer.inventory.currentItem + 27 + i;
     }

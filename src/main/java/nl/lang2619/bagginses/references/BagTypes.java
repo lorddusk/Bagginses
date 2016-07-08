@@ -6,20 +6,23 @@ package nl.lang2619.bagginses.references;
 public enum BagTypes {
     TIER1(3, 5, 44, 19),
     TIER2(3, 9, 8, 19),
+    TIER3(4, 9, 8, 19),
     VOID(1, 1, 80, 37),
     ENDER(0, 0, 0, 0);
 
-    BagTypes(int rows, int columns, int startX, int startY) {
+    BagTypes(int rows, int columns, int bagStartX, int bagStartY) {
         this.rows = rows;
         this.columns = columns;
-        this.startX = startX;
-        this.startY = startY;
+        this.bagStartX = bagStartX;
+        this.bagStartY = bagStartY;
     }
 
     private int rows;
     private int columns;
-    private int startX;
-    private int startY;
+    private int bagStartX;
+    private int bagStartY;
+    private int invStartX;
+    private int invStartY;
 
     public int getRows() {
         return rows;
@@ -33,11 +36,11 @@ public enum BagTypes {
         return columns * rows;
     }
 
-    public int getStartX() {
-        return startX;
+    public int getBagStartX() {
+        return bagStartX;
     }
 
-    public int getStartY() {
-        return startY;
+    public int getBagStartY() {
+        return bagStartY;
     }
 }

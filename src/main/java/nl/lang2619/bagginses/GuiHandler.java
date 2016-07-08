@@ -27,6 +27,9 @@ public class GuiHandler implements IGuiHandler {
         if (ID == GuiInfo.GUI_BACKPACK_T2) {
             return new BagContainer(player, new InventoryBag(getStack(player)));
         }
+        if (ID == GuiInfo.GUI_BACKPACK_T3) {
+            return new BagContainer(player, new InventoryBag(getStack(player)));
+        }
         return null;
     }
 
@@ -39,6 +42,9 @@ public class GuiHandler implements IGuiHandler {
             return new BagGui(player, new InventoryBag(getStack(player)));
         }
         if (ID == GuiInfo.GUI_BACKPACK_T2) {
+            return new BagGui(player, new InventoryBag(getStack(player)));
+        }
+        if (ID == GuiInfo.GUI_BACKPACK_T3) {
             return new BagGui(player, new InventoryBag(getStack(player)));
         }
         return null;
