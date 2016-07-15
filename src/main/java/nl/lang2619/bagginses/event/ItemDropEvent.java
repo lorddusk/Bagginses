@@ -22,13 +22,15 @@ import java.util.Iterator;
  */
 public class ItemDropEvent {
 
+    //TODO add bags in hotbar too
+
     @SubscribeEvent
     public void onLivingDrops(LivingDropsEvent event) {
         if(event.getSource().getDamageType() == "player") {
             EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
-            if (isItemNonNull(player.getHeldItemOffhand())
-                    && player.getHeldItemOffhand().getItem() instanceof Bag) {
-                Bag bag = (Bag) player.getHeldItemOffhand().getItem();
+            ItemStack bagStack = getBag(player);
+            if (bagStack != null) {
+                Bag bag = (Bag) bagStack.getItem();
                 //Only want pickup
                 if (bag.getMode() != BagMode.PICKUP)
                     return;
@@ -46,7 +48,7 @@ public class ItemDropEvent {
                     }
                 } else {
                     BagTypes type = bag.getType();
-                    InventoryBag inv = new InventoryBag(player.getHeldItemOffhand());
+                    InventoryBag inv = new InventoryBag(bagStack);
                     BagContainer container = new BagContainer(player, inv);
                     while(drops.hasNext()) {
                         EntityItem stack = drops.next();
@@ -83,10 +85,9 @@ public class ItemDropEvent {
     @SubscribeEvent
     public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
         if(event.getHarvester() != null) {
-            EntityPlayer player = event.getHarvester();
-            if (isItemNonNull(player.getHeldItemOffhand())
-                    && player.getHeldItemOffhand().getItem() instanceof Bag) {
-                Bag bag = (Bag) player.getHeldItemOffhand().getItem();
+            ItemStack bagStack = getBag(event.getHarvester());
+            if (bagStack != null) {
+                Bag bag = (Bag) bagStack.getItem();
                 //Only want pickup
                 if (bag.getMode() != BagMode.PICKUP)
                     return;
@@ -98,14 +99,14 @@ public class ItemDropEvent {
                 if (bag.getType() == BagTypes.ENDER) {
                     while(drops.hasNext()) {
                         ItemStack stack = drops.next();
-                        if(player.getInventoryEnderChest().addItem(stack) == null) {
+                        if(event.getHarvester().getInventoryEnderChest().addItem(stack) == null) {
                             toRemove.add(stack);
                         }
                     }
                 } else {
                     BagTypes type = bag.getType();
-                    InventoryBag inv = new InventoryBag(player.getHeldItemOffhand());
-                    BagContainer container = new BagContainer(player, inv);
+                    InventoryBag inv = new InventoryBag(bagStack);
+                    BagContainer container = new BagContainer(event.getHarvester(), inv);
                     while(drops.hasNext()) {
                         ItemStack stack = drops.next();
                         for (int i = 0; i < type.getColumns() * type.getRows(); i++) {
@@ -144,5 +145,19 @@ public class ItemDropEvent {
 
     public static boolean isItemNonNull(ItemStack itemStack) {
         return itemStack != null && itemStack.getItem() != null;
+    }
+
+    public static ItemStack getBag(EntityPlayer player) {
+        if (isItemNonNull(player.getHeldItemOffhand())
+                && player.getHeldItemOffhand().getItem() instanceof Bag)
+            return player.getHeldItemOffhand();
+
+        for (int i = 0; i < 9; i++) {
+            if (isItemNonNull(player.inventory.getStackInSlot(i))
+                    && player.inventory.getStackInSlot(i).getItem() instanceof Bag)
+                return player.inventory.getStackInSlot(i);
+        }
+
+        return null;
     }
 }

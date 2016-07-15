@@ -26,8 +26,7 @@ public class ModConfig {
             orange,
             white;
     public static boolean whitelist;
-    public static boolean soulbound, bagPickUp;
-    public static boolean analytics;
+    public static boolean bagPickUp, hotbarBagPickUp, soulbound, analytics;
     public static final String CATEGORY_WHITELIST = "whitelist";
     public static final String CATEGORY_MISC = "miscellaneous config options";
 
@@ -57,6 +56,7 @@ public class ModConfig {
 
         config.setCategoryComment(CATEGORY_MISC, "Miscellaneous config options related to the mod");
         bagPickUp = config.get(CATEGORY_MISC, "Should bags be able to pick up items when dropped", true).getBoolean();
+        hotbarBagPickUp = config.get(CATEGORY_MISC, "Should bag pickup be enabled for bags in your hotbar?", true).getBoolean();
         soulbound = config.get(CATEGORY_MISC, "Should soulbound bags be enabled?", true).getBoolean();
         analytics = config.get(CATEGORY_MISC, "Do you consent to anonymous usage tracking?", true, "Visit https://github.com/lorddusk/Bagginses/wiki/Analytics for more info").getBoolean();
         if (config.hasChanged())
