@@ -61,16 +61,20 @@ public class BagContainer extends ContainerBagginses {
             }
         }
 
+        int added = 0;
+        if (foid)
+            added = 36;
+
         //PlayerInventory
         for (int inventoryRowIndex = 0; inventoryRowIndex < PLAYER_INVENTORY_ROWS; ++inventoryRowIndex) {
             for (int inventoryColumnIndex = 0; inventoryColumnIndex < PLAYER_INVENTORY_COLUMNS; ++inventoryColumnIndex) {
-                this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 30 + (18* bagInventoryRows) + inventoryRowIndex * 18));
+                this.addSlotToContainer(new Slot(entityPlayer.inventory, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 30 + (18 * bagInventoryRows) + inventoryRowIndex * 18 + added));
             }
         }
 
         //Hotbar
         for (int actionBarSlotIndex = 0; actionBarSlotIndex < PLAYER_INVENTORY_COLUMNS; ++actionBarSlotIndex) {
-            this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 30 + (18* bagInventoryRows) + 58));
+            this.addSlotToContainer(new Slot(entityPlayer.inventory, actionBarSlotIndex, 8 + actionBarSlotIndex * 18, 30 + (18 * bagInventoryRows) + 58 + added));
         }
         blockedSlot = entityPlayer.inventory.currentItem + 27 + i;
     }
