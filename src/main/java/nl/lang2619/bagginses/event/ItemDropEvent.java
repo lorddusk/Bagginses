@@ -154,7 +154,8 @@ public class ItemDropEvent {
 
         for (int i = 0; i < 9; i++) {
             if (isItemNonNull(player.inventory.getStackInSlot(i))
-                    && player.inventory.getStackInSlot(i).getItem() instanceof Bag)
+                    && player.inventory.getStackInSlot(i).getItem() instanceof Bag
+                    && ((Bag) player.inventory.getStackInSlot(i).getItem()).getMode() == BagMode.PICKUP)
                 return player.inventory.getStackInSlot(i);
         }
 
