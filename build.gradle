@@ -25,14 +25,14 @@ version = "3.0.3"
 group= "nl.lang2619.bagginses" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Bagginses"
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 minecraft {
-    version = "1.10-12.18.0.1992-1.10.0"
+    version = "1.10.2-12.18.1.2053"
     runDir = "run"
 
-    mappings = "snapshot_20160520"
+    mappings = "stable_26"
 
     replace "@VERSION@", project.version
     replace "@GAMEKEY@", gamekey

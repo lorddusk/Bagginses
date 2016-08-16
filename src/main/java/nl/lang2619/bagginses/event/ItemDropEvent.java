@@ -58,7 +58,7 @@ public class ItemDropEvent {
                                     inv.setInventorySlotContents(i, stack.getEntityItem());
                                     toRemove.add(stack);
                                     break;
-                                } else if (doStacksMatch(inv.getStackInSlot(i), stack.getEntityItem())) {
+                                } else if (ItemStack.areItemsEqual(inv.getStackInSlot(i), stack.getEntityItem())) {
                                     ItemStack invStack = inv.getStackInSlot(i);
                                     Slot slot = container.getSlot(i);
                                     int resultingStackSize = stack.getEntityItem().stackSize + invStack.stackSize;
@@ -115,7 +115,7 @@ public class ItemDropEvent {
                                     inv.setInventorySlotContents(i, stack);
                                     toRemove.add(stack);
                                     break;
-                                } else if (doStacksMatch(inv.getStackInSlot(i), stack)) {
+                                } else if (ItemStack.areItemsEqual(inv.getStackInSlot(i), stack)) {
                                     ItemStack invStack = inv.getStackInSlot(i);
                                     Slot slot = container.getSlot(i);
                                     int resultingStackSize = stack.stackSize + invStack.stackSize;
@@ -154,11 +154,14 @@ public class ItemDropEvent {
 
         for (int i = 0; i < 9; i++) {
             if (isItemNonNull(player.inventory.getStackInSlot(i))
-                    && player.inventory.getStackInSlot(i).getItem() instanceof Bag
-                    && ((Bag) player.inventory.getStackInSlot(i).getItem()).getMode() == BagMode.PICKUP)
-                return player.inventory.getStackInSlot(i);
+                    && player.inventory.getStackInSlot(i).getItem() instanceof Bag) {
+                if (((Bag) player.inventory.getStackInSlot(i).getItem()).getMode() == BagMode.PICKUP) {
+                    return player.inventory.getStackInSlot(i);
+                } else {
+                    return null;
+                }
+            }
         }
-
         return null;
     }
 }
