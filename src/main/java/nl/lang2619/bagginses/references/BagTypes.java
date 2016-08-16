@@ -21,8 +21,6 @@ public enum BagTypes {
     private int columns;
     private int bagStartX;
     private int bagStartY;
-    private int invStartX;
-    private int invStartY;
 
     public int getRows() {
         return rows;

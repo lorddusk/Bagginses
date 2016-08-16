@@ -28,7 +28,7 @@ public class ContainerBagginses extends Container {
 
         if (itemStack.isStackable()) {
             while (itemStack.stackSize > 0 && (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin)) {
-                slot = (Slot) this.inventorySlots.get(currentSlotIndex);
+                slot = this.inventorySlots.get(currentSlotIndex);
                 stackInSlot = slot.getStack();
 
                 if (slot.isItemValid(itemStack) && ItemHelper.equalsIgnoreStackSize(itemStack, stackInSlot)) {
@@ -56,7 +56,7 @@ public class ContainerBagginses extends Container {
             currentSlotIndex = ascending ? slotMax - 1 : slotMin;
 
             while (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin) {
-                slot = (Slot) this.inventorySlots.get(currentSlotIndex);
+                slot = this.inventorySlots.get(currentSlotIndex);
                 stackInSlot = slot.getStack();
 
                 if (slot.isItemValid(itemStack) && stackInSlot == null) {

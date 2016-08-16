@@ -2,7 +2,6 @@ package nl.lang2619.bagginses.items;
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import nl.lang2619.bagginses.items.bags.Bag;
 
@@ -25,7 +24,7 @@ public class BagRecipe extends ShapelessOreRecipe {
         if (bag != null) {
             if(bag.hasTagCompound()){
                 ItemStack output = getRecipeOutput().copy();
-                output.setTagCompound((NBTTagCompound) bag.getTagCompound().copy());
+                output.setTagCompound(bag.getTagCompound().copy());
                 return output;
             }
         }

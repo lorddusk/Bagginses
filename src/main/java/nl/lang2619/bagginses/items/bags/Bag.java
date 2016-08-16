@@ -120,6 +120,9 @@ public class Bag extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         super.addInformation(stack, player, list, advanced);
+        if (mode != BagMode.DEFAULT) {
+            list.add(ChatFormatting.AQUA + "Mode: " + mode.getName());
+        }
         if (isSoulBound(stack)) {
             list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");
         }

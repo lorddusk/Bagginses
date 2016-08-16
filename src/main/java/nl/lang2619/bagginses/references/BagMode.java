@@ -5,8 +5,8 @@ package nl.lang2619.bagginses.references;
  */
 public enum BagMode {
 
-    DEFAULT("DEFAULT"),
-    PICKUP("PICKUP");
+    DEFAULT("Default"),
+    PICKUP("Pickup");
 
     private static BagMode[] vals = values();
     public BagMode next() {

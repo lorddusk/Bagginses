@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.helpers.BagDescriptions;
 import nl.lang2619.bagginses.helpers.Bags;
@@ -93,7 +94,7 @@ public class ModItems {
 
         upgrade = new Upgrade();
         registerItem(upgrade, ItemInfo.upgrade);
-        GameRegistry.addShapedRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.STRING, 'I', Items.IRON_INGOT, 'W', Blocks.PLANKS);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', Items.STRING, 'I', Items.IRON_INGOT, 'W', "plankWood"));
 
         RecipeSorter.register(Defaults.MODID + ":bag", BagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
         RecipeSorter.register(Defaults.MODID + ":soulboundbag", SoulBoundBagRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");

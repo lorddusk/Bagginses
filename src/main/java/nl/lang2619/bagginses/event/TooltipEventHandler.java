@@ -35,18 +35,10 @@ public class TooltipEventHandler {
     static boolean isItemAllowed(ItemStack stack, String color) {
         if (ModConfig.whitelist) {
             //Whitelist
-            if (BlockList.contains(stack.getItem(), stack.getItemDamage(), color)) {
-                return true;
-            }else{
-                return false;
-            }
+            return BlockList.contains(stack.getItem(), stack.getItemDamage(), color);
         }else{
             //Blacklist
-            if (BlockList.contains(stack.getItem(), stack.getItemDamage(), color)) {
-                return false;
-            }else{
-                return true;
-            }
+            return !BlockList.contains(stack.getItem(), stack.getItemDamage(), color);
         }
     }
 

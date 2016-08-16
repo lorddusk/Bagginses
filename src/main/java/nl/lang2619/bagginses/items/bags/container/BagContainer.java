@@ -108,7 +108,7 @@ public class BagContainer extends ContainerBagginses {
     public ItemStack transferStackInSlot(EntityPlayer p, int slotIndex) {
         if (!foid) {
             ItemStack newItemStack = null;
-            Slot slot = (Slot) inventorySlots.get(slotIndex);
+            Slot slot = inventorySlots.get(slotIndex);
 
             if (slot != null && slot.getHasStack()) {
                 ItemStack itemStack = slot.getStack();
@@ -143,7 +143,7 @@ public class BagContainer extends ContainerBagginses {
 
     private ItemStack transferVoid(EntityPlayer player, int slotIndex) {
         ItemStack originalStack = null;
-        Slot slot = (Slot) inventorySlots.get(slotIndex);
+        Slot slot = inventorySlots.get(slotIndex);
         int numSlots = inventorySlots.size();
         if ((slot != null) && slot.getHasStack()) {
             ItemStack stackInSlot = slot.getStack();
@@ -172,7 +172,7 @@ public class BagContainer extends ContainerBagginses {
 
     private boolean tryShiftItem(ItemStack stackToShift, int numSlots) {
         for (int machineIndex = 0; machineIndex < numSlots - 9 * 4; machineIndex++) {
-            Slot slot = (Slot) inventorySlots.get(machineIndex);
+            Slot slot = inventorySlots.get(machineIndex);
             if (!slot.isItemValid(stackToShift))
                 continue;
             if (shiftItemStack(stackToShift, machineIndex, machineIndex + 1))
@@ -185,7 +185,7 @@ public class BagContainer extends ContainerBagginses {
         boolean changed = false;
         if (stackToShift.isStackable())
             for (int slotIndex = start; stackToShift.stackSize > 0 && slotIndex < end; slotIndex++) {
-                Slot slot = (Slot) inventorySlots.get(slotIndex);
+                Slot slot = inventorySlots.get(slotIndex);
                 ItemStack stackInSlot = slot.getStack();
                 if (stackInSlot != null && StackUtils.isIdenticalItem(stackInSlot, stackToShift)) {
                     int resultingStackSize = stackInSlot.stackSize + stackToShift.stackSize;
@@ -205,7 +205,7 @@ public class BagContainer extends ContainerBagginses {
             }
         if (stackToShift.stackSize > 0)
             for (int slotIndex = start; stackToShift.stackSize > 0 && slotIndex < end; slotIndex++) {
-                Slot slot = (Slot) inventorySlots.get(slotIndex);
+                Slot slot = inventorySlots.get(slotIndex);
                 ItemStack stackInSlot = slot.getStack();
                 if (stackInSlot == null) {
                     int max = Math.min(stackToShift.getMaxStackSize(), slot.getSlotStackLimit());
@@ -272,18 +272,10 @@ public class BagContainer extends ContainerBagginses {
                     }
                     if (ModConfig.whitelist) {
                         //Whitelist
-                        if (BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color)) {
-                            return true;
-                        }else{
-                            return false;
-                        }
+                        return BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color);
                     }else{
                         //Blacklist
-                        if (BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color)) {
-                            return false;
-                        }else{
-                            return true;
-                        }
+                        return !BlockList.contains(itemStack.getItem(), itemStack.getItemDamage(), color);
                     }
                 }
                 return false;
