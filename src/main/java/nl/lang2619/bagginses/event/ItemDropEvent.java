@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import nl.lang2619.bagginses.helpers.BagFinder;
 import nl.lang2619.bagginses.inventory.InventoryBag;
 import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.items.bags.container.BagContainer;
@@ -28,7 +29,7 @@ public class ItemDropEvent {
     public void onLivingDrops(LivingDropsEvent event) {
         if(event.getSource().getDamageType() == "player") {
             EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
-            ItemStack bagStack = getBag(player);
+            ItemStack bagStack = BagFinder.getBag(player);
             if (bagStack != null) {
                 Bag bag = (Bag) bagStack.getItem();
                 //Only want pickup
@@ -85,7 +86,7 @@ public class ItemDropEvent {
     @SubscribeEvent
     public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
         if(event.getHarvester() != null) {
-            ItemStack bagStack = getBag(event.getHarvester());
+            ItemStack bagStack = BagFinder.getBag(event.getHarvester());
             if (bagStack != null) {
                 Bag bag = (Bag) bagStack.getItem();
                 //Only want pickup
@@ -137,31 +138,5 @@ public class ItemDropEvent {
                 event.getDrops().removeAll(toRemove);
             }
         }
-    }
-
-    public static boolean doStacksMatch(ItemStack stack1, ItemStack stack2) {
-        return isItemNonNull(stack1) && isItemNonNull(stack2) && stack1.getItem() == stack2.getItem();
-    }
-
-    public static boolean isItemNonNull(ItemStack itemStack) {
-        return itemStack != null && itemStack.getItem() != null;
-    }
-
-    public static ItemStack getBag(EntityPlayer player) {
-        if (isItemNonNull(player.getHeldItemOffhand())
-                && player.getHeldItemOffhand().getItem() instanceof Bag)
-            return player.getHeldItemOffhand();
-
-        for (int i = 0; i < 9; i++) {
-            if (isItemNonNull(player.inventory.getStackInSlot(i))
-                    && player.inventory.getStackInSlot(i).getItem() instanceof Bag) {
-                if (((Bag) player.inventory.getStackInSlot(i).getItem()).getMode() == BagMode.PICKUP) {
-                    return player.inventory.getStackInSlot(i);
-                } else {
-                    return null;
-                }
-            }
-        }
-        return null;
     }
 }

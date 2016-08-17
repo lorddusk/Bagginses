@@ -11,7 +11,9 @@ import nl.lang2619.bagginses.config.ConfigHandler;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.event.*;
 import nl.lang2619.bagginses.gameanalytics.minecraft.MCSimpleAnalytics;
+import nl.lang2619.bagginses.helpers.KeybindHandler;
 import nl.lang2619.bagginses.helpers.Messages.BagDescMessage;
+import nl.lang2619.bagginses.helpers.Messages.OpenBagMessage;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.references.Achievements;
 import nl.lang2619.bagginses.references.BlockList;
@@ -41,9 +43,7 @@ public class CommonProxy {
 
         ModItems.init();
 
-        if(event.getSide() == Side.CLIENT){
-            ModItems.registerModels();
-        }
+        KeybindHandler.registerKeybinds();
     }
 
     public void init(FMLInitializationEvent event) {
@@ -51,6 +51,7 @@ public class CommonProxy {
         NetworkRegistry.INSTANCE.registerGuiHandler(Bagginses.instance, Bagginses.guiHandler);
 
         Bagginses.INSTANCE.registerMessage(BagDescMessage.MyMessageHandler.class, BagDescMessage.class, 0, Side.CLIENT);
+        Bagginses.INSTANCE.registerMessage(OpenBagMessage.MyMessageHandler.class, OpenBagMessage.class, 1, Side.SERVER);
 
         Achievements.init();
     }
@@ -87,6 +88,8 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(new ItemDropEvent());
         //Player join and leave serbers
         MinecraftForge.EVENT_BUS.register(new PlayerServerEventHandler());
+        //KeyBinds
+        MinecraftForge.EVENT_BUS.register(new KeybindHandler());
     }
 
 }

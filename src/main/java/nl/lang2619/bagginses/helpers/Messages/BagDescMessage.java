@@ -13,9 +13,9 @@ import nl.lang2619.bagginses.items.ModItems;
  */
 public class BagDescMessage implements IMessage {
 
+    String bag;
+
     public BagDescMessage() {}
-
-
 
     @Override
     public void fromBytes(ByteBuf buf) {
