@@ -79,11 +79,12 @@ public class Bag extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
+        if (player.isSneaking()) {
+            changeMode(itemStack, world, player, hand);
+            return new ActionResult(EnumActionResult.SUCCESS, itemStack);
+        }
+
         if (!world.isRemote) {
-            if (player.isSneaking()) {
-                changeMode(itemStack, world, player, hand);
-                return new ActionResult(EnumActionResult.SUCCESS, itemStack);
-            }
             if (!ItemHelper.hasOwnerUUID(itemStack)) {
                 ItemHelper.setOwner(itemStack, player);
             }
@@ -106,7 +107,7 @@ public class Bag extends Item {
         return new ActionResult(EnumActionResult.SUCCESS, itemStack);
     }
 
-    private void changeMode(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
+    private void changeMode(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (type == BagTypes.VOID) {
             return;
         }
@@ -114,14 +115,16 @@ public class Bag extends Item {
             return;
         }
         mode = mode.next();
-        ChatUtils.sendNoSpamMessages(14, new TextComponentString(ChatFormatting.AQUA + "Mode: " + mode.getName()));
+        if (world.isRemote)
+            System.out.println(mode.getName() + " : " + mode.next().getName());
+            ChatUtils.sendNoSpamMessages(14, new TextComponentString(ChatFormatting.AQUA + "Mode: " + mode.getName()));
     }
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         super.addInformation(stack, player, list, advanced);
-        if (mode != BagMode.DEFAULT) {
-            list.add(ChatFormatting.AQUA + "Mode: " + mode.getName());
+        if (((Bag) stack.getItem()).getMode() != BagMode.DEFAULT) {
+            list.add(ChatFormatting.AQUA + "Mode: " + this.mode);
         }
         if (isSoulBound(stack)) {
             list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");

@@ -42,8 +42,6 @@ public class CommonProxy {
         Bagginses.analytics.eventDesign(Defaults.VERSION + ":ModStarted:" + Bagginses.analytics.userPrefix(), Bagginses.analytics.userPrefix());
 
         ModItems.init();
-
-        KeybindHandler.registerKeybinds();
     }
 
     public void init(FMLInitializationEvent event) {
@@ -88,8 +86,6 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(new ItemDropEvent());
         //Player join and leave serbers
         MinecraftForge.EVENT_BUS.register(new PlayerServerEventHandler());
-        //KeyBinds
-        MinecraftForge.EVENT_BUS.register(new KeybindHandler());
     }
 
 }
