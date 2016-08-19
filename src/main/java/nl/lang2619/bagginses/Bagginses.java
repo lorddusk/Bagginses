@@ -31,7 +31,7 @@ import java.io.File;
 /**
  * Created by Tim on 7/29/2014.
  */
-@Mod(modid = Defaults.MODID, version = "2.4.2d", name = Defaults.NAME)
+@Mod(modid = Defaults.MODID, version = "2.4.2d", name = Defaults.NAME, acceptedMinecraftVersions = "1.10, 1.10.2")
 public class Bagginses {
     @Mod.Instance(Defaults.MODID)
     public static Bagginses instance;
