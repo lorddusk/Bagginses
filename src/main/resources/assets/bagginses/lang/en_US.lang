@@ -60,3 +60,6 @@ achievement.tier2bag=Let's carry even more
 achievement.tier2bag.desc=Make a tier 2 Bagginses
 achievement.tier3bag=Let's carry everything
 achievement.tier3bag.desc=Make a tier 3 Bagginses bag
+
+key.categories.bagginses=Bagginses
+key.OpenBag=Open/Close Bag Inventory
