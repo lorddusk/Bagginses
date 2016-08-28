@@ -28,7 +28,6 @@ public class KeybindHandler {
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (Minecraft.getMinecraft().inGameHasFocus) {
             if (openBag.isPressed()) {
-                System.out.println("Open Bag pressed");
                 Bagginses.INSTANCE.sendToServer(new OpenBagMessage());
             }
         }

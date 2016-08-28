@@ -39,7 +39,6 @@ public class OpenBagMessage implements IMessage {
             // youre 'handle' code is run on the main Minecraft thread. 'onMessage' itself
             // is called on the networking thread so it is not safe to do a lot of things
             // here.
-            System.out.println("Listening");
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }

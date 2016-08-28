@@ -116,7 +116,6 @@ public class Bag extends Item {
         }
         mode = mode.next();
         if (world.isRemote)
-            System.out.println(mode.getName() + " : " + mode.next().getName());
             ChatUtils.sendNoSpamMessages(14, new TextComponentString(ChatFormatting.AQUA + "Mode: " + mode.getName()));
     }
 
