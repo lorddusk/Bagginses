@@ -2,13 +2,13 @@
 
 ### What did you expect to happen? ###
 
-### What happened instead ###
+### What happened instead? ###
 
 ### Crashlog on pastebin/gist ###
 
-### Forge and Minecraft version ###
+### Forge and Minecraft version? ###
 
-### Hydraulicraft version and build number ###
+### Any other known modifications to Minecraft/Forge itself that are known to cause issues? ###
 
-### Any other info which might help ###
+### Any other info which might help. ###
 
