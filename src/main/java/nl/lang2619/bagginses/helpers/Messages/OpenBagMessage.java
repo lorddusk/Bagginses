@@ -46,6 +46,8 @@ public class OpenBagMessage implements IMessage {
         private void handle(OpenBagMessage message, MessageContext ctx) {
             // This code is run on the server side. So you can do server-side calculations here
             EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+            if (BagFinder.getBag(player) == null)
+                return;
             BagTypes type = ((Bag) BagFinder.getBag(player).getItem()).getType();
             if (type == BagTypes.TIER1)
                 player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK, player.worldObj, 0, 0, 0);

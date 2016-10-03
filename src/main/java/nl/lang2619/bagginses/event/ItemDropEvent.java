@@ -59,7 +59,7 @@ public class ItemDropEvent {
                                     inv.setInventorySlotContents(i, stack.getEntityItem());
                                     toRemove.add(stack);
                                     break;
-                                } else if (ItemStack.areItemsEqual(inv.getStackInSlot(i), stack.getEntityItem())) {
+                                } else if (doStacksMatch(inv.getStackInSlot(i), stack.getEntityItem())) {
                                     ItemStack invStack = inv.getStackInSlot(i);
                                     Slot slot = container.getSlot(i);
                                     int resultingStackSize = stack.getEntityItem().stackSize + invStack.stackSize;
@@ -116,7 +116,7 @@ public class ItemDropEvent {
                                     inv.setInventorySlotContents(i, stack);
                                     toRemove.add(stack);
                                     break;
-                                } else if (ItemStack.areItemsEqual(inv.getStackInSlot(i), stack)) {
+                                } else if (doStacksMatch(inv.getStackInSlot(i), stack)) {
                                     ItemStack invStack = inv.getStackInSlot(i);
                                     Slot slot = container.getSlot(i);
                                     int resultingStackSize = stack.stackSize + invStack.stackSize;
@@ -138,5 +138,9 @@ public class ItemDropEvent {
                 event.getDrops().removeAll(toRemove);
             }
         }
+    }
+
+    public boolean doStacksMatch(ItemStack stackA, ItemStack stackB) {
+        return stackA == stackB ? true : (stackA != null && stackB != null ? stackA.isItemEqual(stackB) : false) && (stackA.getTagCompound().equals(stackB.getTagCompound()));
     }
 }

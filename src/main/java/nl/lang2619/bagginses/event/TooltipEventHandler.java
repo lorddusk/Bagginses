@@ -20,14 +20,18 @@ public class TooltipEventHandler {
     @SubscribeEvent
     public void tooltip(ItemTooltipEvent e) {
         if (Minecraft.getMinecraft().currentScreen instanceof BagGui) {
-            Bag bag = (Bag) getStack(e.getEntityPlayer()).getItem();
-            String color = bag.getColor();
+            try {
+                Bag bag = (Bag) getStack(e.getEntityPlayer()).getItem();
+                String color = bag.getColor();
 
-            if (bag.getType() == BagTypes.TIER1
-                    || bag.getType() == BagTypes.TIER2) {
-                if (!isItemAllowed(e.getItemStack(), color)) {
-                    e.getToolTip().add(ChatFormatting.RED + "This item is not allowed in this bag");
+                if (bag.getType() == BagTypes.TIER1
+                        || bag.getType() == BagTypes.TIER2) {
+                    if (!isItemAllowed(e.getItemStack(), color)) {
+                        e.getToolTip().add(ChatFormatting.RED + "This item is not allowed in this bag");
+                    }
                 }
+            } catch (ClassCastException ex) {
+                return;
             }
         }
     }
