@@ -22,6 +22,7 @@ import nl.lang2619.bagginses.helpers.Messages.BagDescMessage;
 import nl.lang2619.bagginses.items.ModItems;
 import nl.lang2619.bagginses.proxy.CommonProxy;
 import nl.lang2619.bagginses.references.Achievements;
+import nl.lang2619.bagginses.references.BagMode;
 import nl.lang2619.bagginses.references.BlockList;
 import nl.lang2619.bagginses.references.Defaults;
 import scala.tools.nsc.doc.model.Def;

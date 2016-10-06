@@ -5,11 +5,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.helpers.ChatUtils;
@@ -29,7 +32,6 @@ import java.util.List;
 public class Bag extends Item {
     String color;
     BagTypes type;
-    BagMode mode;
 
 
     public Bag(String color, BagTypes type) {
@@ -38,7 +40,6 @@ public class Bag extends Item {
         setCreativeTab(Bagginses.BagTab);
         this.color = color;
         this.type = type;
-        this.mode = BagMode.DEFAULT;
     }
 
     public String getColor() {
@@ -47,10 +48,6 @@ public class Bag extends Item {
 
     public BagTypes getType() {
         return type;
-    }
-
-    public BagMode getMode() {
-        return mode;
     }
 
     public String getUnlocalizedName(ItemStack itemStack) {
@@ -114,7 +111,17 @@ public class Bag extends Item {
         if (!ModConfig.bagPickUp) {
             return;
         }
+        if (stack.getTagCompound() == null)
+            stack.setTagCompound(new NBTTagCompound());
+        NBTTagCompound tags = stack.getTagCompound();
+        BagMode mode = BagMode.getMode(stack);
+
         mode = mode.next();
+
+        tags.setString("bagMode", mode.getName());
+
+        stack.setTagCompound(tags);
+
         if (world.isRemote)
             ChatUtils.sendNoSpamMessages(14, new TextComponentString(ChatFormatting.AQUA + "Mode: " + mode.getName()));
     }
@@ -122,8 +129,8 @@ public class Bag extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         super.addInformation(stack, player, list, advanced);
-        if (((Bag) stack.getItem()).getMode() != BagMode.DEFAULT) {
-            list.add(ChatFormatting.AQUA + "Mode: " + this.mode);
+        if (BagMode.getMode(stack) != BagMode.DEFAULT) {
+            list.add(ChatFormatting.AQUA + "Mode: " + BagMode.getMode(stack).getName());
         }
         if (isSoulBound(stack)) {
             list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");

@@ -33,7 +33,7 @@ public class ItemDropEvent {
             if (bagStack != null) {
                 Bag bag = (Bag) bagStack.getItem();
                 //Only want pickup
-                if (bag.getMode() != BagMode.PICKUP)
+                if (BagMode.getMode(bagStack) != BagMode.PICKUP)
                     return;
                 //Not void for now
                 if (bag.getType() == BagTypes.VOID)
@@ -90,7 +90,7 @@ public class ItemDropEvent {
             if (bagStack != null) {
                 Bag bag = (Bag) bagStack.getItem();
                 //Only want pickup
-                if (bag.getMode() != BagMode.PICKUP)
+                if (BagMode.getMode(bagStack) != BagMode.PICKUP)
                     return;
                 //Not void for now
                 if (bag.getType() == BagTypes.VOID)

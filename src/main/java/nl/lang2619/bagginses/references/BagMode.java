@@ -1,5 +1,7 @@
 package nl.lang2619.bagginses.references;
 
+import net.minecraft.item.ItemStack;
+
 /**
  * Created by alex on 19/06/16.
  */
@@ -19,7 +21,7 @@ public enum BagMode {
         this.name = name;
     }
 
-    public BagMode getMode(String name) {
+    public static BagMode getMode(String name) {
         for (BagMode bagMode : BagMode.values()) {
             if (name.equals(bagMode.name))
                 return bagMode;
@@ -30,4 +32,12 @@ public enum BagMode {
     public String getName() {
         return this.name;
     }
+
+    public static BagMode getMode(ItemStack stack) {
+        if (stack.getTagCompound() != null
+                && stack.getTagCompound().hasKey("bagMode"))
+            return getMode(stack.getTagCompound().getString("bagMode"));
+        return DEFAULT;
+    }
+
 }
