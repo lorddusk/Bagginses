@@ -141,6 +141,16 @@ public class ItemDropEvent {
     }
 
     public boolean doStacksMatch(ItemStack stackA, ItemStack stackB) {
-        return stackA == stackB ? true : (stackA != null && stackB != null ? stackA.isItemEqual(stackB) : false) && (stackA.getTagCompound().equals(stackB.getTagCompound()));
+        if (stackA == null
+                || stackB == null)
+            return false;
+        if (stackA.getItem() != stackB.getItem())
+            return false;
+        if (stackA.getItemDamage() != stackB.getItemDamage())
+            return false;
+        if (stackA.getTagCompound() != stackB.getTagCompound())
+            return false;
+
+        return true;
     }
 }
