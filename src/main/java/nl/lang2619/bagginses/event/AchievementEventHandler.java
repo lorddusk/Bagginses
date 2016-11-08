@@ -1,6 +1,8 @@
 package nl.lang2619.bagginses.event;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import nl.lang2619.bagginses.Bagginses;
@@ -16,22 +18,29 @@ public class AchievementEventHandler {
     @SubscribeEvent
     public void event(PlayerEvent.ItemCraftedEvent e) {
         if (e.crafting.getItem() instanceof Bag) {
-            e.player.addStat(Achievements.firstBag);
+            giveAchievement(e.player, Achievements.firstBag);
             Bag bag = (Bag) e.crafting.getItem();
             Bagginses.analytics.eventDesign("BagCrafted:" + bag.getType().name().toLowerCase() + bag.getColor() + ":" + (isSoulBound(e.crafting) ? "soulbound" : "notSoulbound"), Bagginses.analytics.userPrefix());
             if (((Bag) e.crafting.getItem()).getType() == BagTypes.VOID) {
-                e.player.addStat(Achievements.voidBag);
+                giveAchievement(e.player, Achievements.voidBag);
             }
             else if(((Bag) e.crafting.getItem()).getType() == BagTypes.ENDER) {
-                e.player.addStat(Achievements.enderBag);
+                giveAchievement(e.player, Achievements.enderBag);
             }
             else if (((Bag) e.crafting.getItem()).getType() == BagTypes.TIER2) {
-                e.player.addStat(Achievements.tier2Bag);
+                giveAchievement(e.player, Achievements.tier2Bag);
             }
             else if (((Bag) e.crafting.getItem()).getType() == BagTypes.TIER3) {
-                e.player.addStat(Achievements.tier3Bag);
+                giveAchievement(e.player, Achievements.tier3Bag);
             }
         }
+    }
+
+    private void giveAchievement(EntityPlayer player, Achievement achievement) {
+        if (player.hasAchievement(achievement))
+            return;
+
+        player.addStat(achievement);
     }
 
     private boolean isSoulBound(ItemStack stack) {
