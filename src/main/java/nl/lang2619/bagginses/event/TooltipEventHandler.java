@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.items.bags.Bag;
 import nl.lang2619.bagginses.items.bags.gui.BagGui;
@@ -17,6 +19,7 @@ import nl.lang2619.bagginses.references.BlockList;
  */
 public class TooltipEventHandler {
 
+    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void tooltip(ItemTooltipEvent e) {
         if (Minecraft.getMinecraft().currentScreen instanceof BagGui) {
@@ -30,7 +33,7 @@ public class TooltipEventHandler {
                         e.getToolTip().add(ChatFormatting.RED + "This item is not allowed in this bag");
                     }
                 }
-            } catch (ClassCastException ex) {
+            } catch (Exception ex) {
                 return;
             }
         }
