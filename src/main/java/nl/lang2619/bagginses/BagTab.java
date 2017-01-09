@@ -1,8 +1,7 @@
 package nl.lang2619.bagginses;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import nl.lang2619.bagginses.items.ModItems;
 
 /**
@@ -15,8 +14,8 @@ public class BagTab extends CreativeTabs{
     }
 
     @Override
-    public Item getTabIconItem() {
-        return ModItems.foid;
+    public ItemStack getTabIconItem() {
+        return new ItemStack(ModItems.foid);
     }
 
     public String getTranslatedTabLabel(){

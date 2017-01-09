@@ -13,6 +13,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.lang2619.bagginses.Bagginses;
 import nl.lang2619.bagginses.config.ModConfig;
 import nl.lang2619.bagginses.helpers.ChatUtils;
@@ -75,7 +76,8 @@ public class Bag extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack itemStack = player.getHeldItem(hand);
         if (player.isSneaking()) {
             changeMode(itemStack, world, player, hand);
             return new ActionResult(EnumActionResult.SUCCESS, itemStack);
@@ -126,6 +128,7 @@ public class Bag extends Item {
             ChatUtils.sendNoSpamMessages(14, new TextComponentString(ChatFormatting.AQUA + "Mode: " + mode.getName()));
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         super.addInformation(stack, player, list, advanced);

@@ -21,7 +21,7 @@ plugins {
 }
 */
 
-version = "3.0.4g"
+version = "3.1.0"
 group= "nl.lang2619.bagginses" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Bagginses"
 
@@ -29,10 +29,10 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = "1.10.2-12.18.1.2053"
+    version = "1.11-13.19.1.2189"
     runDir = "run"
 
-    mappings = "stable_26"
+    mappings = "snapshot_20170109"
 
     replace "@VERSION@", project.version
     replace "@GAMEKEY@", gamekey
@@ -41,26 +41,6 @@ minecraft {
 }
 
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // addsb uildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 }
 

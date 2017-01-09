@@ -50,13 +50,13 @@ public class OpenBagMessage implements IMessage {
                 return;
             BagTypes type = ((Bag) BagFinder.getBag(player).getItem()).getType();
             if (type == BagTypes.TIER1)
-                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK, player.worldObj, 0, 0, 0);
+                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK, player.world, 0, 0, 0);
             if (type == BagTypes.TIER2)
-                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T2, player.worldObj, 0, 0, 0);
+                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T2, player.world, 0, 0, 0);
             if (type == BagTypes.TIER3)
-                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T3, player.worldObj, 0, 0, 0);
+                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_T3, player.world, 0, 0, 0);
             if (type == BagTypes.VOID)
-                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_VOID, player.worldObj, 0, 0, 0);
+                player.openGui(Bagginses.instance, GuiInfo.GUI_BACKPACK_VOID, player.world, 0, 0, 0);
             if(type == BagTypes.ENDER) {
                 InventoryEnderChest inventoryEnderChest = player.getInventoryEnderChest();
                 player.displayGUIChest(inventoryEnderChest);

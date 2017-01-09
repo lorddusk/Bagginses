@@ -3,6 +3,7 @@ package nl.lang2619.bagginses.event;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
@@ -51,7 +52,7 @@ public class SoulBoundEventHandler {
         if (evt.getEntityPlayer() == null || evt.getEntityPlayer() instanceof FakePlayer || evt.isCanceled()) {
             return;
         }
-        if(evt.getEntityPlayer().worldObj.getGameRules().getBoolean("keepInventory")) {
+        if(evt.getEntityPlayer().world.getGameRules().getBoolean("keepInventory")) {
             return;
         }
 
@@ -89,22 +90,22 @@ public class SoulBoundEventHandler {
         if(evt.getOriginal() == null || evt.getEntityPlayer() == null || evt.getEntityPlayer() instanceof FakePlayer) {
             return;
         }
-        if(evt.getEntityPlayer().worldObj.getGameRules().getBoolean("keepInventory")) {
+        if(evt.getEntityPlayer().world.getGameRules().getBoolean("keepInventory")) {
             return;
         }
-        for (int i = 0; i < evt.getOriginal().inventory.mainInventory.length; i++) {
-            ItemStack item = evt.getOriginal().inventory.mainInventory[i];
+        for (int i = 0; i < evt.getOriginal().inventory.mainInventory.size(); i++) {
+            ItemStack item = evt.getOriginal().inventory.mainInventory.get(i);
             if(isSoulBound(item)) {
                 if (addToPlayerInventory(evt.getEntityPlayer(), item)) {
-                    evt.getOriginal().inventory.mainInventory[i] = null;
+                    evt.getOriginal().inventory.mainInventory.set(i, ItemStack.EMPTY);
                 }
             }
         }
-        for (int i = 0; i < evt.getOriginal().inventory.armorInventory.length; i++) {
-            ItemStack item = evt.getOriginal().inventory.armorInventory[i];
+        for (int i = 0; i < evt.getOriginal().inventory.armorInventory.size(); i++) {
+            ItemStack item = evt.getOriginal().inventory.armorInventory.get(i);
             if(isSoulBound(item)) {
                 if (addToPlayerInventory(evt.getEntityPlayer(), item)) {
-                    evt.getOriginal().inventory.armorInventory[i] = null;
+                    evt.getOriginal().inventory.armorInventory.set(i, ItemStack.EMPTY);
                 }
             }
         }
@@ -117,16 +118,16 @@ public class SoulBoundEventHandler {
         if(item.getItem() instanceof ItemArmor) {
             ItemArmor arm = (ItemArmor) item.getItem();
             int index = 3 - arm.armorType.getIndex();
-            if(entityPlayer.inventory.armorItemInSlot(index) == null) {
-                entityPlayer.inventory.armorInventory[index] = item;
+            if(entityPlayer.inventory.armorInventory.get(index) == ItemStack.EMPTY) {
+                entityPlayer.inventory.armorInventory.set(index, item);
                 return true;
             }
         }
 
         InventoryPlayer inv = entityPlayer.inventory;
-        for (int i = 0; i < inv.mainInventory.length; i++) {
-            if(inv.mainInventory[i] == null) {
-                inv.mainInventory[i] = item.copy();
+        for (int i = 0; i < inv.mainInventory.size(); i++) {
+            if(inv.mainInventory.get(i) == ItemStack.EMPTY) {
+                inv.mainInventory.set(i, item.copy());
                 return true;
             }
         }

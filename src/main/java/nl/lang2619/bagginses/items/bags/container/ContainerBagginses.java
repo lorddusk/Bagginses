@@ -27,22 +27,22 @@ public class ContainerBagginses extends Container {
         ItemStack stackInSlot;
 
         if (itemStack.isStackable()) {
-            while (itemStack.stackSize > 0 && (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin)) {
+            while (itemStack.getCount() > 0 && (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin)) {
                 slot = this.inventorySlots.get(currentSlotIndex);
                 stackInSlot = slot.getStack();
 
                 if (slot.isItemValid(itemStack) && ItemHelper.equalsIgnoreStackSize(itemStack, stackInSlot)) {
-                    int combinedStackSize = stackInSlot.stackSize + itemStack.stackSize;
+                    int combinedStackSize = stackInSlot.getCount() + itemStack.getCount();
                     int slotStackSizeLimit = Math.min(stackInSlot.getMaxStackSize(), slot.getSlotStackLimit());
 
                     if (combinedStackSize <= slotStackSizeLimit) {
-                        itemStack.stackSize = 0;
-                        stackInSlot.stackSize = combinedStackSize;
+                        itemStack = ItemStack.EMPTY;
+                        stackInSlot.setCount(combinedStackSize);
                         slot.onSlotChanged();
                         slotFound = true;
-                    } else if (stackInSlot.stackSize < slotStackSizeLimit) {
-                        itemStack.stackSize -= slotStackSizeLimit - stackInSlot.stackSize;
-                        stackInSlot.stackSize = slotStackSizeLimit;
+                    } else if (stackInSlot.getCount() < slotStackSizeLimit) {
+                        itemStack.shrink(slotStackSizeLimit - stackInSlot.getCount());
+                        stackInSlot.setCount(slotStackSizeLimit);
                         slot.onSlotChanged();
                         slotFound = true;
                     }
@@ -52,19 +52,19 @@ public class ContainerBagginses extends Container {
             }
         }
 
-        if (itemStack.stackSize > 0) {
+        if (itemStack.getCount() > 0) {
             currentSlotIndex = ascending ? slotMax - 1 : slotMin;
 
             while (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin) {
                 slot = this.inventorySlots.get(currentSlotIndex);
                 stackInSlot = slot.getStack();
 
-                if (slot.isItemValid(itemStack) && stackInSlot == null) {
-                    slot.putStack(ItemHelper.cloneItemStack(itemStack, Math.min(itemStack.stackSize, slot.getSlotStackLimit())));
+                if (slot.isItemValid(itemStack) && stackInSlot == ItemStack.EMPTY) {
+                    slot.putStack(ItemHelper.cloneItemStack(itemStack, Math.min(itemStack.getCount(), slot.getSlotStackLimit())));
                     slot.onSlotChanged();
 
-                    if (slot.getStack() != null) {
-                        itemStack.stackSize -= slot.getStack().stackSize;
+                    if (slot.getStack() != ItemStack.EMPTY) {
+                        itemStack.shrink(slot.getStack().getCount());
                         slotFound = true;
                     }
 

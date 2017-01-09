@@ -74,9 +74,9 @@ public class BagGui extends GuiContainer {
     {
         super.onGuiClosed();
 
-        if (mc.thePlayer != null)
+        if (mc.player != null)
         {
-            for (ItemStack itemStack : mc.thePlayer.inventory.mainInventory)
+            for (ItemStack itemStack : mc.player.inventory.mainInventory)
             {
                 if (itemStack != null)
                 {

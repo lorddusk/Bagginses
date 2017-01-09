@@ -43,7 +43,7 @@ public class ItemDropEvent {
                 if (bag.getType() == BagTypes.ENDER) {
                     while(drops.hasNext()) {
                         EntityItem stack = drops.next();
-                        if(player.getInventoryEnderChest().addItem(stack.getEntityItem()) == null) {
+                        if(player.getInventoryEnderChest().addItem(stack.getEntityItem()) == ItemStack.EMPTY) {
                             toRemove.add(stack);
                         }
                     }
@@ -53,7 +53,10 @@ public class ItemDropEvent {
                     BagContainer container = new BagContainer(player, inv);
                     while(drops.hasNext()) {
                         EntityItem stack = drops.next();
-                        for (int i = 0; i < type.getColumns() * type.getRows(); i++) {
+                        if (inv.addItem(stack.getEntityItem()) == ItemStack.EMPTY) {
+                            toRemove.add(stack);
+                        }
+                        /*for (int i = 0; i < type.getColumns() * type.getRows(); i++) {
                             if (container.getSlot(i).isItemValid(stack.getEntityItem())) {
                                 if (inv.getStackInSlot(i) == null) {
                                     inv.setInventorySlotContents(i, stack.getEntityItem());
@@ -74,7 +77,8 @@ public class ItemDropEvent {
                                     }
                                 }
                             }
-                        }
+                        }*/
+
                     }
                     inv.save();
                 }
@@ -100,7 +104,7 @@ public class ItemDropEvent {
                 if (bag.getType() == BagTypes.ENDER) {
                     while(drops.hasNext()) {
                         ItemStack stack = drops.next();
-                        if(event.getHarvester().getInventoryEnderChest().addItem(stack) == null) {
+                        if(event.getHarvester().getInventoryEnderChest().addItem(stack) == ItemStack.EMPTY) {
                             toRemove.add(stack);
                         }
                     }
@@ -110,7 +114,11 @@ public class ItemDropEvent {
                     BagContainer container = new BagContainer(event.getHarvester(), inv);
                     while(drops.hasNext()) {
                         ItemStack stack = drops.next();
-                        for (int i = 0; i < type.getColumns() * type.getRows(); i++) {
+                        if (inv.addItem(stack) == ItemStack.EMPTY) {
+                            toRemove.add(stack);
+                        }
+
+                        /*for (int i = 0; i < type.getColumns() * type.getRows(); i++) {
                             if (container.getSlot(i).isItemValid(stack)) {
                                 if (inv.getStackInSlot(i) == null) {
                                     inv.setInventorySlotContents(i, stack);
@@ -131,7 +139,7 @@ public class ItemDropEvent {
                                     }
                                 }
                             }
-                        }
+                        }*/
                     }
                     inv.save();
                 }

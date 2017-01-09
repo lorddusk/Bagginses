@@ -3,6 +3,7 @@ package nl.lang2619.bagginses.references;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -141,9 +142,9 @@ public class BlockList {
             }
             if (itemId[0].equals("ore")) {
                 String identifier = itemId[1];
-                ArrayList<ItemStack> items = (ArrayList<ItemStack>) OreDictionary.getOres(identifier);
+                NonNullList<ItemStack> items = OreDictionary.getOres(identifier);
                 for (ItemStack is : items) {
-                    if (GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem())) instanceof Item) {
+                    if (GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem())) != null) {
                         Item item = GameData.getItemRegistry().getRaw(Item.getIdFromItem(is.getItem()));
                         getList(color).put(item, dmgs);
                         ++added;
@@ -179,9 +180,9 @@ public class BlockList {
     }
 
     private static int SpecifiedEntry(String color, int added, String entry, short[] dmgs, String[] itemId) {
-        Item item = GameRegistry.findItem(itemId[0], itemId[1]);
+        Item item = GameData.getItemRegistry().getValue(new ResourceLocation(itemId[0], itemId[1]));
         if (item == null) {
-            Block block = GameRegistry.findBlock(itemId[0], itemId[1]);
+            Block block = GameData.getBlockRegistry().getValue(new ResourceLocation(itemId[0], itemId[1]));
             if (block == null) {
                 if (itemId[0].equals("minecraft") || Loader.isModLoaded(itemId[0]))
                     Log.warn("Invalid entry in whitelist $1, item not found: $0", entry, color);

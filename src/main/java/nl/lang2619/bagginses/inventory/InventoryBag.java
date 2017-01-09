@@ -2,6 +2,7 @@ package nl.lang2619.bagginses.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -18,6 +19,7 @@ import java.util.UUID;
  * Created by Tim on 4/12/2015.
  */
 public class InventoryBag implements IInventory, INBTTaggable {
+
     public ItemStack parentItemStack;
     protected ItemStack[] inventory;
     public ItemStack[] itemSlots = new ItemStack[64];
@@ -44,7 +46,7 @@ public class InventoryBag implements IInventory, INBTTaggable {
             readFromNBT(itemStack.getTagCompound());
         } else {
             itemSlots = new ItemStack[size];
-            if (itemStack.hasTagCompound() == false) {
+            if (!itemStack.hasTagCompound()) {
                 itemStack.setTagCompound(new NBTTagCompound());
             }
             tag = itemStack.getTagCompound();
@@ -107,6 +109,11 @@ public class InventoryBag implements IInventory, INBTTaggable {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     public ItemStack getStackInSlot(int slotIndex) {
         if (!foid)
             return inventory[slotIndex];
@@ -119,11 +126,11 @@ public class InventoryBag implements IInventory, INBTTaggable {
         if (!foid) {
             ItemStack itemStack = getStackInSlot(slotIndex);
             if (itemStack != null) {
-                if (itemStack.stackSize <= decrementAmount) {
+                if (itemStack.getCount() <= decrementAmount) {
                     setInventorySlotContents(slotIndex, null);
                 } else {
                     itemStack = itemStack.splitStack(decrementAmount);
-                    if (itemStack.stackSize == 0) {
+                    if (itemStack.isEmpty()) {
                         setInventorySlotContents(slotIndex, null);
                     }
                 }
@@ -135,14 +142,14 @@ public class InventoryBag implements IInventory, INBTTaggable {
                 return null;
             } else if (itemSlots[slotIndex] != null) {
                 ItemStack itemstack;
-                if (itemSlots[slotIndex].stackSize <= decrementAmount) {
+                if (itemSlots[slotIndex].getCount() <= decrementAmount) {
                     itemstack = itemSlots[slotIndex];
                     itemSlots[slotIndex] = null;
                     markDirty();
                     return itemstack;
                 } else {
                     itemstack = itemSlots[slotIndex].splitStack(decrementAmount);
-                    if (itemSlots[slotIndex].stackSize == 0) {
+                    if (itemSlots[slotIndex].isEmpty()) {
                         itemSlots[slotIndex] = null;
                     }
                     markDirty();
@@ -171,8 +178,8 @@ public class InventoryBag implements IInventory, INBTTaggable {
     public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
         if (!foid) {
             inventory[slotIndex] = itemStack;
-            if ((itemStack != null) && (itemStack.stackSize > getInventoryStackLimit())) {
-                itemStack.stackSize = getInventoryStackLimit();
+            if ((itemStack != ItemStack.EMPTY) && (itemStack.getCount() > getInventoryStackLimit())) {
+                itemStack.setCount(getInventoryStackLimit());
             }
             markDirty();
         } else {
@@ -186,6 +193,48 @@ public class InventoryBag implements IInventory, INBTTaggable {
                 }
             }
         }
+    }
+
+    public ItemStack addItem(ItemStack stack)
+    {
+        ItemStack itemstack = stack.copy();
+
+        for (int i = 0; i < this.itemSlots.length; ++i)
+        {
+            ItemStack itemstack1 = this.getStackInSlot(i);
+
+            if (itemstack1.isEmpty())
+            {
+                this.setInventorySlotContents(i, itemstack);
+                this.markDirty();
+                return ItemStack.EMPTY;
+            }
+
+            if (ItemStack.areItemsEqual(itemstack1, itemstack))
+            {
+                int j = Math.min(this.getInventoryStackLimit(), itemstack1.getMaxStackSize());
+                int k = Math.min(itemstack.getCount(), j - itemstack1.getCount());
+
+                if (k > 0)
+                {
+                    itemstack1.grow(k);
+                    itemstack.shrink(k);
+
+                    if (itemstack.isEmpty())
+                    {
+                        this.markDirty();
+                        return ItemStack.EMPTY;
+                    }
+                }
+            }
+        }
+
+        if (itemstack.getCount() != stack.getCount())
+        {
+            this.markDirty();
+        }
+
+        return itemstack;
     }
 
     public void processInv() {
@@ -208,13 +257,13 @@ public class InventoryBag implements IInventory, INBTTaggable {
         setNBT(item);
     }
 
-    public void setNBT(ItemStack item) {
-        item.setTagCompound(tag);
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return true;
     }
 
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
-        return true;
+    public void setNBT(ItemStack item) {
+        item.setTagCompound(tag);
     }
 
     @Override
@@ -267,7 +316,7 @@ public class InventoryBag implements IInventory, INBTTaggable {
                         NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
                         byte slotIndex = tagCompound.getByte("Slot");
                         if (slotIndex >= 0 && slotIndex < inventory.length) {
-                            inventory[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+                            inventory[slotIndex] = new ItemStack(tagCompound);
                         }
                     }
                 }
@@ -287,7 +336,7 @@ public class InventoryBag implements IInventory, INBTTaggable {
                 NBTTagCompound Slots = inventory.getCompoundTagAt(i);
                 byte slot = Slots.getByte("Slot");
                 if ((slot >= 0) && (slot < itemSlots.length)) {
-                    itemSlots[slot] = ItemStack.loadItemStackFromNBT(Slots);
+                    itemSlots[slot] =new ItemStack(Slots);
                 }
             }
         }
