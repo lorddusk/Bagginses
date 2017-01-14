@@ -53,9 +53,9 @@ public class Bag extends Item {
 
     public String getUnlocalizedName(ItemStack itemStack) {
         if (type == BagTypes.TIER2) {
-            return "backpack_" + color + "T2";
+            return "backpack_" + color + "t2";
         } else if (type == BagTypes.TIER3) {
-            return "backpack_" + color + "T3";
+            return "backpack_" + color + "t3";
         }
         return "backpack_" + color;
     }
@@ -77,7 +77,7 @@ public class Bag extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        ItemStack itemStack = player.getHeldItem(hand);
+        ItemStack itemStack = player.getHeldItem(EnumHand.MAIN_HAND);
         if (player.isSneaking()) {
             changeMode(itemStack, world, player, hand);
             return new ActionResult(EnumActionResult.SUCCESS, itemStack);

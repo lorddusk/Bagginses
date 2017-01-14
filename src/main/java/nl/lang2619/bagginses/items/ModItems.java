@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import nl.lang2619.bagginses.config.ModConfig;
@@ -118,7 +120,7 @@ public class ModItems {
             if (!bag.isRegistered())
                 continue;
             bag.setTier2(new Bag(bag.getColor(), BagTypes.TIER2));
-            registerItem(bag.getTier2(), bag.getColor() + "T2");
+            registerItem(bag.getTier2(), bag.getColor() + "t2");
             GameRegistry.addRecipe(new BagRecipe(new ItemStack(bag.getTier2()), new ItemStack(bag.getTier1()), ModItems.upgrade));
             if (ModConfig.soulbound) {
                 GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(bag.getTier2())));
@@ -130,7 +132,7 @@ public class ModItems {
             if (!bag.isRegistered())
                 continue;
             bag.setTier3(new Bag(bag.getColor(), BagTypes.TIER3));
-            registerItem(bag.getTier3(), bag.getColor() + "T3");
+            registerItem(bag.getTier3(), bag.getColor() + "t3");
             GameRegistry.addRecipe(new BagRecipe(new ItemStack(bag.getTier3()), new ItemStack(bag.getTier2()), ModItems.upgrade, ModItems.upgrade));
             if (ModConfig.soulbound) {
                 GameRegistry.addRecipe(new SoulBoundBagRecipe(new ItemStack(bag.getTier3())));
@@ -158,6 +160,7 @@ public class ModItems {
         GameRegistry.register(item, new ResourceLocation(Defaults.MODID + ":" + name));
     }
 
+    @SideOnly(Side.CLIENT)
     public static void registerModels() {
         ModelLoader.registerItemVariants(foid);
         ModelLoader.setCustomModelResourceLocation(foid, 0, new ModelResourceLocation(Defaults.MODID + ":" + ItemInfo.foid, "inventory"));
