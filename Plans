@@ -1,0 +1,25 @@
+BAGGINSES: Return of the Bag.
+
+Bag sizes are the same:
+
+Tier		Height	Width		Slots
+1			3		5			15
+2			3		9			27
+3			4		9			36
+
+Bags:
+	16 colours of bags in 3 tiers. No change there
+	Ender bag: no changes
+	Void bag: no changes
+
+Magnet:
+	Craftable item that can be added to bags in order to "attract" dropped items toward the bags
+	Same as magnet mode works currently.
+	Unsure yet on how to add this to bags, whether I do it as a recipe [Bag + Magnet] or with a slot inside where it is added
+
+Filter:
+	Craftable item added to bags in order to filter which items are whitelisted/blacklisted by the Magnet on the bag
+	[ores going into bag 1, gems into bag 2, cobble and crap voided to bag 3, etc.]
+
+Soulbound:
+	Same as currently done
