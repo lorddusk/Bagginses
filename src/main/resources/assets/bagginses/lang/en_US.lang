@@ -1,0 +1,68 @@
+item.upgrade.name=Upgrade
+
+item.backpack_void_void=Void Bag
+item.backpack_ender_ender=Ender Bag
+
+item.backpack_white_t1.name=White Bag, Tier 1
+item.backpack_white_t2.name=White Bag, Tier 2
+item.backpack_white_t3.name=White Bag, Tier 3
+
+item.backpack_orange_t1.name=Orange Bag, Tier 1
+item.backpack_orange_t2.name=Orange Bag, Tier 2
+item.backpack_orange_t3.name=Orange Bag, Tier 3
+
+item.backpack_magenta_t1.name=Magenta Bag, Tier 1
+item.backpack_magenta_t2.name=Magenta Bag, Tier 2
+item.backpack_magenta_t3.name=Magenta Bag, Tier 3
+
+item.backpack_light_blue_t1.name=Light Blue Bag, Tier 1
+item.backpack_light_blue_t2.name=Light Blue Bag, Tier 2
+item.backpack_light_blue_t3.name=Light Blue Bag, Tier 3
+
+item.backpack_yellow_t1.name=Yellow Bag, Tier 1
+item.backpack_yellow_t2.name=Yellow Bag, Tier 2
+item.backpack_yellow_t3.name=Yellow Bag, Tier 3
+
+item.backpack_lime_t1.name=Lime Bag, Tier 1
+item.backpack_lime_t2.name=Lime Bag, Tier 2
+item.backpack_lime_t3.name=Lime Bag, Tier 3
+
+item.backpack_pink_t1.name=Pink Bag, Tier 1
+item.backpack_pink_t2.name=Pink Bag, Tier 2
+item.backpack_pink_t3.name=Pink Bag, Tier 3
+
+item.backpack_gray_t1.name=Gray Bag, Tier 1
+item.backpack_gray_t2.name=Gray Bag, Tier 2
+item.backpack_gray_t3.name=Gray Bag, Tier 3
+
+item.backpack_silver_t1.name=Silver Bag, Tier 1
+item.backpack_silver_t2.name=Silver Bag, Tier 2
+item.backpack_silver_t3.name=Silver Bag, Tier 3
+
+item.backpack_cyan_t1.name=Cyan Bag, Tier 1
+item.backpack_cyan_t2.name=Cyan Bag, Tier 2
+item.backpack_cyan_t3.name=Cyan Bag, Tier 3
+
+item.backpack_purple_t1.name=Purple Bag, Tier 1
+item.backpack_purple_t2.name=Purple Bag, Tier 2
+item.backpack_purple_t3.name=Purple Bag, Tier 3
+
+item.backpack_blue_t1.name=Blue Bag, Tier 1
+item.backpack_blue_t2.name=Blue Bag, Tier 2
+item.backpack_blue_t3.name=Blue Bag, Tier 3
+
+item.backpack_brown_t1.name=Brown Bag, Tier 1
+item.backpack_brown_t2.name=Brown Bag, Tier 2
+item.backpack_brown_t3.name=Brown Bag, Tier 3
+
+item.backpack_green_t1.name=Green Bag, Tier 1
+item.backpack_green_t2.name=Green Bag, Tier 2
+item.backpack_green_t3.name=Green Bag, Tier 3
+
+item.backpack_red_t1.name=Red Bag, Tier 1
+item.backpack_red_t2.name=Red Bag, Tier 2
+item.backpack_red_t3.name=Red Bag, Tier 3
+
+item.backpack_black_t1.name=Black Bag, Tier 1
+item.backpack_black_t2.name=Black Bag, Tier 2
+item.backpack_black_t3.name=Black Bag, Tier 3
