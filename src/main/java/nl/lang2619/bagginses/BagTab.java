@@ -15,11 +15,10 @@ public class BagTab extends CreativeTabs {
 
     @Override
     public Item getTabIconItem() {
-        //TODO
-        return Items.APPLE;
+        return ModItems.foid;
     }
 
     public String getTranslatedTabLabel(){
-        return "Bagginses";
+        return ModInfo.NAME;
     }
 }
