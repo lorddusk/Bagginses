@@ -26,7 +26,7 @@ import java.util.Map;
 public class ModItems {
 
     public static Map<String, Bags> bags = new HashMap<String, Bags>();
-    public static Item upgrade;
+    public static Upgrade upgrade;
     public static Bag foid;
     public static Bag ender;
 
@@ -39,11 +39,13 @@ public class ModItems {
 
         //Register the upgrade and recipe for it
         upgrade = new Upgrade();
+        upgrade.registerItemModel();
         registerItem(upgrade, upgrade.getUnlocalizedName());
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.upgrade), "SSS", "III", "WWW", 'S', "string", 'I', "ingotIron", 'W', "plankWood"));
 
         //Register the void bag and recipe for it
         foid = new Bag("void", BagType.VOID);
+        foid.registerItemModel();
         registerItem(foid, foid.getUnlocalizedName());
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.foid), "sws", "wcw", "sws", 's', "string", 'w', Blocks.WOOL, 'c', "enderpearl"));
 
@@ -51,6 +53,7 @@ public class ModItems {
 
         //Register the ender bag and recipe for it
         ender = new Bag("ender", BagType.ENDER);
+        ender.registerItemModel();
         registerItem(ender, ender.getUnlocalizedName());
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.ender), ModItems.upgrade, "chestEnder"));
 
@@ -61,14 +64,17 @@ public class ModItems {
                 continue;
 
             //Tier1
+            bag.getTier1().registerItemModel();
             registerItem(bag.getTier1(), bag.getTier1().getUnlocalizedName());
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bag.getTier1()), "sws", "wcw", "sws", 's', "string", 'w', new ItemStack(Blocks.WOOL, 1, Util.intFromColour(bag.getColor())), 'c', "chestWood"));
 
             //Tier2
+            bag.getTier2().registerItemModel();
             registerItem(bag.getTier2(), bag.getTier2().getUnlocalizedName());
             GameRegistry.addRecipe(new BagRecipe(new ItemStack(bag.getTier2()), new ItemStack(bag.getTier1()), ModItems.upgrade));
 
             //Tier3
+            bag.getTier3().registerItemModel();
             registerItem(bag.getTier3(), bag.getTier3().getUnlocalizedName());
             GameRegistry.addRecipe(new BagRecipe(new ItemStack(bag.getTier3()), new ItemStack(bag.getTier2()), ModItems.upgrade, ModItems.upgrade));
 
@@ -80,7 +86,7 @@ public class ModItems {
 
     }
 
-    static void registerItem(Item item, String name) {
+    private static void registerItem(Item item, String name) {
         GameRegistry.register(item, new ResourceLocation(ModInfo.MODID + ":" + name));
     }
 

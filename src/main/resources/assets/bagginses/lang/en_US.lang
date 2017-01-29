@@ -1,7 +1,7 @@
 item.upgrade.name=Upgrade
 
-item.backpack_void_void=Void Bag
-item.backpack_ender_ender=Ender Bag
+item.backpack_void_void.name=Void Bag
+item.backpack_ender_ender.name=Ender Bag
 
 item.backpack_white_t1.name=White Bag, Tier 1
 item.backpack_white_t2.name=White Bag, Tier 2

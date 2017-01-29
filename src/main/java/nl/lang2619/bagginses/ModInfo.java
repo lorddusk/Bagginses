@@ -5,11 +5,10 @@ package nl.lang2619.bagginses;
  */
 public class ModInfo {
 
-  static final String MODID = "bagginses";
-  static final String VERSION = "@VERSION@";
-  static final String NAME = "Bagginses: Return of the Bag";
+  public static final String MODID = "bagginses";
+  public static final String VERSION = "@VERSION@";
+  public static final String NAME = "Bagginses: Return of the Bag";
 
-  static final String CLIENTPROXY = "nl.lang2619.bagginses.proxy.ClientProxy";
-  static final String COMMONPROXY = "nl.lang2619.bagginses.proxy.CommonProxy";
-
+  public static final String CLIENTPROXY = "nl.lang2619.bagginses.proxy.ClientProxy";
+  public static final String COMMONPROXY = "nl.lang2619.bagginses.proxy.CommonProxy";
 }

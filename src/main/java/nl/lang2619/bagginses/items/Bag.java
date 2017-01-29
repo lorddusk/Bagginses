@@ -1,12 +1,15 @@
 package nl.lang2619.bagginses.items;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.lang2619.bagginses.Bagginses;
+import nl.lang2619.bagginses.ModInfo;
 import nl.lang2619.bagginses.helpers.Util;
 
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.List;
 /**
  * Created by Alex on 27/01/2017.
  */
-public class Bag extends Item {
+public class Bag extends BagginsesItem {
 
     String colour;
     BagType type;
@@ -22,7 +25,6 @@ public class Bag extends Item {
     public Bag(String colour, BagType type) {
         super();
         maxStackSize = 1;
-        setCreativeTab(Bagginses.instance.creativeTab);
         this.colour = colour;
         this.type = type;
 
@@ -35,6 +37,11 @@ public class Bag extends Item {
 
     public BagType getType() {
         return type;
+    }
+
+    @Override
+    public void registerItemModel() {
+        Bagginses.proxy.registerItemRenderer(this);
     }
 
     @Override

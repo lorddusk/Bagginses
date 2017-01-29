@@ -10,12 +10,11 @@ import java.util.List;
 /**
  * Created by Alex on 28/01/2017.
  */
-public class Upgrade extends Item {
+public class Upgrade extends BagginsesItem {
 
     public Upgrade() {
         super();
         maxStackSize = 64;
-        setCreativeTab(Bagginses.instance.creativeTab);
         this.setUnlocalizedName("upgrade");
     }
 
