@@ -1,15 +1,13 @@
 package nl.lang2619.bagginses.items;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.lang2619.bagginses.Bagginses;
-import nl.lang2619.bagginses.ModInfo;
+import nl.lang2619.bagginses.ModItems;
+import nl.lang2619.bagginses.helpers.BagType;
 import nl.lang2619.bagginses.helpers.Util;
 
 import java.util.List;
@@ -64,14 +62,14 @@ public class Bag extends BagginsesItem {
         }
 
         //TODO Descriptions
-        /*try {
+        try {
             String msg = "";
-            if (ModItems.bags.get(color).getServerDesc() != null
-                    && !ModItems.bags.get(color).getServerDesc().equals("")) {
-                msg = ModItems.bags.get(color).getServerDesc();
-            } else if (ModItems.bags.get(color).getDesc() != null
-                    && !ModItems.bags.get(color).getDesc().equals("")) {
-                msg = ModItems.bags.get(color).getDesc();
+            if (ModItems.bags.get(colour).getServerDesc() != null
+                    && !ModItems.bags.get(colour).getServerDesc().equals("")) {
+                msg = ModItems.bags.get(colour).getServerDesc();
+            } else if (ModItems.bags.get(colour).getDesc() != null
+                    && !ModItems.bags.get(colour).getDesc().equals("")) {
+                msg = ModItems.bags.get(colour).getDesc();
             }
 
             if (!("").equals(msg)) {
@@ -85,7 +83,7 @@ public class Bag extends BagginsesItem {
             }
         } catch (NullPointerException e) {
             //Ignore
-        }*/
+        }
     }
 
 }

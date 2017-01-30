@@ -1,4 +1,4 @@
-package nl.lang2619.bagginses.items;
+package nl.lang2619.bagginses.helpers;
 
 /**
  * Created by Alex on 27/01/2017.

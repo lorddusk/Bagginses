@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import nl.lang2619.bagginses.items.BagType;
 import nl.lang2619.bagginses.proxy.CommonProxy;
 
 import java.io.FileWriter;

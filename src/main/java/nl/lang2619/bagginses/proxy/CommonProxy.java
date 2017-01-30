@@ -5,6 +5,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import nl.lang2619.bagginses.ModItems;
+import nl.lang2619.bagginses.config.BagDescriptions;
+import nl.lang2619.bagginses.config.Config;
 import nl.lang2619.bagginses.items.Bag;
 
 /**
@@ -13,7 +15,9 @@ import nl.lang2619.bagginses.items.Bag;
 public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
+        Config.init(event.getModConfigurationDirectory().getAbsolutePath());
         ModItems.init();
+        BagDescriptions.init(Config.dir);
     }
 
     public void init(FMLInitializationEvent event) {

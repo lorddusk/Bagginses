@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import nl.lang2619.bagginses.helpers.BagType;
 import nl.lang2619.bagginses.helpers.Bags;
 import nl.lang2619.bagginses.helpers.Util;
 import nl.lang2619.bagginses.items.Bag;
-import nl.lang2619.bagginses.items.BagType;
 import nl.lang2619.bagginses.items.Upgrade;
 import nl.lang2619.bagginses.items.recipes.BagRecipe;
 import nl.lang2619.bagginses.items.recipes.SoulboundRecipe;
@@ -83,6 +83,10 @@ public class ModItems {
             GameRegistry.addRecipe(new SoulboundRecipe(new ItemStack(bag.getTier2())));
             GameRegistry.addRecipe(new SoulboundRecipe(new ItemStack(bag.getTier3())));
         }
+
+        bags.put("ender", new Bags(ender, null, null, "ender", true));
+        bags.put("void", new Bags(foid, null, null, "void", true));
+
 
     }
 

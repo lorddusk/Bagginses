@@ -1,7 +1,6 @@
 package nl.lang2619.bagginses;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 /**
