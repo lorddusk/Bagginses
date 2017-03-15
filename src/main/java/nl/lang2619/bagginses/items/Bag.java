@@ -10,7 +10,9 @@ import nl.lang2619.bagginses.ModItems;
 import nl.lang2619.bagginses.helpers.BagType;
 import nl.lang2619.bagginses.helpers.Util;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Alex on 27/01/2017.
@@ -61,18 +63,22 @@ public class Bag extends BagginsesItem {
             list.add(ChatFormatting.LIGHT_PURPLE + "Soulbound");
         }
 
-        //TODO Descriptions
-        try {
-            String msg = "";
-            if (ModItems.bags.get(colour).getServerDesc() != null
-                    && !ModItems.bags.get(colour).getServerDesc().equals("")) {
-                msg = ModItems.bags.get(colour).getServerDesc();
-            } else if (ModItems.bags.get(colour).getDesc() != null
-                    && !ModItems.bags.get(colour).getDesc().equals("")) {
-                msg = ModItems.bags.get(colour).getDesc();
-            }
+        String msg = "";
+        if (ModItems.bags.get(colour).getServerDesc() != null
+                && !ModItems.bags.get(colour).getServerDesc().equals("")) {
+            msg = ModItems.bags.get(colour).getServerDesc();
+        } else if (ModItems.bags.get(colour).getDesc() != null
+                && !ModItems.bags.get(colour).getDesc().equals("")) {
+            msg = ModItems.bags.get(colour).getDesc();
+        }
 
-            if (!("").equals(msg)) {
+        Arrays.stream(msg.split("\n"))
+                .limit(3)
+                .filter(Objects::nonNull)
+                .filter(part -> !("").equals(part))
+                .forEach(part -> list.add(part));
+
+            /*if (!("").equals(msg)) {
                 String[] parts = msg.split("\n");
                 for (int i = 0; i < Math.min(3, parts.length); i++) {
                     if (parts[i] != null
@@ -80,10 +86,7 @@ public class Bag extends BagginsesItem {
                         list.add(parts[i]);
                     }
                 }
-            }
-        } catch (NullPointerException e) {
-            //Ignore
-        }
+            }*/
     }
 
 }

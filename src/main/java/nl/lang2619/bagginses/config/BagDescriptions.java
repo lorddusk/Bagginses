@@ -33,6 +33,7 @@ public class BagDescriptions {
                 FileUtils.copyURLToFile(inputUrl, file);
             }
             catch (IOException e) {
+                Bagginses.logger.error("Unable to copy the Descriptions file. Descriptions will probably be broken", e);
             }
         }
 
@@ -43,7 +44,7 @@ public class BagDescriptions {
             reader.close();
         }
         catch (IOException e) {
-            //TODO
+            Bagginses.logger.error("Unable to read in the Descriptions file, Descriptions will probably be broken", e);
         }
 
         for (BagInfo desc : descriptions) {

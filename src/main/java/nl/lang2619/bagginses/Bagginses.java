@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import nl.lang2619.bagginses.proxy.CommonProxy;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class Bagginses {
 
   @Mod.Instance(ModInfo.MODID)
   public static Bagginses instance;
+  public static Logger logger;
 
   @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
   public static CommonProxy proxy;
@@ -28,24 +30,7 @@ public class Bagginses {
 
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent event) {
-      try {
-          FileWriter writer = new FileWriter("text.txt");
-
-          for (EnumDyeColor dyeColor : EnumDyeColor.values()) {
-              writer.write("item.backpack_" + dyeColor.getName() + "_t1.name=" + dyeColor.getName().substring(0, 1).toUpperCase() + dyeColor.getName().substring(1) + " Bag, Tier 1");
-              writer.write("\n");
-              writer.write("item.backpack_" + dyeColor.getName() + "_t2.name=" + dyeColor.getName().substring(0, 1).toUpperCase() + dyeColor.getName().substring(1) + " Bag, Tier 2");
-              writer.write("\n");
-              writer.write("item.backpack_" + dyeColor.getName() + "_t3.name=" + dyeColor.getName().substring(0, 1).toUpperCase() + dyeColor.getName().substring(1) + " Bag, Tier 3");
-              writer.write("\n\n");
-          }
-
-          writer.flush();
-          writer.close();
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
-
+      logger = event.getModLog();
       proxy.preInit(event);
   }
 
